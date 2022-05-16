@@ -6,9 +6,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
+
+import java.util.Iterator;
 
 public class MazeGame extends ApplicationAdapter {
     private Texture dropImage;
@@ -18,6 +23,9 @@ public class MazeGame extends ApplicationAdapter {
     private SpriteBatch batch;
 
     private Rectangle bucket;
+
+    private Array<Rectangle> raindrops;
+    private long lastDropTime;
 
     @Override
     public void create(){
@@ -31,12 +39,16 @@ public class MazeGame extends ApplicationAdapter {
 
         batch = new SpriteBatch();
 
-        // actual objects (origin of x,y is the bottom left of the screen)
+        // bucket (origin of x,y is the bottom left of the screen)
         bucket = new Rectangle();
         bucket.x = 800 / 2 - 64 / 2;
         bucket.y = 20;
         bucket.width = 64;
         bucket.height = 64;
+
+        // raindrops
+        raindrops = new Array<Rectangle>();
+        spawnRaindrop();
     }
 
     @Override
@@ -49,6 +61,9 @@ public class MazeGame extends ApplicationAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(bucketImage, bucket.x, bucket.y);
+        for (Rectangle raindrop: raindrops){
+            batch.draw(dropImage, raindrop.x, raindrop.y);
+        }
         batch.end();
 
 
@@ -66,5 +81,32 @@ public class MazeGame extends ApplicationAdapter {
         // make sure bucket stays within screen limits
         if(bucket.x < 0) bucket.x = 0;
         if(bucket.x > 800 - 64) bucket.x = 800 - 64;
+
+        // spawn raindrops
+        if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnRaindrop();
+
+        // move raindrops
+        for(Iterator<Rectangle> iterable = raindrops.iterator(); iterable.hasNext(); ){
+            Rectangle raindrop = iterable.next();
+            raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
+
+            if(raindrop.y + 64 < 0) iterable.remove();
+            if(raindrop.overlaps(bucket)){
+                iterable.remove();
+            }
+        }
+    }
+
+    private void spawnRaindrop() {
+        Rectangle raindrop = new Rectangle();
+
+        raindrop.x = MathUtils.random(0, 800-64);
+        raindrop.y = 480;
+
+        raindrop.width = 64;
+        raindrop.height = 64;
+
+        raindrops.add(raindrop);
+        lastDropTime = TimeUtils.nanoTime();
     }
 }
