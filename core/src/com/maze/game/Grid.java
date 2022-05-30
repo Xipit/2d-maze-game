@@ -19,8 +19,6 @@ public class Grid {
     1 Pfad
      o (opening) Eingangspfadfeld
      e (ending) Ausgangspfadfeld
-    Gitter gleichbleibend je Level, zur Anordnung der Texturen in der render-Methode von MazeGame zu jedem zu berechnenden Frame.
-    Erweiterbar um Position von Items oder Ähnlichem.
     */
     private int sizeX;
     private int sizeY;
@@ -34,7 +32,7 @@ public class Grid {
     public Point getEnding() {return this.ending;}
     public char getValue(int x, int y) {return this.grid.get(y).get(x);}
 
-    public void printGrid() {
+    public void print() {
         for (int i = sizeY - 1; i >= 0; i--) {
             for (int j = 0; j < sizeX; j++) {
                 System.out.print(this.grid.get(i).get(j));
@@ -46,7 +44,7 @@ public class Grid {
 
     public Grid load(
             int level)
-            throws IOException {
+            throws IOException, IllegalArgumentException {
         // Einlesen des Level-Aufbaus aus Textdatei in eine 2D Arraylist.
 
         int fileSizeX = 0, currentFileSizeX, currentFileSizeY = 0;
@@ -55,7 +53,7 @@ public class Grid {
 
         String legalChars = new String(new char[] {'o', 'e', '0', '1'});
 
-        BufferedReader br = new BufferedReader(new FileReader(String.valueOf(Paths.get(Gdx.files.getLocalStoragePath(), "core/src/com/maze/game/level/", Integer.toString(level)))));
+        BufferedReader br = new BufferedReader(new FileReader(String.valueOf(Paths.get(Gdx.files.getLocalStoragePath(), "assets/level/", Integer.toString(level)))));
         String line = br.readLine();
 
         /*
@@ -65,7 +63,7 @@ public class Grid {
         - Zeichen einer bestimmten Auswahl
         - gleiche Zeilenlänge
         */
-        // todo umfangreiche Fehlerbehandlung notwendig, wenn Level nur vorgegeben sind? Oder beibehalten: Verwendung "selbsterstellter" Level als mögliches Feature?
+
         while (line != null) {
             if (fileSizeX == 0) {
                 fileSizeX = line.length();
@@ -78,7 +76,6 @@ public class Grid {
             currentFileSizeX = 0;
 
             for (char c : line.toCharArray()) {
-                lineList.add(c);
                 if (c == 'o') {
                     if (fileOpening == null && currentFileSizeX == 0)
                         fileOpening = new Point(currentFileSizeX, currentFileSizeY);
@@ -100,6 +97,7 @@ public class Grid {
                     System.out.println(c);
                     throw new IllegalArgumentException();
                 }
+                lineList.add(c);
                 currentFileSizeX++;
             }
 
@@ -109,6 +107,7 @@ public class Grid {
 
             currentFileSizeY++;
         }
+        br.close();
 
         if (fileEnding == null || fileOpening == null)
             throw new IllegalArgumentException();
