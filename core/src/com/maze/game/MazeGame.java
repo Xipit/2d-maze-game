@@ -42,6 +42,10 @@ public class MazeGame extends ApplicationAdapter {
 
 		camera.update();
 
+		Map.renderer.setView(camera);
+		Map.renderer.render();
+
+		/*
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		for (int i = 0; i < grid.getSizeX(); i++) {
@@ -57,6 +61,7 @@ public class MazeGame extends ApplicationAdapter {
 			}
 		}
 		batch.end();
+		*/
 	}
 	
 	@Override
