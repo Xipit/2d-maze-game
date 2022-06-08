@@ -4,26 +4,87 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Map {
-    private TiledMap map;
-    private OrthogonalTiledMapRenderer renderer;
+    static int WIDTH, HEIGHT;
+    static int WIDTH_PIXEL, HEIGHT_PIXEL;
+    static int TILE_WIDTH, TILE_HEIGHT;
 
-    //TiledMapTileLayer layer = (TiledMapTileLayer)tiledMap.getLayers().get(0);
+    private final TiledMap map;
+    private final OrthogonalTiledMapRenderer renderer;
+    private final TiledMapTileLayer tileLayer;
 
-    public Map create(String fileName, Float unitScale){
+    public Map(String fileName, Float unitScale) {
         this.map = MazeGame.instance.assetManager.get(fileName, TiledMap.class);
-        renderer = new OrthogonalTiledMapRenderer(this.map, unitScale);
-        return this;
+        this.renderer = new OrthogonalTiledMapRenderer(this.map, unitScale);
+        this.tileLayer = (TiledMapTileLayer) this.map.getLayers().get("tiles");
+
+        WIDTH = this.map.getProperties().get("width", Integer.class);
+        HEIGHT = this.map.getProperties().get("height", Integer.class);
+        TILE_WIDTH = this.map.getProperties().get("tilewidth", Integer.class);
+        TILE_HEIGHT = this.map.getProperties().get("tileheight", Integer.class);
+        WIDTH_PIXEL = WIDTH * TILE_WIDTH;
+        HEIGHT_PIXEL = HEIGHT * TILE_HEIGHT;
     }
 
     public void render(OrthographicCamera camera) {
-        renderer.setMap(this.map);
-        renderer.setView(camera);
-        renderer.render();
+        this.renderer.setMap(this.map);
+        this.renderer.setView(camera);
+        this.renderer.render();
     }
 
     public void dispose() {
         this.map.dispose();
+        this.renderer.dispose();
+    }
+
+    public Vector2 getWallCollision(Vector2 moveVector, Position playerPosition) {
+        Point[] corners;
+
+
+        Point tileIndex = getTileIndex(pixelCoordinates);
+
+        // Pixel genaue Prüfung der Eckpunkte des rechteckigen Spielcharakters
+        TiledMapTileLayer.Cell[] cells = {
+                this.tileLayer.getCell(tileIndex. / TILE_WIDTH, y / TILE_HEIGHT),
+                this.tileLayer.getCell(x / TILE_WIDTH, (y + player.shape.height) / TILE_HEIGHT),
+                this.tileLayer.getCell((x + player.shape.width) / TILE_WIDTH, y / TILE_HEIGHT),
+                this.tileLayer.getCell((x + player.shape.width) / TILE_WIDTH, (y + player.shape.height) / TILE_HEIGHT)
+        };
+
+        for (TiledMapTileLayer.Cell cell : cells) {
+            if (cell != null && cell.getTile() != null) {
+                if (cell.getTile().getProperties().containsKey("wall_collision"))
+                    return true;
+            }
+        }
+
+    }
+
+    private Point getTileIndex(Point pixelCoordinates){
+        int xIndex = (pixelCoordinates.x - pixelCoordinates.x % TILE_WIDTH) / TILE_WIDTH;
+        int yIndex = (pixelCoordinates.y - pixelCoordinates.y % TILE_WIDTH) / TILE_WIDTH;
+        return new Point(xIndex, yIndex);
+    }
+
+    private ArrayList<Integer> getCorners(Vector2 moveVector, Position playerPosition) {
+        ArrayList<Integer> corners = new ArrayList<> ();
+
+        if (moveVector.x > 0)
+            corners.add(playerPosition.xMax);
+        else if ( moveVector.x < 0)
+            corners.add(playerPosition.xMin);
+        if (moveVector.y > 0)
+            corners.add(playerPosition.yMax);
+        else if ( moveVector.y< 0)
+            corners.add(playerPosition.yMin);
+
+        return corners;
     }
 }

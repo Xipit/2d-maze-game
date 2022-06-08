@@ -4,17 +4,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class LevelScreen extends ScreenAdapter {
-    OrthographicCamera camera;
-    Map currentMap;
+    private OrthographicCamera camera;
+    static Map currentMap;
 
-    public LevelScreen() {
+    private Player player;
+
+    private SpriteBatch sb;
+
+    public LevelScreen(String tilemapFile) {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
 
-        currentMap = new Map().create("prototyp_tilemap.tmx", 1f);
+        currentMap = new Map(tilemapFile, 1f);
+        player = new Player();
+
+        sb = new SpriteBatch();
     }
 
     @Override
@@ -25,7 +33,19 @@ public class LevelScreen extends ScreenAdapter {
 
         camera.update();
 
+        // todo Zentriere den Player, es sei denn, der Abstand zu dem Rand ist nicht groß genug oder Umgebung art render?
+        camera.position.set((float) player.shape.getX(), (float) player.shape.getY(), 0);
         currentMap.render(camera);
+        // erste Frame(s) nicht position gewechselt
+        sb.setProjectionMatrix(camera.combined);
+
+        // new batch sb
+        sb.begin();
+        sb.draw(player.texture, player.shape.x, player.shape.y);
+        sb.end();
+
+        // Player movement by keystroke
+        player.input();
     }
 
     @Override
