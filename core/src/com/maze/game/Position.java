@@ -3,8 +3,6 @@ package com.maze.game;
 import com.badlogic.gdx.math.Vector2;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
-import java.util.Vector;
 
 public class Position {
     public int xMin, xMax, yMin, yMax;
