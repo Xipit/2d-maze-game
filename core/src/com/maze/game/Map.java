@@ -7,9 +7,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Map {
     static int WIDTH, HEIGHT;
@@ -45,7 +43,7 @@ public class Map {
     }
 
     public Vector2 getWallCollision(Vector2 moveVector, Position playerPosition) {
-        Point[] corners;
+        ArrayList<Point> cornerPoints = getCornerPoints(moveVector, playerPosition);
 
 
         Point tileIndex = getTileIndex(pixelCoordinates);
@@ -73,17 +71,21 @@ public class Map {
         return new Point(xIndex, yIndex);
     }
 
-    private ArrayList<Integer> getCorners(Vector2 moveVector, Position playerPosition) {
-        ArrayList<Integer> corners = new ArrayList<> ();
+    private ArrayList<Point> getCornerPoints(Vector2 moveVector, Position playerPosition) {
+        ArrayList<Point> corners = new ArrayList<> ();
 
-        if (moveVector.x > 0)
-            corners.add(playerPosition.xMax);
-        else if ( moveVector.x < 0)
-            corners.add(playerPosition.xMin);
-        if (moveVector.y > 0)
-            corners.add(playerPosition.yMax);
-        else if ( moveVector.y< 0)
-            corners.add(playerPosition.yMin);
+        if (moveVector.x < 0 || moveVector.y > 0){
+            corners.add(new Point(playerPosition.xMin, playerPosition.yMax)); // topLeft
+        }
+        if (moveVector.x > 0 || moveVector.y > 0){
+            corners.add(new Point(playerPosition.xMax, playerPosition.yMax)); // topRight
+        }
+        if (moveVector.x < 0 || moveVector.y < 0) {
+            corners.add(new Point(playerPosition.xMin, playerPosition.yMin)); // bottomLeft
+        }
+        if (moveVector.x > 0 || moveVector.y < 0) {
+            corners.add(new Point(playerPosition.xMax, playerPosition.yMin)); // bottomRight
+        }
 
         return corners;
     }
