@@ -67,11 +67,12 @@ public class Map {
 
     private Point getTileIndex(Point pixelCoordinates){
         int xIndex = (pixelCoordinates.x - pixelCoordinates.x % TILE_WIDTH) / TILE_WIDTH;
-        int yIndex = (pixelCoordinates.y - pixelCoordinates.y % TILE_WIDTH) / TILE_WIDTH;
+        int yIndex = (pixelCoordinates.y - pixelCoordinates.y % TILE_HEIGHT) / TILE_HEIGHT;
         return new Point(xIndex, yIndex);
     }
 
     private ArrayList<Point> getCornerPoints(Vector2 moveVector, Position playerPosition) {
+        // Returns the position of the corners of the position object (player) that are at the front of the movement direction (and therefore are to be checked for collisions).
         ArrayList<Point> corners = new ArrayList<> ();
 
         if (moveVector.x < 0 || moveVector.y > 0){

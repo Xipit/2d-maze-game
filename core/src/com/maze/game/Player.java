@@ -9,11 +9,9 @@ import java.awt.*;
 
 public class Player {
     public Texture texture;
-
     public Rectangle shape;
 
     private float speed = 200;
-    // todo INFO, clean png
     private int width = 50;
     private int height = 56;
     public Position position;
@@ -49,14 +47,10 @@ public class Player {
 
         vector.nor();  //normalize vector length = 1
 
-        // if !LevelScreen.currentMap.getWallCollision(shape.x, (int) (shape.y + speed * deltaTime),this);
-
-
         respectBoundaries();
     }
 
     private void respectBoundaries() {
-        // todo CHANGED
         if(shape.x < 0) shape.x = 0;
         if(shape.x > Map.WIDTH_PIXEL - width) shape.x =  Map.WIDTH_PIXEL - width;
 
