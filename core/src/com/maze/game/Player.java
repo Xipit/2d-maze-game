@@ -31,7 +31,7 @@ public class Player {
         shape.height = height;
     }
 
-    public void input() {
+    public void input(Map map) {
         Vector2 vector = new Vector2(0, 0);
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)){
@@ -48,11 +48,14 @@ public class Player {
         }
 
         vector.nor();  //normalize vector length = 1
+        if(!vector.isZero()) move(vector.scl(speed), map);
+
+        // Map.accountForCollision needs vector * speed as moveVector
 
         // if !LevelScreen.currentMap.getWallCollision(shape.x, (int) (shape.y + speed * deltaTime),this);
 
 
-        respectBoundaries();
+        // respectBoundaries();
     }
 
     private void respectBoundaries() {
@@ -66,12 +69,23 @@ public class Player {
 
     }
 
-    public void move(Vector2 vector) {
+    public void move(Vector2 moveVector, Map map) {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
-        position.update(vector);
-        shape.x += vector.x * deltaTime;
-        shape.y += vector.y * deltaTime;
+        moveVector.scl(deltaTime);
+
+        Gdx.app.log("MazeGame", "uncorrected moveVector: " + moveVector.toString());
+
+        moveVector.add(map.accountForCollision(moveVector, position));
+
+        Gdx.app.log("MazeGame", "corrected moveVector: " + moveVector.toString());
+
+        position.update(moveVector);
+
+
+
+        shape.x += moveVector.x;
+        shape.y += moveVector.y;
     }
 
     public void disposeTextures() {

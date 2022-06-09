@@ -17,11 +17,13 @@ public class Position {
         this.yMax = yMin + height;
     }
 
-    public void update(Vector2 vector) {
+    public Position update(Vector2 vector) {
         this.xMin += vector.x;
         this.xMax += vector.x;
         this.yMin += vector.y;
         this.yMax += vector.y;
+
+        return this;
     }
 
     public Point getCenter(){

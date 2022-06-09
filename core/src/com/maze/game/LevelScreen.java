@@ -45,7 +45,7 @@ public class LevelScreen extends ScreenAdapter {
         sb.end();
 
         // Player movement by keystroke
-        player.input();
+        player.input(currentMap);
     }
 
     @Override
