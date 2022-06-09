@@ -2,6 +2,7 @@ package com.maze.game;
 
 import com.badlogic.gdx.math.Vector2;
 
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Vector;
 
@@ -21,5 +22,9 @@ public class Position {
         this.xMax += vector.x;
         this.yMin += vector.y;
         this.yMax += vector.y;
+    }
+
+    public Point getCenter(){
+        return new Point((int)(xMin + 0.5 * xMax), (int)(yMin + 0.5 * yMax));
     }
 }

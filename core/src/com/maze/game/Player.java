@@ -37,17 +37,17 @@ public class Player {
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)){
             vector.x = -1;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)){
+        else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)){
             vector.x = +1;
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)){
             vector.y = -1;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)){
+        else if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)){
             vector.y = +1;
         }
 
-        vector.nor();
+        vector.nor();  //normalize vector length = 1
 
         // if !LevelScreen.currentMap.getWallCollision(shape.x, (int) (shape.y + speed * deltaTime),this);
 

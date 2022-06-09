@@ -34,7 +34,7 @@ public class LevelScreen extends ScreenAdapter {
         camera.update();
 
         // todo Zentriere den Player, es sei denn, der Abstand zu dem Rand ist nicht groß genug oder Umgebung art render?
-        camera.position.set((float) player.shape.getX(), (float) player.shape.getY(), 0);
+        camera.position.set((float) player.position.getCenter().x, (float)player.position.getCenter().y, 0);
         currentMap.render(camera);
         // erste Frame(s) nicht position gewechselt
         sb.setProjectionMatrix(camera.combined);
