@@ -56,6 +56,7 @@ public class Map {
 
         TiledMapTileLayer.Cell[] potentialCollisionCells = {null, null, null, null};
         Point[] cornerPointTileIndices = {null, null, null, null};
+
         for (int i = 0; i < cornerPoints.length; i ++) {
             if(cornerPoints[i] == null) continue;
             
@@ -115,7 +116,7 @@ public class Map {
             Gdx.app.log("MazeGame", "correctionVector: " + correctionVector.toString());
         }
 
-        if
+
 
         Gdx.app.log("MazeGame", "correction: " + accumulatedCorrectionVector.toString());
         return accumulatedCorrectionVector;
