@@ -71,8 +71,11 @@ public class Player {
 
     public void move(Vector2 moveVector, Map map) {
         float deltaTime = Gdx.graphics.getDeltaTime();
-
         moveVector.scl(deltaTime);
+        moveVector = new Vector2((float)Math.floor(moveVector.x), (float)Math.floor(moveVector.y));
+
+        Gdx.app.log("MazeGame", "---------------------------------------------");
+
 
         Gdx.app.log("MazeGame", "uncorrected moveVector: " + moveVector.toString());
 

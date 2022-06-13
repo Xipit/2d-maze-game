@@ -54,8 +54,11 @@ public class Map {
         Gdx.app.log("MazeGame", "xMax  " + previousPosition.xMax);
         Gdx.app.log("MazeGame", "yMin  " + previousPosition.yMin);
         Gdx.app.log("MazeGame", "yMax  " + previousPosition.yMax);
-        Position position = previousPosition.update(moveVector);
-
+        Position position = previousPosition.calculateNewPosition(moveVector);
+        Gdx.app.log("MazeGame", "ä xMin  " + position.xMin);
+        Gdx.app.log("MazeGame", "ä xMax  " + position.xMax);
+        Gdx.app.log("MazeGame", "ä yMin  " + position.yMin);
+        Gdx.app.log("MazeGame", "ä yMax  " + position.yMax);
         Point[] cornerPoints = getCornerPoints(moveVector, position);
 
         TiledMapTileLayer.Cell[] potentialCollisionCells = {null, null, null, null};
@@ -90,13 +93,13 @@ public class Map {
 
                 Point tilePosition = new Point(cornerPointTileIndices[i].x * TILE_WIDTH, cornerPointTileIndices[i].y * TILE_HEIGHT); // bottomLeft of Tile
                 //adjust tilePosition to match the relevant corner
-                tilePosition.x += (i == 0 || i == 2) ? TILE_WIDTH : 0;
-                tilePosition.y += (i == 2 || i == 3) ? TILE_HEIGHT : 0;
+                tilePosition.x += (i == 0 || i == 2) ? (TILE_WIDTH - 1): 0;
+                tilePosition.y += (i == 2 || i == 3) ? (TILE_HEIGHT - 1): 0;
 
                 Gdx.app.log("MazeGame", "tileIndex: " + i + " -> " + cornerPointTileIndices[i].toString() + ", " + tilePosition.toString());
 
 
-                Vector2 correctionVector = new Vector2(tilePosition.x - cornerPoints[i].x, tilePosition.y - cornerPoints[i].y);
+                Vector2 correctionVector = new Vector2((tilePosition.x - cornerPoints[i].x) , (tilePosition.y - cornerPoints[i].y));
 
                 correctionVectors.add(correctionVector); // pushes player into available space
             }
@@ -118,12 +121,14 @@ public class Map {
                 && cornerPoints[2].y == cornerPoints[3].y){
             considerX = false;
         }
-        if(cornerPointRelevantAndCollides(0, cornerPoints, potentialCollisionCells) && cornerPointRelevantAndCollides(2, cornerPoints, potentialCollisionCells)
-                && cornerPoints[0].x == cornerPoints[2].x
-                || cornerPointRelevantAndCollides(1, cornerPoints, potentialCollisionCells) && cornerPointRelevantAndCollides(3, cornerPoints, potentialCollisionCells)
-                && cornerPoints[1].x == cornerPoints[3].x){
+        if((cornerPointRelevantAndCollides(0, cornerPoints, potentialCollisionCells) && cornerPointRelevantAndCollides(2, cornerPoints, potentialCollisionCells)
+                && cornerPoints[0].x == cornerPoints[2].x)
+                || (cornerPointRelevantAndCollides(1, cornerPoints, potentialCollisionCells) && cornerPointRelevantAndCollides(3, cornerPoints, potentialCollisionCells)
+                && cornerPoints[1].x == cornerPoints[3].x)){
             considerY = false;
         }
+        // doesnt work for diagonal movement
+
         Gdx.app.log("MazeGame", "considerX " + considerX.toString());
         Gdx.app.log("MazeGame", "considerY " + considerY.toString());
 
