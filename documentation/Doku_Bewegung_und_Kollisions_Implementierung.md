@@ -136,4 +136,54 @@ for(int i = 0; i < potentialCollisionCells.length; i ++){
     }
 }
 ```
-An dieser Stelle ist auch der Fehler unseres Ansatzes zu finden. 
+An dieser Stelle ist auch das Problem unseres Ansatzes zu finden. Eine konkrete Beschreibung befindet sich am Ende.
+
+1. Aus den Korrektionsvektoren der einzelnen Eckpunkte muss ein einzelner Korrektionsvektor ausgerechnet werden.
+2. Dies wird erreicht in dem der größte absolute X und Y Wert der Korrektionsvektoren ermittelt wird. Dies geschieht unter der Annahme das diese Werte das gleiche Vorzeichen haben.
+3. Anschließend wird dieser Korrektionsvektor zurückgegeben
+
+```java
+Vector2 accumulatedCorrectionVector = new Vector2(0, 0);
+for (Vector2 correctionVector:
+     correctionVectors) {
+    Vector2 correction = new Vector2(0,0);
+    correction.x = Math.abs(accumulatedCorrectionVector.x) > Math.abs(correctionVector.x) ? accumulatedCorrectionVector.x : correctionVector.x;
+    correction.y = Math.abs(accumulatedCorrectionVector.y) > Math.abs(correctionVector.y) ? accumulatedCorrectionVector.y : correctionVector.y;
+
+    accumulatedCorrectionVector = correction;
+}
+
+return accumulatedCorrectionVector;
+```
+
+## Player
+#### [Player.move]
+1. Die Position wird mit dem Bewegungsvektor aktualisiert.
+
+```java
+moveVector.add(map.accountForCollision(moveVector, position));
+
+position.update(moveVector);
+```
+
+# Das Problem
+## .. der Funktionsweise
+Bevor der tatsächliche Korrektionsvektor berechnet wird, wurden folgende Informationen ermittelt, bzw. stehen zur Verfügung:
+- vorherige- und potenzielle neue Position [Pixel]
+- gewollter Bewegungsvektor 
+- Für jeden relevanten Eckpunkt:
+  - eigene Position [Pixel]
+  - Position der kollidierenden Tile [Index] [Pixel]
+
+Mit diesen Informationen konnte nun die benötigte Bewegung berechnet werden, welche die Spielfigur aus der Kollisions-Tile bringt. 
+Dies würde auch korrekt funktionieren, wenn es nur eine mögliche Tile gäbe mit der die Spielfigur kollidieren könnte. 
+Das Problem hieran ist das die Nachbar-Tiles auch eine Kollisions-Tile sein kann und die Ecken der Spielfigur zeitgleich mit verschiedenen Tiles kollidieren kann (sehr oft). 
+Für diese Kollisions-Tiles hat unsere Implementierung auch keine Information aus welcher Richtung die Spielfigur kommt und kann demnach nicht entscheiden ob X, Y oder beide Werte der Eckpunkte für den Korrektionsvektor interessant sind.
+
+Bspw. kann die Spielfigur sich schräg auf eine Wand (mehrere Kollisions-Tiles nebeneinander) zu bewegen und die Kollisionsbetrachtung müsste nun herausfinden aus welcher Richtung sie kommt und ob sie etwaige Kollisions-Tile Nachbarn hat.
+
+Ein möglicher Ansatz wäre die Anzahl der gleichen X oder Y Werte der Eckpunkte zu zählen und wenn es mehr als 1 gibt diese Achse nicht weiter zu betrachten. Dies würde
+
+
+
+

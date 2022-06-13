@@ -76,16 +76,15 @@ public class Player {
 
         Gdx.app.log("MazeGame", "uncorrected moveVector: " + moveVector.toString());
 
-        moveVector.add(map.accountForCollision(moveVector, position));
+        Vector2 correctedMoveVector = moveVector.add(map.accountForCollision(moveVector, position));
 
-        Gdx.app.log("MazeGame", "corrected moveVector: " + moveVector.toString());
+        Gdx.app.log("MazeGame", "corrected moveVector: " + correctedMoveVector.toString());
 
-        position.update(moveVector);
+        this.position = position.update(correctedMoveVector);
+    // TODO Position does net get updated correctly :(
 
-
-
-        shape.x += moveVector.x;
-        shape.y += moveVector.y;
+        shape.x += correctedMoveVector.x;
+        shape.y += correctedMoveVector.y;
     }
 
     public void disposeTextures() {
