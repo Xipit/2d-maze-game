@@ -54,7 +54,6 @@ Position position = previousPosition.update(moveVector);
 Point[] cornerPoints = getCornerPoints(moveVector, position);
 ```
 
-
 #### [Map.getCornerPoints]
 1. Zuweisung des Eckpunkt Arrays mithilfe des Bewegungsvektorens. Bspw.: Wenn der x Wert &lt; 0 oder der y Wert &gt; 0 ist, dann wird am Index 0 der Eckpunkt mithilfe der neuen Position ermittelt und zugewisen. 
 2. Rückgabe des Eckpunkt Array
@@ -85,7 +84,7 @@ private Point[] getCornerPoints(Vector2 moveVector, Position playerPosition) {
 }
 ```
 Zur korrekten berechnung der relevanten Eckpunkte wurde folgende Skizze verwendet:
-![](H:\src\documentation\getCornerPoints_Hilfsskizze.jpg "CornerPoints Hilfsskizze")
+![](https://user-images.githubusercontent.com/48943886/173302055-53f2b9ed-10fc-4881-9cf6-bee875665b13.jpg "CornerPoints Hilfsskizze")
 
 #### [Map.accountForCollision]
 1. Belegung der tatsächlichen Map Cell wie sie von libGdx sowie ihrem Index (mithilfe von Map.getTileIndex) für jeden relevanten Eckpunkt. Dafür sind zwei versch. Arrays notwendig, da die Map Cell nicht ihren eigenen Index speichert. Mit Index ist hierbei ihre Position wie in einer Tabelle zu verstehen (Bspw. [1,5]), alle anderen Koordinaten sind in Pixel (Bspw. [64,256]) angegeben.
