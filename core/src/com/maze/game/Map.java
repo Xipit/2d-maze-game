@@ -8,7 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Map {
     static int WIDTH, HEIGHT;
@@ -43,122 +43,170 @@ public class Map {
         this.renderer.dispose();
     }
 
-    /*
-        Corner Indices:
-        0 - 1
-        |   |
-        2 - 3
-    */
-    public Vector2 accountForCollision(Vector2 moveVector, Position previousPosition) {
-        Position position = previousPosition.update(moveVector);
+    public Vector2 accountForCollision(Vector2 moveVector, Position position) {
+        // This implementation works only if the motion vector has a smaller length than the length of the tiles.
+        // It is only checked for collision at the prospective position, without considering that several tiles might collide on that way.
 
-        Point[] cornerPoints = getCornerPoints(moveVector, position);
+        Position potentialPosition = position.calculateNewPosition(moveVector);
 
-        TiledMapTileLayer.Cell[] potentialCollisionCells = {null, null, null, null};
-        Point[] cornerPointTileIndices = {null, null, null, null};
-        for (int i = 0; i < cornerPoints.length; i ++) {
-            if(cornerPoints[i] == null) continue;
-            
-            Point cornerPointTileIndex = getTileIndex(cornerPoints[i]);
-            cornerPointTileIndices[i] = cornerPointTileIndex;
-            potentialCollisionCells[i] = (this.tileLayer.getCell(cornerPointTileIndex.x, cornerPointTileIndex.y));
-        }
+        Vector2 correctionVector = new Vector2(0, 0);
 
-        ArrayList<Vector2> correctionVectors = new ArrayList<>();
+        // Prevent the map boundaries from being exceeded.
+        if(potentialPosition.xMin  < 0) correctionVector.x = -potentialPosition.xMin;
+        if(potentialPosition.xMax > WIDTH_PIXEL) correctionVector.x = -(potentialPosition.xMax - WIDTH_PIXEL);
+        if(potentialPosition.yMin < 0) correctionVector.y = -potentialPosition.yMin;
+        if(potentialPosition.yMax > HEIGHT_PIXEL) correctionVector.y = -(potentialPosition.yMax - HEIGHT_PIXEL);
 
-        //Point tileIndex = getTileIndex(pixelCoordinates);
+        Point[] potentialCornerPoints = getCornerPoints(moveVector, potentialPosition);
 
-        // Pixel genaue Prüfung der Eckpunkte des rechteckigen Spielcharakters
-        /*TiledMapTileLayer.Cell[] cells = {
-                this.tileLayer.getCell(tileIndex. / TILE_WIDTH, y / TILE_HEIGHT),
-                this.tileLayer.getCell(x / TILE_WIDTH, (y + player.shape.height) / TILE_HEIGHT),
-                this.tileLayer.getCell((x + player.shape.width) / TILE_WIDTH, y / TILE_HEIGHT),
-                this.tileLayer.getCell((x + player.shape.width) / TILE_WIDTH, (y + player.shape.height) / TILE_HEIGHT)
-        };*/
+        Point[] tileIndicesCollisionCells = {null, null, null, null};
+        for (int i = 0; i < potentialCornerPoints.length; i ++) {
+            if(potentialCornerPoints[i] == null) continue;
 
-        for(int i = 0; i < potentialCollisionCells.length; i ++){
-            if(potentialCollisionCells[i] == null || potentialCollisionCells[i].getTile() == null){
-                continue;
-            }
-            if (potentialCollisionCells[i].getTile().getProperties().containsKey("wall_collision")){
-                // info
-                // - corner Position in pixels
-                // - which cornerPosition it is -> index
-                // - tile Position as index & in pixels
-                // - moveVector
-                // - previous and new Position
+            Point potentialCornerPoint = getTileIndex(potentialCornerPoints[i]);
+            TiledMapTileLayer.Cell cell = this.tileLayer.getCell(potentialCornerPoint.x, potentialCornerPoint.y);
+            if(cell == null) continue;
 
-                // need to know per tile from which direction we are entering
-                // playerPosition center maybe?
-
-                Point tilePosition = new Point(cornerPointTileIndices[i].x * TILE_WIDTH, cornerPointTileIndices[i].y * TILE_HEIGHT); // bottomLeft of Tile
-                //adjust tilePosition to match the relevant corner
-                tilePosition.x += (i == 0 || i == 2) ? TILE_WIDTH : 0;
-                tilePosition.y += (i == 2 || i == 3) ? TILE_HEIGHT : 0;
-
-                Gdx.app.log("MazeGame", "tileIndex: " + i + " -> " + cornerPointTileIndices[i].toString() + ", " + tilePosition.toString());
-
-                // ISSUE: adjust for every corner (
-
-                correctionVectors.add(new Vector2(tilePosition.x - cornerPoints[i].x, tilePosition.y - cornerPoints[i].y)); // pushes player into available space
+            if(cell.getTile().getProperties().containsKey("wall_collision")) {
+                tileIndicesCollisionCells[i] = potentialCornerPoint;
             }
         }
+        Gdx.app.log("MazeGame", "potentialCornerPoints: " + Arrays.toString(potentialCornerPoints));
+        Gdx.app.log("MazeGame", "tileIndicesCollisionCells: " + Arrays.toString(tileIndicesCollisionCells));
 
-        Vector2 accumulatedCorrectionVector = new Vector2(0, 0);
-        for (Vector2 correctionVector:
-             correctionVectors) {
-            Vector2 correction = new Vector2(0,0);
-            correction.x += Math.abs(accumulatedCorrectionVector.x) > Math.abs(correctionVector.x) ? accumulatedCorrectionVector.x : correctionVector.x;
-            correction.y += Math.abs(accumulatedCorrectionVector.y) > Math.abs(correctionVector.y) ? accumulatedCorrectionVector.y : correctionVector.y;
+        // Reduce the number of colliding cells to be considered for calculation to one.
+        boolean double_motion_ignore_x = false, double_motion_ignore_y = false;
+        Point tileIndicesCollisionCellOfInterest = null;
 
-            accumulatedCorrectionVector = correction;
-            Gdx.app.log("MazeGame", "correctionVector: " + correctionVector.toString());
+        /*
+            2 - 3
+            |   |
+            0 - 1
+        */
+
+        // triple collision (with "double" direction of movement):
+        // The enclosed cell is considered.
+        if(tileIndicesCollisionCells[2] != null && tileIndicesCollisionCells[0] != null && tileIndicesCollisionCells[1] != null)
+            tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[0];
+        else if(tileIndicesCollisionCells[0] != null && tileIndicesCollisionCells[1] != null && tileIndicesCollisionCells[3] != null)
+            tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[1];
+        else if(tileIndicesCollisionCells[1] != null && tileIndicesCollisionCells[3] != null && tileIndicesCollisionCells[2] != null)
+            tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[3];
+        else if(tileIndicesCollisionCells[3] != null && tileIndicesCollisionCells[2] != null && tileIndicesCollisionCells[0] != null)
+            tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[2];
+        else {
+            if (moveVector.x != 0 ^ moveVector.y != 0) {
+                // single or double collision with single direction of movement:
+                // The choice of cell does not matter.
+                for (Point tileIndicesCollisionCell : tileIndicesCollisionCells) {
+                    if (tileIndicesCollisionCell != null) {
+                        tileIndicesCollisionCellOfInterest = tileIndicesCollisionCell;
+                        break;
+                    }
+                }
+            }
+            else {
+                // single or double collision with "double" direction of movement:
+                // Selection of the cell of the colliding corner that is further in the direction of movement.
+                if (moveVector.x < 0 && moveVector.y < 0)
+                    tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[0];
+                else if (moveVector.x > 0 && moveVector.y < 0)
+                    tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[1];
+                else if (moveVector.x < 0 && moveVector.y > 0)
+                    tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[2];
+                else if (moveVector.x > 0 && moveVector.y > 0)
+                    tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[3];
+
+                Gdx.app.log("MazeGame", "double collision");
+                // double collision
+                if (tileIndicesCollisionCellOfInterest == null) {}
+                else if ((tileIndicesCollisionCells[0] != null && tileIndicesCollisionCells[2] != null) || (tileIndicesCollisionCells[1] != null && tileIndicesCollisionCells[3] != null))
+                    double_motion_ignore_y = true;
+                else if ((tileIndicesCollisionCells[0] != null && tileIndicesCollisionCells[1] != null) || (tileIndicesCollisionCells[2] != null && tileIndicesCollisionCells[3] != null))
+                    double_motion_ignore_x = true;
+                // single collision
+                else {
+                    Gdx.app.log("MazeGame", "single collision");
+
+                    int delta_x, delta_y;
+                    if (moveVector.x > 0)
+                        delta_x = potentialPosition.xMax - tileIndicesCollisionCellOfInterest.x * TILE_WIDTH + 1;
+                    else delta_x = (tileIndicesCollisionCellOfInterest.x + 1) * TILE_WIDTH - potentialPosition.xMin + 1;
+                    if (moveVector.y > 0)
+                        delta_y = potentialPosition.yMax - tileIndicesCollisionCellOfInterest.y * TILE_HEIGHT +  1;
+                    else delta_y = (tileIndicesCollisionCellOfInterest.y + 1) * TILE_HEIGHT - potentialPosition.yMin + 1;
+
+                    // delta(x) > delta(y) -> ignore(x) | delta(y) >= delta(x) -> ignore(y)
+                    if (delta_x > delta_y) {
+                        Gdx.app.log("MazeGame", "double_motion_ignore_x");
+                        double_motion_ignore_x = true;}
+                    else {
+                        Gdx.app.log("MazeGame", "double_motion_ignore_y");
+                        double_motion_ignore_y = true;
+                    }
+                    // todo refine
+                }
+            }
         }
+        Gdx.app.log("MazeGame", "tileIndicesCollisionCellOfInterest: " + tileIndicesCollisionCellOfInterest);
 
-        if
+        // Return vector that corrects the movement vector so that there is no longer a collision and the intended movement is maximized.
+        if(tileIndicesCollisionCellOfInterest == null) return correctionVector;
 
-        Gdx.app.log("MazeGame", "correction: " + accumulatedCorrectionVector.toString());
-        return accumulatedCorrectionVector;
+        if(moveVector.x > 0 && !double_motion_ignore_x)
+            correctionVector.add(-(potentialPosition.xMax - tileIndicesCollisionCellOfInterest.x * TILE_WIDTH) - 1, 0);
+        else if(moveVector.x < 0 && !double_motion_ignore_x)
+            correctionVector.add((tileIndicesCollisionCellOfInterest.x + 1) * TILE_WIDTH - potentialPosition.xMin + 1, 0);
 
+        if (moveVector.y > 0 && !double_motion_ignore_y)
+            correctionVector.add(0, -(potentialPosition.yMax - tileIndicesCollisionCellOfInterest.y * TILE_HEIGHT) - 1);
+        else if (moveVector.y < 0 && !double_motion_ignore_y)
+            correctionVector.add(0, (tileIndicesCollisionCellOfInterest.y + 1) * TILE_HEIGHT - potentialPosition.yMin + 1);
+
+        Gdx.app.log("MazeGame", "position: xMin " + position.xMin + " xMax " + position.xMax + " yMin " + position.yMin + " yMax " + position.yMax);
+        Gdx.app.log("MazeGame", "potentialPosition: xMin " + potentialPosition.xMin + " xMax " + potentialPosition.xMax + " yMin " + potentialPosition.yMin + " yMax " + potentialPosition.yMax);
+        Gdx.app.log("MazeGame", "correctionVector: " + correctionVector.toString());
+        return  correctionVector;
     }
 
     private Point getTileIndex(Point pixelCoordinates){
-        int xIndex = (pixelCoordinates.x - pixelCoordinates.x % TILE_WIDTH) / TILE_WIDTH;
-        int yIndex = (pixelCoordinates.y - pixelCoordinates.y % TILE_WIDTH) / TILE_WIDTH;
+        // x<=64 0 | 65<=x<=128 1 | 129<=x<=193 2 ...
+        // examples:
+        // 64 : (64 - mode(63, 64)) / 64 = (64 - 63) / 64 ≈ 0
+        // 65 : (65 - mode(64, 64)) / 64 = (65 - 0) / 64 ≈ 1
+        // 128 : (128 - mode(127, 64)) / 64 = (128 - 63) / 64 ≈ 1
+        // 129 : (129 - mode(128, 64)) / 64 = (129 - 0) / 64 ≈ 2
+
+        int xIndex = (pixelCoordinates.x - (pixelCoordinates.x - 1) % TILE_WIDTH) / TILE_WIDTH;
+        int yIndex = (pixelCoordinates.y - (pixelCoordinates.y - 1) % TILE_WIDTH) / TILE_WIDTH;
+
         return new Point(xIndex, yIndex);
     }
 
     private Point[] getCornerPoints(Vector2 moveVector, Position playerPosition) {
-        Point[] corners = {null, null, null, null};
-
-        ArrayList<Integer> cornerIndices = new ArrayList<>();
+        // Returns the position of the corners of the position object (player) that are at the front of the movement direction (and therefore are to be checked for collisions).
+        // With single direction of movement 2, with "double" direction of movement 3 corners.
 
         /*
-            0 - 1           * 0 *
-            |   |           3   1
-            2 - 3           * 2 *
+            2 - 3
+            |   |
+            0 - 1
         */
 
+        Point[] corners = {null, null, null, null};
 
-
-
-        if (moveVector.x < 0 || moveVector.y > 0){
-            corners[0] = new Point(playerPosition.xMin, playerPosition.yMax); // topLeft
-        }
-        if (moveVector.x > 0 || moveVector.y > 0){
-            corners[1] = new Point(playerPosition.xMax, playerPosition.yMax); // topRight
-        }
         if (moveVector.x < 0 || moveVector.y < 0) {
-            corners[2] = new Point(playerPosition.xMin, playerPosition.yMin); // bottomLeft
+            corners[0] = new Point(playerPosition.xMin, playerPosition.yMin); // bottomLeft
         }
         if (moveVector.x > 0 || moveVector.y < 0) {
-            corners[3] = new Point(playerPosition.xMax, playerPosition.yMin); // bottomRight
+            corners[1] = new Point(playerPosition.xMax, playerPosition.yMin); // bottomRight
         }
-
-        Gdx.app.log("MazeGame", "topLeft" + ((corners[0] != null) ? corners[0].toString() : ""));
-        Gdx.app.log("MazeGame", "topRight" + ((corners[1] != null) ? corners[1].toString() : ""));
-        Gdx.app.log("MazeGame", "bottomLeft" + ((corners[2] != null) ? corners[2].toString() : ""));
-        Gdx.app.log("MazeGame", "bottomRight" + ((corners[3] != null) ? corners[3].toString() : ""));
+        if (moveVector.x < 0 || moveVector.y > 0){
+            corners[2] = new Point(playerPosition.xMin, playerPosition.yMax); // topLeft
+        }
+        if (moveVector.x > 0 || moveVector.y > 0){
+            corners[3] = new Point(playerPosition.xMax, playerPosition.yMax); // topRight
+        }
 
         return corners;
     }

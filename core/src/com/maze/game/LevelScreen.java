@@ -7,11 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class LevelScreen extends ScreenAdapter {
-    private OrthographicCamera camera;
     static Map currentMap;
 
+    private OrthographicCamera camera;
     private Player player;
-
     private SpriteBatch sb;
 
     public LevelScreen(String tilemapFile) {
@@ -45,7 +44,7 @@ public class LevelScreen extends ScreenAdapter {
         sb.end();
 
         // Player movement by keystroke
-        player.input(currentMap);
+        player.input();
     }
 
     @Override
