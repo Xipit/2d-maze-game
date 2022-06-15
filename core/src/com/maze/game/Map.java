@@ -73,6 +73,8 @@ public class Map {
         }
         Gdx.app.log("MazeGame", "potentialCornerPoints: " + Arrays.toString(potentialCornerPoints));
         Gdx.app.log("MazeGame", "tileIndicesCollisionCells: " + Arrays.toString(tileIndicesCollisionCells));
+        Gdx.app.log("MazeGame", "position: xMin " + position.xMin + " xMax " + position.xMax + " yMin " + position.yMin + " yMax " + position.yMax);
+        Gdx.app.log("MazeGame", "potentialPosition: xMin " + potentialPosition.xMin + " xMax " + potentialPosition.xMax + " yMin " + potentialPosition.yMin + " yMax " + potentialPosition.yMax);
 
         // Reduce the number of colliding cells to be considered for calculation to one.
         boolean double_motion_ignore_x = false, double_motion_ignore_y = false;
@@ -84,8 +86,8 @@ public class Map {
             0 - 1
         */
 
-        // triple collision (with "double" direction of movement):
-        // The enclosed cell is considered.
+        // triple collision (with "double" direction of movement)
+        // -> The enclosed cell is considered.
         if(tileIndicesCollisionCells[2] != null && tileIndicesCollisionCells[0] != null && tileIndicesCollisionCells[1] != null)
             tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[0];
         else if(tileIndicesCollisionCells[0] != null && tileIndicesCollisionCells[1] != null && tileIndicesCollisionCells[3] != null)
@@ -95,39 +97,23 @@ public class Map {
         else if(tileIndicesCollisionCells[3] != null && tileIndicesCollisionCells[2] != null && tileIndicesCollisionCells[0] != null)
             tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[2];
         else {
-            if (moveVector.x != 0 ^ moveVector.y != 0) {
-                // single or double collision with single direction of movement:
-                // The choice of cell does not matter.
-                for (Point tileIndicesCollisionCell : tileIndicesCollisionCells) {
-                    if (tileIndicesCollisionCell != null) {
-                        tileIndicesCollisionCellOfInterest = tileIndicesCollisionCell;
-                        break;
-                    }
+            // single or double collision with "single" or "double" direction of movement
+            // -> The choice of cell does not matter.
+            for (Point tileIndicesCollisionCell : tileIndicesCollisionCells) {
+                if (tileIndicesCollisionCell != null) {
+                    tileIndicesCollisionCellOfInterest = tileIndicesCollisionCell;
+                    break;
                 }
             }
-            else {
-                // single or double collision with "double" direction of movement:
-                // Selection of the cell of the colliding corner that is further in the direction of movement.
-                if (moveVector.x < 0 && moveVector.y < 0)
-                    tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[0];
-                else if (moveVector.x > 0 && moveVector.y < 0)
-                    tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[1];
-                else if (moveVector.x < 0 && moveVector.y > 0)
-                    tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[2];
-                else if (moveVector.x > 0 && moveVector.y > 0)
-                    tileIndicesCollisionCellOfInterest = tileIndicesCollisionCells[3];
-
-                Gdx.app.log("MazeGame", "double collision");
+            // single or double collision with "double" direction of movement
+            if (tileIndicesCollisionCellOfInterest != null && moveVector.x != 0 && moveVector.y != 0) {
                 // double collision
-                if (tileIndicesCollisionCellOfInterest == null) {}
-                else if ((tileIndicesCollisionCells[0] != null && tileIndicesCollisionCells[2] != null) || (tileIndicesCollisionCells[1] != null && tileIndicesCollisionCells[3] != null))
+                if ((tileIndicesCollisionCells[0] != null && tileIndicesCollisionCells[2] != null) || (tileIndicesCollisionCells[1] != null && tileIndicesCollisionCells[3] != null))
                     double_motion_ignore_y = true;
                 else if ((tileIndicesCollisionCells[0] != null && tileIndicesCollisionCells[1] != null) || (tileIndicesCollisionCells[2] != null && tileIndicesCollisionCells[3] != null))
                     double_motion_ignore_x = true;
                 // single collision
                 else {
-                    Gdx.app.log("MazeGame", "single collision");
-
                     int delta_x, delta_y;
                     if (moveVector.x > 0)
                         delta_x = potentialPosition.xMax - tileIndicesCollisionCellOfInterest.x * TILE_WIDTH + 1;
@@ -138,13 +124,10 @@ public class Map {
 
                     // delta(x) > delta(y) -> ignore(x) | delta(y) >= delta(x) -> ignore(y)
                     if (delta_x > delta_y) {
-                        Gdx.app.log("MazeGame", "double_motion_ignore_x");
                         double_motion_ignore_x = true;}
                     else {
-                        Gdx.app.log("MazeGame", "double_motion_ignore_y");
                         double_motion_ignore_y = true;
                     }
-                    // todo refine
                 }
             }
         }
@@ -154,17 +137,15 @@ public class Map {
         if(tileIndicesCollisionCellOfInterest == null) return correctionVector;
 
         if(moveVector.x > 0 && !double_motion_ignore_x)
-            correctionVector.add(-(potentialPosition.xMax - tileIndicesCollisionCellOfInterest.x * TILE_WIDTH) - 1, 0);
+            correctionVector.add(-(potentialPosition.xMax - tileIndicesCollisionCellOfInterest.x * TILE_WIDTH), 0);
         else if(moveVector.x < 0 && !double_motion_ignore_x)
             correctionVector.add((tileIndicesCollisionCellOfInterest.x + 1) * TILE_WIDTH - potentialPosition.xMin + 1, 0);
 
         if (moveVector.y > 0 && !double_motion_ignore_y)
-            correctionVector.add(0, -(potentialPosition.yMax - tileIndicesCollisionCellOfInterest.y * TILE_HEIGHT) - 1);
+            correctionVector.add(0, -(potentialPosition.yMax - tileIndicesCollisionCellOfInterest.y * TILE_HEIGHT));
         else if (moveVector.y < 0 && !double_motion_ignore_y)
             correctionVector.add(0, (tileIndicesCollisionCellOfInterest.y + 1) * TILE_HEIGHT - potentialPosition.yMin + 1);
 
-        Gdx.app.log("MazeGame", "position: xMin " + position.xMin + " xMax " + position.xMax + " yMin " + position.yMin + " yMax " + position.yMax);
-        Gdx.app.log("MazeGame", "potentialPosition: xMin " + potentialPosition.xMin + " xMax " + potentialPosition.xMax + " yMin " + potentialPosition.yMin + " yMax " + potentialPosition.yMax);
         Gdx.app.log("MazeGame", "correctionVector: " + correctionVector.toString());
         return  correctionVector;
     }
@@ -185,7 +166,7 @@ public class Map {
 
     private Point[] getCornerPoints(Vector2 moveVector, Position playerPosition) {
         // Returns the position of the corners of the position object (player) that are at the front of the movement direction (and therefore are to be checked for collisions).
-        // With single direction of movement 2, with "double" direction of movement 3 corners.
+        // With "single" direction of movement 2, with "double" direction of movement 3 corners.
 
         /*
             2 - 3
