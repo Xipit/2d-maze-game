@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Map {
     static int WIDTH, HEIGHT;
@@ -53,117 +54,122 @@ public class Map {
         |   |
         2 - 3
     */
-    public Vector2 accountForCollision(Vector2 moveVector, PlayerPosition previousPlayerPosition) {
+    Point[] cornerPositions = {null, null, null, null};
+    Tile[] cornerTiles = {null, null, null, null};
 
-        PlayerPosition playerPosition = previousPlayerPosition.calculateNewPosition(moveVector);
-
-        Point[] cornerPositions = calculateCornerPosition(moveVector, playerPosition);
-
-        Tile[] cornerTiles = new Tile[4];
+    public void calculateCornerData(Vector2 directionVector, PlayerPosition playerPosition) {
+        cornerPositions = calculateCornerPositions(directionVector, playerPosition);
 
         for (int i = 0; i < Corner.values().length; i ++) {
             if(cornerPositions[i] == null) continue;
-            
-            Point cornerPointTileIndex = Tile.getIndex(cornerPositions[i], TILE_WIDTH, TILE_HEIGHT);
 
-            cornerTiles[i].index = cornerPointTileIndex;
-            cornerTiles[i].tile = this.tileLayer.getCell(cornerPointTileIndex.x, cornerPointTileIndex.y).getTile();
-            cornerTiles[i].properties = cornerTiles[i].tile.getProperties().getKeys();
+            Point cornerTileIndex = Tile.getIndex(cornerPositions[i], TILE_WIDTH, TILE_HEIGHT);
+
+            Tile cornerTile = new Tile(
+                cornerTileIndex,
+                this.tileLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile().getProperties(),
+                this.tileLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile());
+
+            cornerTiles[i] = cornerTile;
+        }
+    }
+
+    private Vector2 calculateMoveCorrectionVector(PlayerPosition playPosition, int cornerIndex, boolean considerX, boolean considerY) {
+        Point edgeOfTile = cornerTiles[cornerIndex].getPosition(TILE_WIDTH, TILE_HEIGHT); // bottomLeft of Tile
+
+        if(cornerIndex == Corner.topLeft.ordinal()){
+            edgeOfTile.x += TILE_WIDTH;
+            edgeOfTile.y += -1;
+        }
+        else if(cornerIndex == Corner.topRight.ordinal()){
+            edgeOfTile.x += -1;
+            edgeOfTile.y += -1;
+        }
+        else if(cornerIndex == Corner.bottomLeft.ordinal()){
+            edgeOfTile.x += TILE_WIDTH;
+            edgeOfTile.y += TILE_HEIGHT;
+        }
+        else if(cornerIndex == Corner.bottomRight.ordinal()){
+            edgeOfTile.x += -1;
+            edgeOfTile.y += TILE_HEIGHT;
         }
 
-        ArrayList<Vector2> correctionVectors = new ArrayList<>();
-        for(int i = 0; i < Corner.values().length; i ++){
-            if(cornerTiles[i].tile == null || cornerTiles[i].tile == null){
-                continue;
-            }
-
-            while(cornerTiles[i].properties.hasNext()) {
-                String property = cornerTiles[i].properties.next().toString();
-
-                if(property == "wall_collision") {
+        Gdx.app.log("MAZEGAME", "cornerPositions[" + cornerIndex + "] - " + cornerPositions[cornerIndex]);
+        Gdx.app.log("MAZEGAME", "cornerTiles[" + cornerIndex + "] - " + cornerTiles[cornerIndex].index);
 
 
-                }
-            }
+        return new Vector2(
+                considerX ? (edgeOfTile.x - cornerPositions[cornerIndex].x) : 0 ,
+                considerY ? (edgeOfTile.y - cornerPositions[cornerIndex].y) : 0);
+    }
 
+    public Vector2 getMoveCorrectionVector(Vector2 moveVector, PlayerPosition previousPlayerPosition) {
+        cornerPositions = new Point[]{null, null, null, null};
+        cornerTiles = new Tile[]{null, null, null, null};
 
-            }
-            if (potentialCollisionCells[i].getTile().getProperties().containsKey("wall_collision")){
+        PlayerPosition playerPosition = previousPlayerPosition.calculateNewPosition(moveVector);
 
-                // info
-                // - corner Position in pixels
-                // - which cornerPosition it is -> index
-                // - tile Position as index & in pixels
-                // - moveVector
-                // - previous and new Position
-
-                // need to know per tile from which direction we are entering
-                // playerPosition center maybe?
-
-                Point tilePosition = new Point(cornerPointTileIndices[i].x * TILE_WIDTH, cornerPointTileIndices[i].y * TILE_HEIGHT); // bottomLeft of Tile
-                //adjust tilePosition to match the relevant corner
-                tilePosition.x += (i == 0 || i == 2) ? (TILE_WIDTH - 1): 0; // -1 so max is inclusive
-                tilePosition.y += (i == 2 || i == 3) ? (TILE_HEIGHT - 1): 0;
-
-                Gdx.app.log("MazeGame", "tileIndex: " + i + " -> " + cornerPointTileIndices[i].toString() + ", " + tilePosition.toString());
-
-
-                Vector2 correctionVector = new Vector2((tilePosition.x - cornerPositions[i].x) , (tilePosition.y - cornerPositions[i].y));
-                //Math.cornerPoints[i].x
-                correctionVectors.add(correctionVector); // pushes player into available space
-            }
-        }
-
+        calculateCornerData(moveVector, playerPosition);
 
         /*
             0 - 1
             |   |
             2 - 3
         */
-        // check if 2 X or Y values are the same
-        Boolean considerX = true, considerY = true;
-
-
-        if(cornerPointRelevantAndCollides(0, cornerPoints, potentialCollisionCells) && cornerPointRelevantAndCollides(1, cornerPoints, potentialCollisionCells)
-                && cornerPoints[0].y == cornerPoints[1].y
-                || cornerPointRelevantAndCollides(2, cornerPoints, potentialCollisionCells) && cornerPointRelevantAndCollides(3, cornerPoints, potentialCollisionCells)
-                && cornerPoints[2].y == cornerPoints[3].y){
+        // check if 2 X or Y tiles are relevant
+        boolean considerX = true, considerY = true;
+        if(isTileRelevantForCollision(cornerTiles[Corner.topLeft.ordinal()]) && isTileRelevantForCollision(cornerTiles[Corner.topRight.ordinal()])
+          || isTileRelevantForCollision(cornerTiles[Corner.bottomLeft.ordinal()]) && isTileRelevantForCollision(cornerTiles[Corner.bottomRight.ordinal()])) {
             considerX = false;
         }
-        if((cornerPointRelevantAndCollides(0, cornerPoints, potentialCollisionCells) && cornerPointRelevantAndCollides(2, cornerPoints, potentialCollisionCells)
-                && cornerPoints[0].x == cornerPoints[2].x)
-                || (cornerPointRelevantAndCollides(1, cornerPoints, potentialCollisionCells) && cornerPointRelevantAndCollides(3, cornerPoints, potentialCollisionCells)
-                && cornerPoints[1].x == cornerPoints[3].x)){
+        if(isTileRelevantForCollision(cornerTiles[Corner.topLeft.ordinal()]) && isTileRelevantForCollision(cornerTiles[Corner.bottomLeft.ordinal()])
+                || isTileRelevantForCollision(cornerTiles[Corner.topRight.ordinal()]) && isTileRelevantForCollision(cornerTiles[Corner.bottomRight.ordinal()])) {
             considerY = false;
         }
-        // doesnt work for diagonal movement
+        if(!considerX && !considerY){
+            // diagonal movement
+            considerX = true;
+            considerY = true;
+        }
 
-        Gdx.app.log("MazeGame", "considerX " + considerX.toString());
-        Gdx.app.log("MazeGame", "considerY " + considerY.toString());
+        // when i move right and hit something on the right --> dont consider Y
+        // when i move up and hit something up      --> dont consider X
 
+        Gdx.app.log("MAZEGAME", "considerX: " + considerX);
+        Gdx.app.log("MAZEGAME", "considerY: " + considerY);
 
+        ArrayList<Vector2> correctionVectors = new ArrayList<>();
+        for(int i = 0; i < Corner.values().length; i ++){
+            if(cornerTiles[i] == null || cornerTiles[i].tile == null){
+                continue;
+            }
+
+            if(cornerTiles[i].properties.containsKey("wall_collision")) {
+                Vector2 v = calculateMoveCorrectionVector(playerPosition, i, considerX, considerY);
+
+                Gdx.app.log("MAZEGAME", "correction [" + i + "]: " + v);
+
+                correctionVectors.add(v);
+            }
+        }
 
         Vector2 accumulatedCorrectionVector = new Vector2(0, 0);
         for (Vector2 correctionVector:
              correctionVectors) {
             Vector2 correction = new Vector2(0,0);
-            correction.x = considerX ? (Math.abs(accumulatedCorrectionVector.x) > Math.abs(correctionVector.x) ? accumulatedCorrectionVector.x : correctionVector.x) : 0;
-            correction.y = considerY ? (Math.abs(accumulatedCorrectionVector.y) > Math.abs(correctionVector.y) ? accumulatedCorrectionVector.y : correctionVector.y) : 0;
+            correction.x = Math.abs(accumulatedCorrectionVector.x) > Math.abs(correctionVector.x) ? accumulatedCorrectionVector.x : correctionVector.x;
+            correction.y = Math.abs(accumulatedCorrectionVector.y) > Math.abs(correctionVector.y) ? accumulatedCorrectionVector.y : correctionVector.y;
 
             accumulatedCorrectionVector = correction;
-            Gdx.app.log("MazeGame", "correctionVector: " + correctionVector.toString());
         }
 
-
-
-        Gdx.app.log("MazeGame", "correction: " + accumulatedCorrectionVector.toString());
         return accumulatedCorrectionVector;
 
     }
 
 
 
-    private Point[] calculateCornerPosition (Vector2 moveVector, PlayerPosition playerPosition) {
+    private Point[] calculateCornerPositions(Vector2 moveVector, PlayerPosition playerPosition) {
         Point[] cornerPositions = {null, null, null, null};
 
         /*
@@ -205,10 +211,9 @@ public class Map {
        |   |
        2 - 3
    */
-    Boolean cornerPointRelevantAndCollides(int i, Point[] cornerPoints, TiledMapTileLayer.Cell[] potentialCollisionCells){
-        if(cornerPoints[i] != null && potentialCollisionCells[i].getTile().getProperties().containsKey("wall_collision")){
-            return true;
-        }
-        return false;
+    private Boolean isTileRelevantForCollision(Tile cornerTile){
+        return cornerTile != null ;
+        //&& cornerTile.properties.containsKey("wall_collision")
     }
+
 }

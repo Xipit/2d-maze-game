@@ -1,5 +1,6 @@
 package com.maze.game;
 
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
@@ -8,10 +9,10 @@ import java.util.Iterator;
 
 public class Tile {
     public Point index;
-    public Iterator properties;
+    public MapProperties properties;
     public TiledMapTile tile;
 
-    public Tile(Point index, Iterator properties, TiledMapTile tile){
+    public Tile(Point index, MapProperties properties, TiledMapTile tile){
         this.index = index;
         this.properties = properties;
         this.tile = tile;
