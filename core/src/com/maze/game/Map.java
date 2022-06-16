@@ -107,21 +107,24 @@ public class Map {
             }
             // single or double collision with "double" direction of movement
             if (tileIndicesCollisionCellOfInterest != null && moveVector.x != 0 && moveVector.y != 0) {
-                // double collision
+                // double collision same side
                 if ((tileIndicesCollisionCells[0] != null && tileIndicesCollisionCells[2] != null) || (tileIndicesCollisionCells[1] != null && tileIndicesCollisionCells[3] != null))
                     double_motion_ignore_y = true;
                 else if ((tileIndicesCollisionCells[0] != null && tileIndicesCollisionCells[1] != null) || (tileIndicesCollisionCells[2] != null && tileIndicesCollisionCells[3] != null))
                     double_motion_ignore_x = true;
+                // double collision crosswise (corner-like situation with diagonal collision, but not a complete wall triangle)
+                // The choice of cell does play a role here: an unreachable cell, which is not actually a collision, makes a small manipulation necessary so that the same calculation can be applied.
+                else if (tileIndicesCollisionCells[0] != null && tileIndicesCollisionCells[3] != null) {
+                    tileIndicesCollisionCellOfInterest = (moveVector.x > 0 && moveVector.y < 0) ? new Point (tileIndicesCollisionCells[0].x + 1, tileIndicesCollisionCells[0].y) : new Point (tileIndicesCollisionCells[0].x, tileIndicesCollisionCells[0].y + 1);
+                }
+                else if (tileIndicesCollisionCells[1] != null && tileIndicesCollisionCells[2] != null) {
+                    tileIndicesCollisionCellOfInterest = (moveVector.x > 0 && moveVector.y > 0) ? new Point (tileIndicesCollisionCells[1].x, tileIndicesCollisionCells[1].y + 1) : new Point (tileIndicesCollisionCells[1].x - 1, tileIndicesCollisionCells[1].y);
+                }
                 // single collision
                 else {
                     int delta_x, delta_y;
-                    if (moveVector.x > 0)
-                        delta_x = potentialPosition.xMax - tileIndicesCollisionCellOfInterest.x * TILE_WIDTH + 1;
-                    else delta_x = (tileIndicesCollisionCellOfInterest.x + 1) * TILE_WIDTH - potentialPosition.xMin + 1;
-                    if (moveVector.y > 0)
-                        delta_y = potentialPosition.yMax - tileIndicesCollisionCellOfInterest.y * TILE_HEIGHT +  1;
-                    else delta_y = (tileIndicesCollisionCellOfInterest.y + 1) * TILE_HEIGHT - potentialPosition.yMin + 1;
-
+                    delta_x = (moveVector.x > 0) ? potentialPosition.xMax - tileIndicesCollisionCellOfInterest.x * TILE_WIDTH + 1 : (tileIndicesCollisionCellOfInterest.x + 1) * TILE_WIDTH - potentialPosition.xMin + 1;
+                    delta_y = (moveVector.y > 0) ? potentialPosition.yMax - tileIndicesCollisionCellOfInterest.y * TILE_HEIGHT +  1 : (tileIndicesCollisionCellOfInterest.y + 1) * TILE_HEIGHT - potentialPosition.yMin + 1;
                     // delta(x) > delta(y) -> ignore(x) | delta(y) >= delta(x) -> ignore(y)
                     if (delta_x > delta_y) {
                         double_motion_ignore_x = true;}
