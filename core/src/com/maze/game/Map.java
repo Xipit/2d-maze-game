@@ -43,44 +43,53 @@ public class Map {
         this.renderer.dispose();
     }
 
+    public enum Corner{
+        topLeft, topRight, bottomLeft, bottomRight
+    }
+
     /*
         Corner Indices:
         0 - 1
         |   |
         2 - 3
     */
-    public Vector2 accountForCollision(Vector2 moveVector, Position previousPosition) {
-        Gdx.app.log("MazeGame", "xMin  " + previousPosition.xMin);
-        Gdx.app.log("MazeGame", "xMax  " + previousPosition.xMax);
-        Gdx.app.log("MazeGame", "yMin  " + previousPosition.yMin);
-        Gdx.app.log("MazeGame", "yMax  " + previousPosition.yMax);
-        Position position = previousPosition.calculateNewPosition(moveVector);
-        Gdx.app.log("MazeGame", "ä xMin  " + position.xMin);
-        Gdx.app.log("MazeGame", "ä xMax  " + position.xMax);
-        Gdx.app.log("MazeGame", "ä yMin  " + position.yMin);
-        Gdx.app.log("MazeGame", "ä yMax  " + position.yMax);
-        Point[] cornerPoints = getCornerPoints(moveVector, position);
+    public Vector2 accountForCollision(Vector2 moveVector, PlayerPosition previousPlayerPosition) {
 
-        TiledMapTileLayer.Cell[] potentialCollisionCells = {null, null, null, null};
-        Point[] cornerPointTileIndices = {null, null, null, null};
+        PlayerPosition playerPosition = previousPlayerPosition.calculateNewPosition(moveVector);
 
-        for (int i = 0; i < cornerPoints.length; i ++) {
-            if(cornerPoints[i] == null) continue;
+        Point[] cornerPositions = calculateCornerPosition(moveVector, playerPosition);
+
+        Tile[] cornerTiles = new Tile[4];
+
+        for (int i = 0; i < Corner.values().length; i ++) {
+            if(cornerPositions[i] == null) continue;
             
-            Point cornerPointTileIndex = getTileIndex(cornerPoints[i]);
-            cornerPointTileIndices[i] = cornerPointTileIndex;
-            potentialCollisionCells[i] = (this.tileLayer.getCell(cornerPointTileIndex.x, cornerPointTileIndex.y));
+            Point cornerPointTileIndex = Tile.getIndex(cornerPositions[i], TILE_WIDTH, TILE_HEIGHT);
+
+            cornerTiles[i].index = cornerPointTileIndex;
+            cornerTiles[i].tile = this.tileLayer.getCell(cornerPointTileIndex.x, cornerPointTileIndex.y).getTile();
+            cornerTiles[i].properties = cornerTiles[i].tile.getProperties().getKeys();
         }
 
         ArrayList<Vector2> correctionVectors = new ArrayList<>();
-
-
-
-        for(int i = 0; i < potentialCollisionCells.length; i ++){
-            if(potentialCollisionCells[i] == null || potentialCollisionCells[i].getTile() == null){
+        for(int i = 0; i < Corner.values().length; i ++){
+            if(cornerTiles[i].tile == null || cornerTiles[i].tile == null){
                 continue;
             }
+
+            while(cornerTiles[i].properties.hasNext()) {
+                String property = cornerTiles[i].properties.next().toString();
+
+                if(property == "wall_collision") {
+
+
+                }
+            }
+
+
+            }
             if (potentialCollisionCells[i].getTile().getProperties().containsKey("wall_collision")){
+
                 // info
                 // - corner Position in pixels
                 // - which cornerPosition it is -> index
@@ -93,14 +102,14 @@ public class Map {
 
                 Point tilePosition = new Point(cornerPointTileIndices[i].x * TILE_WIDTH, cornerPointTileIndices[i].y * TILE_HEIGHT); // bottomLeft of Tile
                 //adjust tilePosition to match the relevant corner
-                tilePosition.x += (i == 0 || i == 2) ? (TILE_WIDTH - 1): 0;
+                tilePosition.x += (i == 0 || i == 2) ? (TILE_WIDTH - 1): 0; // -1 so max is inclusive
                 tilePosition.y += (i == 2 || i == 3) ? (TILE_HEIGHT - 1): 0;
 
                 Gdx.app.log("MazeGame", "tileIndex: " + i + " -> " + cornerPointTileIndices[i].toString() + ", " + tilePosition.toString());
 
 
-                Vector2 correctionVector = new Vector2((tilePosition.x - cornerPoints[i].x) , (tilePosition.y - cornerPoints[i].y));
-
+                Vector2 correctionVector = new Vector2((tilePosition.x - cornerPositions[i].x) , (tilePosition.y - cornerPositions[i].y));
+                //Math.cornerPoints[i].x
                 correctionVectors.add(correctionVector); // pushes player into available space
             }
         }
@@ -152,16 +161,10 @@ public class Map {
 
     }
 
-    private Point getTileIndex(Point pixelCoordinates){
-        int xIndex = (pixelCoordinates.x - pixelCoordinates.x % TILE_WIDTH) / TILE_WIDTH;
-        int yIndex = (pixelCoordinates.y - pixelCoordinates.y % TILE_WIDTH) / TILE_WIDTH;
-        return new Point(xIndex, yIndex);
-    }
 
-    private Point[] getCornerPoints(Vector2 moveVector, Position playerPosition) {
-        Point[] corners = {null, null, null, null};
 
-        ArrayList<Integer> cornerIndices = new ArrayList<>();
+    private Point[] calculateCornerPosition (Vector2 moveVector, PlayerPosition playerPosition) {
+        Point[] cornerPositions = {null, null, null, null};
 
         /*
             0 - 1
@@ -169,24 +172,17 @@ public class Map {
             2 - 3
         */
 
-/*
-        corners[0] = new Point(playerPosition.xMin, playerPosition.yMax); // topLeft
-        corners[1] = new Point(playerPosition.xMax, playerPosition.yMax); // topRight
-        corners[2] = new Point(playerPosition.xMin, playerPosition.yMin); // bottomLeft
-        corners[3] = new Point(playerPosition.xMax, playerPosition.yMin); // bottomRight
-*/
-
         if (moveVector.x < 0 || moveVector.y > 0){
-            corners[0] = new Point(playerPosition.xMin, playerPosition.yMax); // topLeft
+            cornerPositions[Corner.topLeft.ordinal()]       = new Point(playerPosition.xMin, playerPosition.yMax); // topLeft
         }
         if (moveVector.x > 0 || moveVector.y > 0){
-            corners[1] = new Point(playerPosition.xMax, playerPosition.yMax); // topRight
+            cornerPositions[Corner.topRight.ordinal()]      = new Point(playerPosition.xMax, playerPosition.yMax); // topRight
         }
         if (moveVector.x < 0 || moveVector.y < 0) {
-            corners[2] = new Point(playerPosition.xMin, playerPosition.yMin); // bottomLeft
+            cornerPositions[Corner.bottomLeft.ordinal()]    = new Point(playerPosition.xMin, playerPosition.yMin); // bottomLeft
         }
         if (moveVector.x > 0 || moveVector.y < 0) {
-            corners[3] = new Point(playerPosition.xMax, playerPosition.yMin); // bottomRight
+            cornerPositions[Corner.bottomRight.ordinal()]   = new Point(playerPosition.xMax, playerPosition.yMin); // bottomRight
         }
 
         Gdx.app.log("MazeGame", "xMin  " + playerPosition.xMin);
@@ -196,12 +192,12 @@ public class Map {
 
 
 
-        Gdx.app.log("MazeGame", "topLeft" + ((corners[0] != null) ? corners[0].toString() : ""));
-        Gdx.app.log("MazeGame", "topRight" + ((corners[1] != null) ? corners[1].toString() : ""));
-        Gdx.app.log("MazeGame", "bottomLeft" + ((corners[2] != null) ? corners[2].toString() : ""));
-        Gdx.app.log("MazeGame", "bottomRight" + ((corners[3] != null) ? corners[3].toString() : ""));
+        Gdx.app.log("MazeGame", "topLeft" + ((cornerPositions[0] != null) ? cornerPositions[0].toString() : ""));
+        Gdx.app.log("MazeGame", "topRight" + ((cornerPositions[1] != null) ? cornerPositions[1].toString() : ""));
+        Gdx.app.log("MazeGame", "bottomLeft" + ((cornerPositions[2] != null) ? cornerPositions[2].toString() : ""));
+        Gdx.app.log("MazeGame", "bottomRight" + ((cornerPositions[3] != null) ? cornerPositions[3].toString() : ""));
 
-        return corners;
+        return cornerPositions;
     }
 
     /*

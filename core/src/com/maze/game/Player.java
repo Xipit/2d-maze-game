@@ -16,14 +16,14 @@ public class Player {
     // todo INFO, clean png
     private int width = 50;
     private int height = 56;
-    public Position position;
+    public PlayerPosition position;
 
     public Player(){
         //load images Katze_bearbeitet.png
         texture = new Texture(Gdx.files.internal("prototyp_cat.png"));
 
         // create a Rectangle
-        this.position = new Position(800 / 2 - width / 2, 64, width, height);
+        this.position = new PlayerPosition(800 / 2 - width / 2, 64, width, height);
         shape = new Rectangle();
         shape.x = this.position.xMin;
         shape.y = this.position.yMin;
@@ -35,16 +35,16 @@ public class Player {
         Vector2 vector = new Vector2(0, 0);
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)){
-            vector.x = -1;
+            vector.x += -1;
         }
-        else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)){
-            vector.x = +1;
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)){
+            vector.x += +1;
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)){
-            vector.y = -1;
+            vector.y += -1;
         }
-        else if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)){
-            vector.y = +1;
+        if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)){
+            vector.y += +1;
         }
 
         vector.nor();  //normalize vector length = 1
@@ -84,7 +84,6 @@ public class Player {
         Gdx.app.log("MazeGame", "corrected moveVector: " + correctedMoveVector.toString());
 
         this.position = position.update(correctedMoveVector);
-    // TODO Position does net get updated correctly :(
 
         shape.x += correctedMoveVector.x;
         shape.y += correctedMoveVector.y;
