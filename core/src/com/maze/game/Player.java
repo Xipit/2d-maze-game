@@ -53,8 +53,7 @@ public class Player {
 
         moveVector.scl(deltaTime);
         // the movement vector should be integer, Position holds only integer
-        // todo : maybe not moving with every frame, but n times per second, independent of the fps and more accurate than to round
-        moveVector = new Vector2(Math.round(moveVector.x), Math.round(moveVector.y));
+        moveVector = new Vector2((float) Math.ceil(moveVector.x), (float) Math.ceil(moveVector.y));
 
         Gdx.app.log("MazeGame", "uncorrected moveVector: " + moveVector.toString());
 
