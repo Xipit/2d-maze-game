@@ -16,6 +16,8 @@ public class Map {
     static int WIDTH_PIXEL, HEIGHT_PIXEL;
     static int TILE_WIDTH, TILE_HEIGHT;
 
+    static String COL_KEY = "wall_collision";
+
     private final TiledMap map;
     private final OrthogonalTiledMapRenderer renderer;
     private final TiledMapTileLayer tileLayer;
@@ -55,10 +57,38 @@ public class Map {
         2 - 3
     */
     Point[] cornerPositions = {null, null, null, null};
+    Point[] previousCornerPositions = {null, null, null, null};
     Tile[] cornerTiles = {null, null, null, null};
+    Boolean2[] considerCornerPositions = {null, null, null, null};
 
-    public void calculateCornerData(Vector2 directionVector, PlayerPosition playerPosition) {
+    private void resetData(){
+        cornerPositions = new Point[]{null, null, null, null};
+        previousCornerPositions = new Point[]{null, null, null, null};
+        cornerTiles = new Tile[]{null, null, null, null};
+        considerCornerPositions = new Boolean2[]{null, null, null, null};
+    }
+
+    private Boolean2 calculateConsideration(int cornerIndex, Vector2 directionVector, Point previousCornerPosition, Point edgeOfTile){
+        Gdx.app.log("MAZEGAME", "directionVector[" + cornerIndex + "] - " + directionVector);
+        Gdx.app.log("MAZEGAME", "previousCornerPosition[" + cornerIndex + "] - " + previousCornerPosition);
+        Gdx.app.log("MAZEGAME", "edgeOfTile[" + cornerIndex + "] - " + edgeOfTile);
+
+        return new Boolean2(
+            compareUsingDirectionVector((int)directionVector.x, previousCornerPosition.x, edgeOfTile.x),
+            compareUsingDirectionVector((int)directionVector.y, previousCornerPosition.y, edgeOfTile.y)
+        );
+    }
+
+    private boolean compareUsingDirectionVector(int decider, int leftHandInt, int rightHandInt){
+        if(decider == 0)    return false ;
+        if(decider > 0)     return leftHandInt <= rightHandInt;
+        if(decider < 0)     return leftHandInt >= rightHandInt;
+        return false;
+    }
+
+    public void calculateCornerData(Vector2 directionVector, PlayerPosition playerPosition, PlayerPosition previousPlayerPosition) {
         cornerPositions = calculateCornerPositions(directionVector, playerPosition);
+        previousCornerPositions = calculateCornerPositions(directionVector, previousPlayerPosition);
 
         for (int i = 0; i < Corner.values().length; i ++) {
             if(cornerPositions[i] == null) continue;
@@ -74,8 +104,8 @@ public class Map {
         }
     }
 
-    private Vector2 calculateMoveCorrectionVector(PlayerPosition playPosition, int cornerIndex, boolean considerX, boolean considerY) {
-        Point edgeOfTile = cornerTiles[cornerIndex].getPosition(TILE_WIDTH, TILE_HEIGHT); // bottomLeft of Tile
+    private Point getEdgeOfTile(int cornerIndex, Point tilePosition){
+        Point edgeOfTile = tilePosition; // bottomLeft of Tile
 
         if(cornerIndex == Corner.topLeft.ordinal()){
             edgeOfTile.x += TILE_WIDTH;
@@ -94,22 +124,29 @@ public class Map {
             edgeOfTile.y += TILE_HEIGHT;
         }
 
+        return edgeOfTile;
+    }
+
+    private Vector2 calculateMoveCorrectionVector(Vector2 directionVector, int cornerIndex, boolean considerX, boolean considerY) {
+        Point edgeOfTile = getEdgeOfTile(cornerIndex, cornerTiles[cornerIndex].getPosition(TILE_WIDTH, TILE_HEIGHT));
+
+        Boolean2 cornerConsideration = calculateConsideration(cornerIndex, directionVector, previousCornerPositions[cornerIndex], edgeOfTile);
+
         Gdx.app.log("MAZEGAME", "cornerPositions[" + cornerIndex + "] - " + cornerPositions[cornerIndex]);
         Gdx.app.log("MAZEGAME", "cornerTiles[" + cornerIndex + "] - " + cornerTiles[cornerIndex].index);
-
+        Gdx.app.log("MAZEGAME", "cornerCosnideration[" + cornerIndex + "] - " + cornerConsideration.x + ":" + cornerConsideration.y);
 
         return new Vector2(
-                considerX ? (edgeOfTile.x - cornerPositions[cornerIndex].x) : 0 ,
-                considerY ? (edgeOfTile.y - cornerPositions[cornerIndex].y) : 0);
+                cornerConsideration.x ? (edgeOfTile.x - cornerPositions[cornerIndex].x) : 0 ,
+                cornerConsideration.y ? (edgeOfTile.y - cornerPositions[cornerIndex].y) : 0);
     }
 
     public Vector2 getMoveCorrectionVector(Vector2 moveVector, PlayerPosition previousPlayerPosition) {
-        cornerPositions = new Point[]{null, null, null, null};
-        cornerTiles = new Tile[]{null, null, null, null};
+        resetData();
 
         PlayerPosition playerPosition = previousPlayerPosition.calculateNewPosition(moveVector);
 
-        calculateCornerData(moveVector, playerPosition);
+        calculateCornerData(moveVector, playerPosition, previousPlayerPosition);
 
         /*
             0 - 1
@@ -145,7 +182,7 @@ public class Map {
             }
 
             if(cornerTiles[i].properties.containsKey("wall_collision")) {
-                Vector2 v = calculateMoveCorrectionVector(playerPosition, i, considerX, considerY);
+                Vector2 v = calculateMoveCorrectionVector(moveVector, i, considerX, considerY);
 
                 Gdx.app.log("MAZEGAME", "correction [" + i + "]: " + v);
 
@@ -212,8 +249,7 @@ public class Map {
        2 - 3
    */
     private Boolean isTileRelevantForCollision(Tile cornerTile){
-        return cornerTile != null ;
-        //&& cornerTile.properties.containsKey("wall_collision")
+        return cornerTile != null && cornerTile.properties.containsKey("wall_collision");
     }
 
 }

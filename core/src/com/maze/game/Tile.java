@@ -27,4 +27,8 @@ public class Tile {
         int yIndex = (pixelCoordinates.y - pixelCoordinates.y % tileWidth) / tileWidth;
         return new Point(xIndex, yIndex);
     }
+
+    public static boolean containsKey(Tile tile, String key){
+        return tile != null && tile.properties.containsKey(key);
+    }
 }
