@@ -31,10 +31,13 @@ public class LevelScreen extends ScreenAdapter {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-        camera.update();
+        // Player movement by keystroke
+        player.input(currentMap);
 
         // todo Zentriere den Player, es sei denn, der Abstand zu dem Rand ist nicht groß genug oder Umgebung art render?
         camera.position.set((float) player.position.getCenter().x, (float)player.position.getCenter().y, 0);
+        camera.update();
+
         currentMap.render(camera);
         // erste Frame(s) nicht position gewechselt
         sb.setProjectionMatrix(camera.combined);
@@ -44,8 +47,7 @@ public class LevelScreen extends ScreenAdapter {
         sb.draw(player.texture, player.shape.x, player.shape.y);
         sb.end();
 
-        // Player movement by keystroke
-        player.input(currentMap);
+
     }
 
     @Override
