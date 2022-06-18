@@ -1,31 +1,27 @@
 package com.maze.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
-public class MazeGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
+public class MazeGame extends Game {
+	public static MazeGame instance;
+	public final AssetManager assetManager = new AssetManager();
+
+	public MazeGame() {
+		MazeGame.instance = this;
+	}
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-	}
+		// Lade assets mit
+		MazeGame.instance.assetManager.setLoader(TiledMap.class, new TmxMapLoader());
+		MazeGame.instance.assetManager.load("prototyp_tilemap_64.tmx", TiledMap.class);
 
-	@Override
-	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
+		MazeGame.instance.assetManager.load("prototyp_cat.png", Texture.class);
+
+		MazeGame.instance.assetManager.finishLoading();
+		setScreen(new StartMenuScreen());
 	}
 }
