@@ -39,6 +39,6 @@ public class PlayerPosition {
     }
 
     public Point getCenter(){
-        return new Point((int)(xMin + (0.5 * (xMax - xMin))), (int)(yMin + (0.5 * (yMax - yMin))));
+        return new Point((int)(this.xMin + 0.5 * (this.xMax - this.xMin)), (int)(this.yMin + 0.5 * (this.yMax - this.yMin)));
     }
 }

@@ -1,6 +1,5 @@
 package com.maze.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -21,9 +20,9 @@ public class Map {
     private final OrthogonalTiledMapRenderer renderer;
     private final TiledMapTileLayer tileLayer;
 
-    public Map(String fileName, Float unitScale) {
         this.map = MazeGame.instance.assetManager.get(fileName, TiledMap.class);
-        this.renderer = new OrthogonalTiledMapRenderer(this.map, unitScale);
+    public Map(String fileName) {
+        this.renderer = new OrthogonalTiledMapRenderer(this.map);
         this.tileLayer = (TiledMapTileLayer) this.map.getLayers().get("tiles");
 
         WIDTH = this.map.getProperties().get("width", Integer.class);
@@ -84,8 +83,6 @@ public class Map {
                 compareUsingDirectionVector((int)directionVector.x, checkIfEqual.x, previousCornerPosition.x, edgeOfTile.x),
                 compareUsingDirectionVector((int)directionVector.y, checkIfEqual.y, previousCornerPosition.y, edgeOfTile.y)
         );
-
-
     }
 
     private int directionVectorToCorner(Vector2 directionVector){
@@ -125,12 +122,15 @@ public class Map {
 
             Point cornerTileIndex = Tile.getIndex(cornerPositions[i], TILE_WIDTH, TILE_HEIGHT);
 
-            Tile cornerTile = new Tile(
-                cornerTileIndex,
-                this.tileLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile().getProperties(),
-                this.tileLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile());
+            if (this.tileLayer.getCell(cornerTileIndex.x, cornerTileIndex.y) != null) {
+                Tile cornerTile = new Tile(
+                    cornerTileIndex,
+                    this.tileLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile().getProperties(),
+                    this.tileLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile());
 
-            cornerTiles[i] = cornerTile;
+                cornerTiles[i] = cornerTile;
+            }
+            else cornerTiles[i] = null;
         }
     }
 
@@ -203,10 +203,8 @@ public class Map {
             accumulatedCorrectionVector = correction;
         }
 
-        return accumulatedCorrectionVector;
+        return removeBorderViolation(playerPosition, accumulatedCorrectionVector);
     }
-
-
 
     private Point[] calculateCornerPositions(Vector2 moveVector, PlayerPosition playerPosition) {
         Point[] cornerPositions = {null, null, null, null};
@@ -233,4 +231,12 @@ public class Map {
         return cornerPositions;
     }
 
+    private Vector2 removeBorderViolation(PlayerPosition position, Vector2 vector) {
+        if (position.xMin  < 0) vector.x -= position.xMin;
+        else if (position.xMax > WIDTH_PIXEL) vector.x -= position.xMax - WIDTH_PIXEL;
+        if (position.yMin < 0) vector.y -= position.yMin;
+        else if (position.yMax > HEIGHT_PIXEL) vector.y -= position.yMax - HEIGHT_PIXEL;
+
+        return vector;
+    }
 }

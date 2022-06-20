@@ -13,60 +13,39 @@ public class Player {
     public Rectangle shape;
 
     private float speed = 200;
-    // todo INFO, clean png
-    private int width = 50;
-    private int height = 56;
+    private int width;
+    private int height;
     public PlayerPosition position;
 
     public Player(){
-        //load images Katze_bearbeitet.png
-        texture = new Texture(Gdx.files.internal("prototyp_cat.png"));
+        this.texture = new Texture(Gdx.files.internal("prototyp_cat.png"));
 
-        // create a Rectangle
-        this.position = new PlayerPosition(800 / 2 - width / 2, 64, width, height);
-        shape = new Rectangle();
-        shape.x = this.position.xMin;
-        shape.y = this.position.yMin;
-        shape.width = width;
-        shape.height = height;
+        this.width = this.texture.getWidth();
+        this.height = this.texture.getHeight();
+        this.position = new PlayerPosition(Map.TILE_WIDTH, Map.TILE_HEIGHT, this.width, this.height);
+        this.shape = new Rectangle();
+        this.shape.x = this.position.xMin;
+        this.shape.y = this.position.yMin;
+        this.shape.width = this.width;
+        this.shape.height = this.height;
     }
 
     public void input(Map map) {
         Vector2 vector = new Vector2(0, 0);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)){
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
             vector.x += -1;
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)){
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
             vector.x += +1;
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)){
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S))
             vector.y += -1;
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)){
+        if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))
             vector.y += +1;
-        }
 
         vector.nor();  //normalize vector length = 1
         if(!vector.isZero()) move(vector.scl(speed), map);
 
         // Map.accountForCollision needs vector * speed as moveVector
-
-        // if !LevelScreen.currentMap.getWallCollision(shape.x, (int) (shape.y + speed * deltaTime),this);
-
-
-        // respectBoundaries();
-    }
-
-    private void respectBoundaries() {
-        // todo CHANGED
-        if(shape.x < 0) shape.x = 0;
-        if(shape.x > Map.WIDTH_PIXEL - width) shape.x =  Map.WIDTH_PIXEL - width;
-
-        if(shape.x > Map.WIDTH_PIXEL - width) shape.x =  Map.WIDTH_PIXEL - width;
-        if(shape.y < 0) shape.y = 0;
-        if(shape.y > Map.HEIGHT_PIXEL - height) shape.y =  Map.HEIGHT_PIXEL - height;
-
     }
 
     public void move(Vector2 moveVector, Map map) {
@@ -92,5 +71,4 @@ public class Player {
     public void disposeTextures() {
         texture.dispose();
     }
-
 }
