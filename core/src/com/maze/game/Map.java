@@ -1,11 +1,14 @@
 package com.maze.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.maze.game.types.Boolean2;
+import com.maze.game.types.CornerPosition;
+import com.maze.game.types.PlayerPosition;
+import com.maze.game.types.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;

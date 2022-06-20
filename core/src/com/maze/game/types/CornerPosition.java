@@ -1,4 +1,4 @@
-package com.maze.game;
+package com.maze.game.types;
 
 import java.awt.*;
 

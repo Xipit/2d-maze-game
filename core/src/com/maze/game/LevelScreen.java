@@ -44,7 +44,7 @@ public class LevelScreen extends ScreenAdapter {
 
         // new batch sb
         sb.begin();
-        sb.draw(player.texture, player.shape.x, player.shape.y);
+        sb.draw(player.texture, player.position.xMin, player.position.yMin);
         sb.end();
 
 

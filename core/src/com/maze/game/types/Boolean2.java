@@ -1,4 +1,4 @@
-package com.maze.game;
+package com.maze.game.types;
 
 public class Boolean2 {
     public boolean x;
