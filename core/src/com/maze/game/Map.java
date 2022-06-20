@@ -20,8 +20,8 @@ public class Map {
     private final OrthogonalTiledMapRenderer renderer;
     private final TiledMapTileLayer tileLayer;
 
-        this.map = MazeGame.instance.assetManager.get(fileName, TiledMap.class);
     public Map(String fileName) {
+        this.map = Asset.manager.get(fileName, TiledMap.class);
         this.renderer = new OrthogonalTiledMapRenderer(this.map);
         this.tileLayer = (TiledMapTileLayer) this.map.getLayers().get("tiles");
 
