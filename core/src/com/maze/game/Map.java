@@ -55,16 +55,13 @@ public class Map {
         |   |
         2 - 3
     */
-    Point[] cornerPositions = {null, null, null, null};
-    Point[] previousCornerPositions = {null, null, null, null};
+
+    CornerPosition[] cornerPositions = {null, null, null, null};
     Tile[] cornerTiles = {null, null, null, null};
-    Boolean2[] considerCornerPositions = {null, null, null, null};
 
     private void resetData(){
-        cornerPositions = new Point[]{null, null, null, null};
-        previousCornerPositions = new Point[]{null, null, null, null};
+        cornerPositions = new CornerPosition[]{null, null, null, null};
         cornerTiles = new Tile[]{null, null, null, null};
-        considerCornerPositions = new Boolean2[]{null, null, null, null};
     }
 
     private Boolean2 calculateConsideration(int cornerIndex, Vector2 directionVector, Point previousCornerPosition, Point edgeOfTile){
@@ -78,8 +75,8 @@ public class Map {
         }
 
         Boolean2 checkIfEqual = new Boolean2(
-                directionVector.x == 0 || directionVector.y == 0 || cornerPositions[cornerIndex] == edgeOfTile || Math.abs(previousCornerPosition.y - edgeOfTile.y) > Math.abs(previousCornerPosition.x - edgeOfTile.x),
-                directionVector.x == 0 || directionVector.y == 0 || cornerPositions[cornerIndex] == edgeOfTile || Math.abs(previousCornerPosition.x - edgeOfTile.x) > Math.abs(previousCornerPosition.y - edgeOfTile.y));
+                directionVector.x == 0 || directionVector.y == 0 || cornerPositions[cornerIndex].expected == edgeOfTile || Math.abs(previousCornerPosition.y - edgeOfTile.y) > Math.abs(previousCornerPosition.x - edgeOfTile.x),
+                directionVector.x == 0 || directionVector.y == 0 || cornerPositions[cornerIndex].expected == edgeOfTile || Math.abs(previousCornerPosition.x - edgeOfTile.x) > Math.abs(previousCornerPosition.y - edgeOfTile.y));
         return new Boolean2(
                 compareUsingDirectionVector((int)directionVector.x, checkIfEqual.x, previousCornerPosition.x, edgeOfTile.x),
                 compareUsingDirectionVector((int)directionVector.y, checkIfEqual.y, previousCornerPosition.y, edgeOfTile.y)
@@ -117,13 +114,12 @@ public class Map {
     }
 
     public void calculateCornerData(Vector2 directionVector, PlayerPosition playerPosition, PlayerPosition previousPlayerPosition) {
-        cornerPositions = calculateCornerPositions(directionVector, playerPosition);
-        previousCornerPositions = calculateCornerPositions(directionVector, previousPlayerPosition);
+        cornerPositions = calculateCornerPositions(directionVector, playerPosition, previousPlayerPosition);
 
         for (int i = 0; i < Corner.values().length; i ++) {
             if(cornerPositions[i] == null) continue;
 
-            Point cornerTileIndex = Tile.getIndex(cornerPositions[i], TILE_WIDTH, TILE_HEIGHT);
+            Point cornerTileIndex = Tile.getIndex(cornerPositions[i].expected, TILE_WIDTH, TILE_HEIGHT);
 
             Tile cornerTile = new Tile(
                 cornerTileIndex,
@@ -160,11 +156,11 @@ public class Map {
     private Vector2 calculateMoveCorrectionVector(Vector2 directionVector, int cornerIndex) {
         Point edgeOfTile = getEdgeOfTile(cornerIndex, cornerTiles[cornerIndex].getPosition(TILE_WIDTH, TILE_HEIGHT));
 
-        Boolean2 cornerCollisionConsideration = calculateConsideration(cornerIndex, directionVector, previousCornerPositions[cornerIndex], edgeOfTile);
+        Boolean2 cornerCollisionConsideration = calculateConsideration(cornerIndex, directionVector, cornerPositions[cornerIndex].previous, edgeOfTile);
 
         return new Vector2(
-                cornerCollisionConsideration.x ? (edgeOfTile.x - cornerPositions[cornerIndex].x) : 0 ,
-                cornerCollisionConsideration.y ? (edgeOfTile.y - cornerPositions[cornerIndex].y) : 0);
+                cornerCollisionConsideration.x ? (edgeOfTile.x - cornerPositions[cornerIndex].expected.x) : 0 ,
+                cornerCollisionConsideration.y ? (edgeOfTile.y - cornerPositions[cornerIndex].expected.y) : 0);
     }
 
     public Vector2 getMoveCorrectionVector(Vector2 moveVector, PlayerPosition previousPlayerPosition) {
@@ -208,8 +204,10 @@ public class Map {
 
 
 
-    private Point[] calculateCornerPositions(Vector2 moveVector, PlayerPosition playerPosition) {
-        Point[] cornerPositions = {null, null, null, null};
+
+
+    private CornerPosition[] calculateCornerPositions(Vector2 moveVector, PlayerPosition playerPosition, PlayerPosition previousPlayerPosition) {
+        CornerPosition[] cornerPositions = {null, null, null, null};
 
         /*
             0 - 1
@@ -218,16 +216,24 @@ public class Map {
         */
 
         if (moveVector.x < 0 || moveVector.y > 0){
-            cornerPositions[Corner.topLeft.ordinal()]       = new Point(playerPosition.xMin, playerPosition.yMax); // topLeft
+            cornerPositions[Corner.topLeft.ordinal()] = new CornerPosition(
+                    new Point(playerPosition.xMin, playerPosition.yMax),
+                    new Point(previousPlayerPosition.xMin, previousPlayerPosition.yMax)); // topLeft
         }
         if (moveVector.x > 0 || moveVector.y > 0){
-            cornerPositions[Corner.topRight.ordinal()]      = new Point(playerPosition.xMax, playerPosition.yMax); // topRight
+            cornerPositions[Corner.topRight.ordinal()] = new CornerPosition(
+                    new Point(playerPosition.xMax, playerPosition.yMax),
+                    new Point(previousPlayerPosition.xMax, previousPlayerPosition.yMax)); // topRight
         }
         if (moveVector.x < 0 || moveVector.y < 0) {
-            cornerPositions[Corner.bottomLeft.ordinal()]    = new Point(playerPosition.xMin, playerPosition.yMin); // bottomLeft
+            cornerPositions[Corner.bottomLeft.ordinal()] = new CornerPosition(
+                    new Point(playerPosition.xMin, playerPosition.yMin),
+                    new Point(previousPlayerPosition.xMin, previousPlayerPosition.yMin)); // bottomLeft
         }
         if (moveVector.x > 0 || moveVector.y < 0) {
-            cornerPositions[Corner.bottomRight.ordinal()]   = new Point(playerPosition.xMax, playerPosition.yMin); // bottomRight
+            cornerPositions[Corner.bottomRight.ordinal()] = new CornerPosition(
+                    new Point(playerPosition.xMax, playerPosition.yMin),
+                    new Point(previousPlayerPosition.xMax, previousPlayerPosition.yMin)); // bottomRight
         }
 
         return cornerPositions;
