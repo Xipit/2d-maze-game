@@ -5,21 +5,21 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.maze.game.maps.Map;
+import com.maze.game.maps.PrototypeMap;
 
 public class LevelScreen extends ScreenAdapter {
-    private OrthographicCamera camera;
-    static Map currentMap;
+    private final OrthographicCamera camera;
+    private final Map map;
+    private final Player player;
+    private final SpriteBatch sb;
 
-    private Player player;
-
-    private SpriteBatch sb;
-
-    public LevelScreen(String tilemapFile) {
+    public LevelScreen() {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
 
-        currentMap = new Map(tilemapFile, 1f);
+        map = new PrototypeMap();
         player = new Player();
 
         sb = new SpriteBatch();
@@ -32,13 +32,13 @@ public class LevelScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         // Player movement by keystroke
-        player.input(currentMap);
+        player.input(map);
 
         // todo Zentriere den Player, es sei denn, der Abstand zu dem Rand ist nicht groß genug oder Umgebung art render?
         camera.position.set((float) player.position.getCenter().x, (float)player.position.getCenter().y, 0);
         camera.update();
 
-        currentMap.render(camera);
+        map.render(camera);
         // erste Frame(s) nicht position gewechselt
         sb.setProjectionMatrix(camera.combined);
 
@@ -52,6 +52,7 @@ public class LevelScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        currentMap.dispose();
+        map.dispose();
+        player.disposeTextures();
     }
 }
