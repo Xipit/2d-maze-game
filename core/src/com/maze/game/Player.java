@@ -4,15 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.maze.game.maps.Map;
 import com.maze.game.types.PlayerPosition;
 
 public class Player {
     public Texture texture;
 
-    private float speed = 200;
+    private final float speed = 200;
     // todo INFO, clean png
-    private int width = 50;
-    private int height = 56;
+    private final int width = 50;
+    private final int height = 56;
     public PlayerPosition position;
 
     public Player(){
@@ -39,24 +40,19 @@ public class Player {
             vector.y += +1;
         }
 
-        vector.nor();  //normalize vector length = 1
+        vector.nor();  //normalize vector -> length = 1
         if(!vector.isZero()) move(vector.scl(speed), map);
     }
 
     public void move(Vector2 moveVector, Map map) {
-        float deltaTime = Gdx.graphics.getDeltaTime();
-        moveVector.scl(deltaTime);
-
+        moveVector.scl(Gdx.graphics.getDeltaTime());
         moveVector = new Vector2((float)Math.ceil(moveVector.x), (float)Math.ceil(moveVector.y));
 
-        Gdx.app.log("MazeGame", "---------------------------------------------");
-        Gdx.app.log("MazeGame", "uncorrected moveVector: " + moveVector.toString());
+        Vector2 moveCorrectionVector = map.getMoveCorrectionVector(moveVector, position);
 
-        Vector2 correctedMoveVector = moveVector.add(map.getMoveCorrectionVector(moveVector, position));
-
-        Gdx.app.log("MazeGame", "corrected moveVector: " + correctedMoveVector.toString());
-
+        Vector2 correctedMoveVector = moveVector.add(moveCorrectionVector);
         this.position = position.update(correctedMoveVector);
+
     }
 
     public void disposeTextures() {
