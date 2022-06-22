@@ -5,7 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.maze.game.MazeGame;
+import com.maze.game.Asset;
 import com.maze.game.types.Boolean2;
 import com.maze.game.types.CornerPosition;
 import com.maze.game.types.PlayerPosition;
@@ -25,9 +25,9 @@ public class Map {
     private final OrthogonalTiledMapRenderer renderer;
     protected final TiledMapTileLayer tileLayer;
 
-    public Map(String fileName, Float unitScale) {
-        this.tiledMap = MazeGame.instance.assetManager.get(fileName, TiledMap.class);
-        this.renderer = new OrthogonalTiledMapRenderer(this.tiledMap, unitScale);
+    public Map(String fileName) {
+        this.tiledMap = Asset.manager.get(fileName, TiledMap.class);
+        this.renderer = new OrthogonalTiledMapRenderer(this.tiledMap);
         this.tileLayer = (TiledMapTileLayer) this.tiledMap.getLayers().get("tiles");
 
         WIDTH = this.tiledMap.getProperties().get("width", Integer.class);
@@ -42,6 +42,22 @@ public class Map {
         this.renderer.setMap(this.tiledMap);
         this.renderer.setView(camera);
         this.renderer.render();
+    }
+
+    public static int getWidthPixel() {
+        return WIDTH_PIXEL;
+    }
+
+    public static int getHeightPixel() {
+        return HEIGHT_PIXEL;
+    }
+
+    public static int getTileWidth() {
+        return TILE_WIDTH;
+    }
+
+    public static int getTileHeight() {
+        return TILE_HEIGHT;
     }
 
     protected String getCollisionKey(){
@@ -60,20 +76,25 @@ public class Map {
     }
 
 
-    CornerPosition[] cornerPositions = {null, null, null, null};
-    Tile[] cornerTiles = {null, null, null, null};
+    CornerPosition[] cornerPositions;
+    Tile[] cornerTiles;
+    Vector2 borderViolationCorrectionVector;
 
     //region Data-calculation
     private void resetData(){
         cornerPositions = new CornerPosition[]{null, null, null, null};
         cornerTiles = new Tile[]{null, null, null, null};
+        borderViolationCorrectionVector = new Vector2(0,0);
     }
 
     public void calculateCornerData(Vector2 moveVector, PlayerPosition previousPlayerPosition) {
         resetData();
 
-        PlayerPosition playerPosition = previousPlayerPosition.calculateNewPosition(moveVector);
-        cornerPositions = calculateCornerPositions(moveVector, playerPosition, previousPlayerPosition);
+        cornerPositions = calculateCornerPositions(
+                moveVector,
+                adjustForBorderViolation(previousPlayerPosition.calculateNewPosition(moveVector)),
+                previousPlayerPosition);
+
 
         for (int cornerIndex = 0; cornerIndex < Corner.values().length; cornerIndex ++) {
             if(cornerPositions[cornerIndex] == null) continue;
@@ -88,6 +109,27 @@ public class Map {
 
             cornerTiles[cornerIndex] = cornerTile;
         }
+    }
+
+    private PlayerPosition adjustForBorderViolation(PlayerPosition playerPosition) {
+        if (playerPosition.xMin  < 0) {
+            borderViolationCorrectionVector.x = -playerPosition.xMin;
+            playerPosition.update(new Vector2(-playerPosition.xMin, 0));
+        }
+        else if (playerPosition.xMax >= WIDTH_PIXEL) {
+            borderViolationCorrectionVector.x = -(playerPosition.xMax - WIDTH_PIXEL) - 1;
+            playerPosition.update(new Vector2(-(playerPosition.xMax - WIDTH_PIXEL) - 1, 0));
+        }
+        if (playerPosition.yMin < 0) {
+            borderViolationCorrectionVector.y = -playerPosition.yMin;
+            playerPosition.update(new Vector2(0, -playerPosition.yMin));
+
+        }
+        else if (playerPosition.yMax >= HEIGHT_PIXEL) {
+            borderViolationCorrectionVector.y = -(playerPosition.yMax - HEIGHT_PIXEL) - 1;
+            playerPosition.update(new Vector2(0, -(playerPosition.yMax - HEIGHT_PIXEL) - 1));
+        }
+        return playerPosition;
     }
 
     private CornerPosition[] calculateCornerPositions(Vector2 moveVector, PlayerPosition playerPosition, PlayerPosition previousPlayerPosition) {
@@ -211,6 +253,8 @@ public class Map {
 
             accumulatedCorrectionVector = correction;
         }
+
+        accumulatedCorrectionVector.add(borderViolationCorrectionVector);
 
         return accumulatedCorrectionVector;
     }

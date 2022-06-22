@@ -13,6 +13,7 @@ public class LevelScreen extends ScreenAdapter {
     private final Map map;
     private final Player player;
     private final SpriteBatch sb;
+    private final float zoomFactor = 0.6f;
 
     public LevelScreen() {
         camera = new OrthographicCamera();
@@ -34,8 +35,12 @@ public class LevelScreen extends ScreenAdapter {
         // Player movement by keystroke
         player.input(map);
 
-        // todo Zentriere den Player, es sei denn, der Abstand zu dem Rand ist nicht groß genug oder Umgebung art render?
-        camera.position.set((float) player.position.getCenter().x, (float)player.position.getCenter().y, 0);
+        // Center the player, unless the distance to the edge is not large enough to display only the map.
+        camera.position.set(
+                (player.position.getCenter().x < Gdx.graphics.getWidth() * zoomFactor / 2) ? (float) Gdx.graphics.getWidth() * zoomFactor / 2 : Math.min(player.position.getCenter().x, (Map.getWidthPixel() - (float) Gdx.graphics.getWidth() * zoomFactor / 2)),
+                (player.position.getCenter().y < Gdx.graphics.getHeight() * zoomFactor / 2) ? (float) Gdx.graphics.getHeight() * zoomFactor / 2 : Math.min(player.position.getCenter().y, (Map.getHeightPixel() - (float) Gdx.graphics.getHeight() * zoomFactor / 2)),
+                0);
+        camera.zoom = zoomFactor;
         camera.update();
 
         map.render(camera);

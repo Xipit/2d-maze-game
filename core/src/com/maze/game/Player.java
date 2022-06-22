@@ -11,34 +11,31 @@ public class Player {
     public Texture texture;
 
     private final float speed = 200;
-    // todo INFO, clean png
-    private final int width = 50;
-    private final int height = 56;
+    private int width;
+    private int height;
     public PlayerPosition position;
 
     public Player(){
-        //load images Katze_bearbeitet.png
-        texture = new Texture(Gdx.files.internal("prototyp_cat.png"));
+        texture = Asset.manager.get("prototyp_cat.png", Texture.class);
+
+        this.width = this.texture.getWidth();
+        this.height = this.texture.getHeight();
 
         // create a Rectangle
-        this.position = new PlayerPosition(800 / 2 - width / 2, 64, width, height);
+        this.position = new PlayerPosition(Map.getTileWidth(), Map.getTileHeight(), this.width, this.height);
     }
 
     public void input(Map map) {
         Vector2 vector = new Vector2(0, 0);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)){
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
             vector.x += -1;
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)){
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
             vector.x += +1;
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)){
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S))
             vector.y += -1;
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)){
+        if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))
             vector.y += +1;
-        }
 
         vector.nor();  //normalize vector -> length = 1
         if(!vector.isZero()) move(vector.scl(speed), map);
