@@ -6,10 +6,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.maze.game.Assets;
-import com.maze.game.types.Boolean2;
-import com.maze.game.types.CornerPosition;
-import com.maze.game.types.PlayerPosition;
-import com.maze.game.types.Tile;
+import com.maze.game.Properties;
+import com.maze.game.types.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,11 +17,10 @@ public class Map {
     public final int widthInPixel, heightInPixel;
     public final int tileWidthInPixel, tileHeightInPixel;
 
-    static String COL_KEY = "wall_collision";
-
     private final TiledMap tiledMap;
     private final OrthogonalTiledMapRenderer renderer;
-    protected final TiledMapTileLayer tileLayer;
+    protected final TiledMapTileLayer baseLayer;
+    protected final TiledMapTileLayer interactionLayer;
 
     private CornerPosition[] cornerPositions;
     private Tile[] cornerTiles;
@@ -32,7 +29,8 @@ public class Map {
     public Map(String fileName) {
         this.tiledMap = Assets.manager.get(fileName, TiledMap.class);
         this.renderer = new OrthogonalTiledMapRenderer(this.tiledMap);
-        this.tileLayer = (TiledMapTileLayer) this.tiledMap.getLayers().get("tiles");
+        this.baseLayer = (TiledMapTileLayer) this.tiledMap.getLayers().get("tiles"); //TODO change layer name to base
+        this.interactionLayer = (TiledMapTileLayer) this.tiledMap.getLayers().get("interaction");
 
         width = this.tiledMap.getProperties().get("width", Integer.class);
         height = this.tiledMap.getProperties().get("height", Integer.class);
@@ -48,9 +46,6 @@ public class Map {
         this.renderer.render();
     }
 
-    protected String getCollisionKey(){
-        return COL_KEY;
-    }
 
     public Point getStartingPoint(){
         return new Point(tileWidthInPixel, tileHeightInPixel);
@@ -93,13 +88,19 @@ public class Map {
 
             Point cornerTileIndex = Tile.getIndex(cornerPositions[cornerIndex].expected, tileWidthInPixel, tileHeightInPixel);
 
-            Tile cornerTile = new Tile(
+            LayerTile baseCornerTile = new LayerTile(
                     cornerTileIndex,
-                    this.tileLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile().getProperties(),
-                    this.tileLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile(),
+                    this.baseLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile().getProperties(),
+                    this.baseLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile(),
                     cornerIndex);
 
-            cornerTiles[cornerIndex] = cornerTile;
+            LayerTile interactionCornerTile = new LayerTile(
+                    cornerTileIndex,
+                    this.interactionLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile().getProperties(),
+                    this.interactionLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile(),
+                    cornerIndex);
+
+            cornerTiles[cornerIndex] = new Tile(baseCornerTile, interactionCornerTile);
         }
     }
 
@@ -211,7 +212,7 @@ public class Map {
     //endregion
 
     private Vector2 calculateMoveCorrectionVector(Vector2 directionVector, int cornerIndex) {
-        Point edgeOfTile = cornerTiles[cornerIndex].getCollisionEdge(tileWidthInPixel, tileHeightInPixel);
+        Point edgeOfTile = cornerTiles[cornerIndex].base.getCollisionEdge(tileWidthInPixel, tileHeightInPixel);
 
         Boolean2 cornerCollisionConsideration = calculateCollisionConsideration(cornerIndex, directionVector, cornerPositions[cornerIndex].previous, edgeOfTile);
 
@@ -225,11 +226,11 @@ public class Map {
 
         ArrayList<Vector2> correctionVectors = new ArrayList<>();
         for(int cornerIndex = 0; cornerIndex < Corner.values().length; cornerIndex ++){
-            if(cornerTiles[cornerIndex] == null || cornerTiles[cornerIndex].tile == null){
+            if(cornerTiles[cornerIndex] == null || cornerTiles[cornerIndex].base.tile == null){
                 continue;
             }
 
-            if(cornerTiles[cornerIndex].properties.containsKey(getCollisionKey())) {
+            if(cornerTiles[cornerIndex].base.properties.containsKey(Properties.COLLISION_KEY)) {
                 Vector2 cornerCorrectionVector = calculateMoveCorrectionVector(moveVector, cornerIndex);
 
                 correctionVectors.add(cornerCorrectionVector);
@@ -260,18 +261,24 @@ public class Map {
 
 
         for(int cornerIndex = 0; cornerIndex < Corner.values().length; cornerIndex ++){
-            if(cornerTiles[cornerIndex] == null || cornerTiles[cornerIndex].tile == null){
+            if(cornerTiles[cornerIndex] == null){
                 continue;
             }
 
-            if(cornerTiles[cornerIndex].properties.containsKey(KEY_KEY)) {
-                // TODO collect key
+
+            if(cornerTiles[cornerIndex].base.tile != null){
+                if(cornerTiles[cornerIndex].base.properties.containsKey(DOOR_KEY)){
+                    // TODO open door if have key
+                }
+                if(cornerTiles[cornerIndex].base.properties.containsKey(TRAP_KEY)){
+                    // TODO die
+                }
             }
-            if(cornerTiles[cornerIndex].properties.containsKey(DOOR_KEY)){
-                // TODO open door if have key
-            }
-            if(cornerTiles[cornerIndex].properties.containsKey(TRAP_KEY)){
-                // TODO die
+
+            if(cornerTiles[cornerIndex].interaction.tile != null){
+                if(cornerTiles[cornerIndex].interaction.properties.containsKey(KEY_KEY)) {
+                    // TODO collect key
+                }
             }
         }
 
