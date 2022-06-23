@@ -41,7 +41,9 @@ public class MazeGameCamera extends OrthographicCamera {
 
         cameraPosition.add(targetPosition);
 
-        this.position.set(cameraPosition);
+        Vector3 flooredCameraPosition = new Vector3((float)Math.floor(cameraPosition.x), (float)Math.floor(cameraPosition.y), (float)Math.floor(cameraPosition.z));
+
+        this.position.set(flooredCameraPosition);
         this.update();
     }
 }

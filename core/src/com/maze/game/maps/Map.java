@@ -266,7 +266,6 @@ public class Map {
 
             if(cornerTiles[cornerIndex].properties.containsKey(KEY_KEY)) {
                 // TODO collect key
-
             }
             if(cornerTiles[cornerIndex].properties.containsKey(DOOR_KEY)){
                 // TODO open door if have key

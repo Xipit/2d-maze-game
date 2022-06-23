@@ -12,7 +12,7 @@ public class LevelScreen extends ScreenAdapter {
     private final Map map;
     private final Player player;
     private final SpriteBatch sb;
-    private final float zoomFactor = 0.6f;
+    private final float zoomFactor = 1/2F;
 
     public LevelScreen() {
         camera = new MazeGameCamera(zoomFactor);
