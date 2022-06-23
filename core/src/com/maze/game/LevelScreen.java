@@ -3,20 +3,19 @@ package com.maze.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.maze.game.maps.Map;
 import com.maze.game.maps.PrototypeMap;
 
 public class LevelScreen extends ScreenAdapter {
-    private final Camera camera;
+    private final MazeGameCamera camera;
     private final Map map;
     private final Player player;
     private final SpriteBatch sb;
     private final float zoomFactor = 0.6f;
 
     public LevelScreen() {
-        camera = new Camera(zoomFactor);
+        camera = new MazeGameCamera(zoomFactor);
 
         map = new PrototypeMap();
         player = new Player(map.getStartingPoint());
@@ -34,7 +33,7 @@ public class LevelScreen extends ScreenAdapter {
         player.input(map);
 
         // update Camera position
-        camera.update(player.position.getCenter(), map.WIDTH_PIXEL, map.HEIGHT_PIXEL);
+        camera.update(player.position.getCenter(), map.widthInPixel, map.heightInPixel);
 
         map.render(camera);
 

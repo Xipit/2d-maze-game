@@ -18,7 +18,7 @@ public class Player {
     public PlayerPosition position;
 
     public Player(Point startPosition){
-        texture = Asset.manager.get("prototyp_cat.png", Texture.class);
+        texture = Assets.manager.get("prototyp_cat.png", Texture.class);
 
         this.width = this.texture.getWidth();
         this.height = this.texture.getHeight();
@@ -40,10 +40,15 @@ public class Player {
             vector.y += +1;
 
         vector.nor();  //normalize vector -> length = 1
-        if(!vector.isZero()) move(vector.scl(speed), map);
+
+        if(!vector.isZero()){
+            move(vector.scl(speed), map);
+
+            checkForTriggers(map);
+        }
     }
 
-    public void move(Vector2 moveVector, Map map) {
+    private void move(Vector2 moveVector, Map map) {
         moveVector.scl(Gdx.graphics.getDeltaTime());
         moveVector = new Vector2((float)Math.ceil(moveVector.x), (float)Math.ceil(moveVector.y));
 
@@ -52,6 +57,10 @@ public class Player {
         Vector2 correctedMoveVector = moveVector.add(moveCorrectionVector);
         this.position = position.update(correctedMoveVector);
 
+    }
+
+    private void checkForTriggers(Map map){
+        map.checkForTriggers(position);
     }
 
     public void disposeTextures() {

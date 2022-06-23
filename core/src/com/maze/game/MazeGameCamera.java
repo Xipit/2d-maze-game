@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Vector3;
 
 import java.awt.*;
 
-public class Camera extends OrthographicCamera {
+public class MazeGameCamera extends OrthographicCamera {
 
-    public Camera(float levelZoomFactor){
+    public MazeGameCamera(float levelZoomFactor){
         super();
 
         this.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -33,7 +33,7 @@ public class Camera extends OrthographicCamera {
 
         // speed determines the delta between current camera position and target camera position
         // when target camera position does not move, the current camera position will catch up
-        final float speed = 0.25F, isSpeed = 1.0F - speed;
+        final float speed = 0.2F, isSpeed = 1.0F - speed;
 
         // scale all values of vectors
         cameraPosition.scl(isSpeed);

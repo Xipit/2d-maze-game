@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
-public class Asset {
+public class Assets {
     public static AssetManager manager = new AssetManager();
 
-    public void load() {
+    private Assets(){}
+
+    public static void load() {
         manager.setLoader(TiledMap.class, new TmxMapLoader());
         manager.load("prototyp_tilemap_64.tmx", TiledMap.class);
 
@@ -17,7 +19,7 @@ public class Asset {
         manager.finishLoading();
     }
 
-    public void dispose() {
+    public static void dispose() {
         manager.dispose();
     }
 }

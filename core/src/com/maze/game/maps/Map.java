@@ -5,7 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.maze.game.Asset;
+import com.maze.game.Assets;
 import com.maze.game.types.Boolean2;
 import com.maze.game.types.CornerPosition;
 import com.maze.game.types.PlayerPosition;
@@ -15,9 +15,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Map {
-    public final int WIDTH, HEIGHT;
-    public final int WIDTH_PIXEL, HEIGHT_PIXEL;
-    public final int TILE_WIDTH, TILE_HEIGHT;
+    public final int width, height;
+    public final int widthInPixel, heightInPixel;
+    public final int tileWidthInPixel, tileHeightInPixel;
 
     static String COL_KEY = "wall_collision";
 
@@ -25,17 +25,21 @@ public class Map {
     private final OrthogonalTiledMapRenderer renderer;
     protected final TiledMapTileLayer tileLayer;
 
+    private CornerPosition[] cornerPositions;
+    private Tile[] cornerTiles;
+    private Vector2 moveCorrectionVector;
+
     public Map(String fileName) {
-        this.tiledMap = Asset.manager.get(fileName, TiledMap.class);
+        this.tiledMap = Assets.manager.get(fileName, TiledMap.class);
         this.renderer = new OrthogonalTiledMapRenderer(this.tiledMap);
         this.tileLayer = (TiledMapTileLayer) this.tiledMap.getLayers().get("tiles");
 
-        WIDTH = this.tiledMap.getProperties().get("width", Integer.class);
-        HEIGHT = this.tiledMap.getProperties().get("height", Integer.class);
-        TILE_WIDTH = this.tiledMap.getProperties().get("tilewidth", Integer.class);
-        TILE_HEIGHT = this.tiledMap.getProperties().get("tileheight", Integer.class);
-        WIDTH_PIXEL = WIDTH * TILE_WIDTH;
-        HEIGHT_PIXEL = HEIGHT * TILE_HEIGHT;
+        width = this.tiledMap.getProperties().get("width", Integer.class);
+        height = this.tiledMap.getProperties().get("height", Integer.class);
+        tileWidthInPixel = this.tiledMap.getProperties().get("tilewidth", Integer.class);
+        tileHeightInPixel = this.tiledMap.getProperties().get("tileheight", Integer.class);
+        widthInPixel = width * tileWidthInPixel;
+        heightInPixel = height * tileHeightInPixel;
     }
 
     public void render(OrthographicCamera camera) {
@@ -49,7 +53,7 @@ public class Map {
     }
 
     public Point getStartingPoint(){
-        return new Point(TILE_WIDTH, TILE_HEIGHT);
+        return new Point(tileWidthInPixel, tileHeightInPixel);
     }
 
     /*
@@ -64,18 +68,18 @@ public class Map {
     }
 
 
-    CornerPosition[] cornerPositions;
-    Tile[] cornerTiles;
-    Vector2 borderViolationCorrectionVector;
-
     //region Data-calculation
     private void resetData(){
         cornerPositions = new CornerPosition[]{null, null, null, null};
         cornerTiles = new Tile[]{null, null, null, null};
-        borderViolationCorrectionVector = new Vector2(0,0);
+        moveCorrectionVector = new Vector2(0,0);
     }
 
-    public void calculateCornerData(Vector2 moveVector, PlayerPosition previousPlayerPosition) {
+    private void calculateCollisionData(PlayerPosition currenPlayerPosition){
+        calculateCollisionData(new Vector2(0,0), currenPlayerPosition);
+    }
+
+    private void calculateCollisionData(Vector2 moveVector, PlayerPosition previousPlayerPosition) {
         resetData();
 
         cornerPositions = calculateCornerPositions(
@@ -87,7 +91,7 @@ public class Map {
         for (int cornerIndex = 0; cornerIndex < Corner.values().length; cornerIndex ++) {
             if(cornerPositions[cornerIndex] == null) continue;
 
-            Point cornerTileIndex = Tile.getIndex(cornerPositions[cornerIndex].expected, TILE_WIDTH, TILE_HEIGHT);
+            Point cornerTileIndex = Tile.getIndex(cornerPositions[cornerIndex].expected, tileWidthInPixel, tileHeightInPixel);
 
             Tile cornerTile = new Tile(
                     cornerTileIndex,
@@ -101,21 +105,21 @@ public class Map {
 
     private PlayerPosition adjustForBorderViolation(PlayerPosition playerPosition) {
         if (playerPosition.xMin  < 0) {
-            borderViolationCorrectionVector.x = -playerPosition.xMin;
+            moveCorrectionVector.x = -playerPosition.xMin;
             playerPosition.update(new Vector2(-playerPosition.xMin, 0));
         }
-        else if (playerPosition.xMax >= WIDTH_PIXEL) {
-            borderViolationCorrectionVector.x = -(playerPosition.xMax - WIDTH_PIXEL) - 1;
-            playerPosition.update(new Vector2(-(playerPosition.xMax - WIDTH_PIXEL) - 1, 0));
+        else if (playerPosition.xMax >= widthInPixel) {
+            moveCorrectionVector.x = -(playerPosition.xMax - widthInPixel) - 1;
+            playerPosition.update(new Vector2(-(playerPosition.xMax - widthInPixel) - 1, 0));
         }
         if (playerPosition.yMin < 0) {
-            borderViolationCorrectionVector.y = -playerPosition.yMin;
+            moveCorrectionVector.y = -playerPosition.yMin;
             playerPosition.update(new Vector2(0, -playerPosition.yMin));
 
         }
-        else if (playerPosition.yMax >= HEIGHT_PIXEL) {
-            borderViolationCorrectionVector.y = -(playerPosition.yMax - HEIGHT_PIXEL) - 1;
-            playerPosition.update(new Vector2(0, -(playerPosition.yMax - HEIGHT_PIXEL) - 1));
+        else if (playerPosition.yMax >= heightInPixel) {
+            moveCorrectionVector.y = -(playerPosition.yMax - heightInPixel) - 1;
+            playerPosition.update(new Vector2(0, -(playerPosition.yMax - heightInPixel) - 1));
         }
         return playerPosition;
     }
@@ -207,7 +211,7 @@ public class Map {
     //endregion
 
     private Vector2 calculateMoveCorrectionVector(Vector2 directionVector, int cornerIndex) {
-        Point edgeOfTile = cornerTiles[cornerIndex].getCollisionEdge(TILE_WIDTH, TILE_HEIGHT);
+        Point edgeOfTile = cornerTiles[cornerIndex].getCollisionEdge(tileWidthInPixel, tileHeightInPixel);
 
         Boolean2 cornerCollisionConsideration = calculateCollisionConsideration(cornerIndex, directionVector, cornerPositions[cornerIndex].previous, edgeOfTile);
 
@@ -217,7 +221,7 @@ public class Map {
     }
 
     public Vector2 getMoveCorrectionVector(Vector2 moveVector, PlayerPosition previousPlayerPosition) {
-        calculateCornerData(moveVector, previousPlayerPosition);
+        calculateCollisionData(moveVector, previousPlayerPosition);
 
         ArrayList<Vector2> correctionVectors = new ArrayList<>();
         for(int cornerIndex = 0; cornerIndex < Corner.values().length; cornerIndex ++){
@@ -242,9 +246,36 @@ public class Map {
             accumulatedCorrectionVector = correction;
         }
 
-        accumulatedCorrectionVector.add(borderViolationCorrectionVector);
+        moveCorrectionVector.add(accumulatedCorrectionVector);
 
-        return accumulatedCorrectionVector;
+        return moveCorrectionVector;
+    }
+
+    public void checkForTriggers(PlayerPosition currentPlayerPosition){
+        String KEY_KEY = "", DOOR_KEY = "", TRAP_KEY = ""; //TODO: implement similar to colission key
+
+        if(!moveCorrectionVector.isZero()){
+            calculateCollisionData(currentPlayerPosition);
+        }
+
+
+        for(int cornerIndex = 0; cornerIndex < Corner.values().length; cornerIndex ++){
+            if(cornerTiles[cornerIndex] == null || cornerTiles[cornerIndex].tile == null){
+                continue;
+            }
+
+            if(cornerTiles[cornerIndex].properties.containsKey(KEY_KEY)) {
+                // TODO collect key
+
+            }
+            if(cornerTiles[cornerIndex].properties.containsKey(DOOR_KEY)){
+                // TODO open door if have key
+            }
+            if(cornerTiles[cornerIndex].properties.containsKey(TRAP_KEY)){
+                // TODO die
+            }
+        }
+
     }
 
     public void dispose() {
