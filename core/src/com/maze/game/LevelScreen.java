@@ -9,19 +9,17 @@ import com.maze.game.maps.Map;
 import com.maze.game.maps.PrototypeMap;
 
 public class LevelScreen extends ScreenAdapter {
-    private final OrthographicCamera camera;
+    private final Camera camera;
     private final Map map;
     private final Player player;
     private final SpriteBatch sb;
     private final float zoomFactor = 0.6f;
 
     public LevelScreen() {
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.update();
+        camera = new Camera(zoomFactor);
 
         map = new PrototypeMap();
-        player = new Player();
+        player = new Player(map.getStartingPoint());
 
         sb = new SpriteBatch();
     }
@@ -35,24 +33,15 @@ public class LevelScreen extends ScreenAdapter {
         // Player movement by keystroke
         player.input(map);
 
-        // Center the player, unless the distance to the edge is not large enough to display only the map.
-        camera.position.set(
-                (player.position.getCenter().x < Gdx.graphics.getWidth() * zoomFactor / 2) ? (float) Gdx.graphics.getWidth() * zoomFactor / 2 : Math.min(player.position.getCenter().x, (Map.getWidthPixel() - (float) Gdx.graphics.getWidth() * zoomFactor / 2)),
-                (player.position.getCenter().y < Gdx.graphics.getHeight() * zoomFactor / 2) ? (float) Gdx.graphics.getHeight() * zoomFactor / 2 : Math.min(player.position.getCenter().y, (Map.getHeightPixel() - (float) Gdx.graphics.getHeight() * zoomFactor / 2)),
-                0);
-        camera.zoom = zoomFactor;
-        camera.update();
+        // update Camera position
+        camera.update(player.position.getCenter(), map.WIDTH_PIXEL, map.HEIGHT_PIXEL);
 
         map.render(camera);
-        // erste Frame(s) nicht position gewechselt
-        sb.setProjectionMatrix(camera.combined);
 
-        // new batch sb
+        sb.setProjectionMatrix(camera.combined);
         sb.begin();
         sb.draw(player.texture, player.position.xMin, player.position.yMin);
         sb.end();
-
-
     }
 
     @Override

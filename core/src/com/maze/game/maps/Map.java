@@ -15,9 +15,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Map {
-    static int WIDTH, HEIGHT;
-    static int WIDTH_PIXEL, HEIGHT_PIXEL;
-    static int TILE_WIDTH, TILE_HEIGHT;
+    public final int WIDTH, HEIGHT;
+    public final int WIDTH_PIXEL, HEIGHT_PIXEL;
+    public final int TILE_WIDTH, TILE_HEIGHT;
 
     static String COL_KEY = "wall_collision";
 
@@ -44,24 +44,12 @@ public class Map {
         this.renderer.render();
     }
 
-    public static int getWidthPixel() {
-        return WIDTH_PIXEL;
-    }
-
-    public static int getHeightPixel() {
-        return HEIGHT_PIXEL;
-    }
-
-    public static int getTileWidth() {
-        return TILE_WIDTH;
-    }
-
-    public static int getTileHeight() {
-        return TILE_HEIGHT;
-    }
-
     protected String getCollisionKey(){
         return COL_KEY;
+    }
+
+    public Point getStartingPoint(){
+        return new Point(TILE_WIDTH, TILE_HEIGHT);
     }
 
     /*

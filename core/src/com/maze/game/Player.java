@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.maze.game.maps.Map;
 import com.maze.game.types.PlayerPosition;
 
+import java.awt.*;
+
 public class Player {
     public Texture texture;
 
@@ -15,14 +17,14 @@ public class Player {
     private int height;
     public PlayerPosition position;
 
-    public Player(){
+    public Player(Point startPosition){
         texture = Asset.manager.get("prototyp_cat.png", Texture.class);
 
         this.width = this.texture.getWidth();
         this.height = this.texture.getHeight();
 
         // create a Rectangle
-        this.position = new PlayerPosition(Map.getTileWidth(), Map.getTileHeight(), this.width, this.height);
+        this.position = new PlayerPosition(startPosition.x, startPosition.y, this.width, this.height);
     }
 
     public void input(Map map) {
