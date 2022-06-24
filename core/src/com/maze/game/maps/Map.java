@@ -1,6 +1,7 @@
 package com.maze.game.maps;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -253,8 +254,6 @@ public class Map {
     }
 
     public void checkForTriggers(PlayerPosition currentPlayerPosition){
-        String KEY_KEY = "", DOOR_KEY = "", TRAP_KEY = ""; //TODO: implement similar to colission key
-
         if(!moveCorrectionVector.isZero()){
             calculateCollisionData(currentPlayerPosition);
         }
@@ -267,16 +266,20 @@ public class Map {
 
 
             if(cornerTiles[cornerIndex].base.tile != null){
-                if(cornerTiles[cornerIndex].base.properties.containsKey(DOOR_KEY)){
+                MapProperties baseProperties = cornerTiles[cornerIndex].base.properties;
+
+                if(baseProperties.containsKey(Properties.DOOR_DIRECTION_KEY) && baseProperties.containsKey(Properties.DOOR_STATUS_KEY) && baseProperties.containsKey(Properties.DOOR_TYPE_KEY)){
                     // TODO open door if have key
                 }
-                if(cornerTiles[cornerIndex].base.properties.containsKey(TRAP_KEY)){
+                if(baseProperties.containsKey(Properties.TRAP_KEY)){
                     // TODO die
                 }
             }
 
             if(cornerTiles[cornerIndex].interaction.tile != null){
-                if(cornerTiles[cornerIndex].interaction.properties.containsKey(KEY_KEY)) {
+                MapProperties interactionProperties = cornerTiles[cornerIndex].interaction.properties;
+
+                if(interactionProperties.containsKey(Properties.KEY_TYPE_KEY) && interactionProperties.containsKey(Properties.KEY_STATUS_KEY)) {
                     // TODO collect key
                 }
             }
