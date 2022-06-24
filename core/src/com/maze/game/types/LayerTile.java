@@ -1,7 +1,9 @@
 package com.maze.game.types;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.maze.game.Properties;
 import com.maze.game.maps.Map;
 
 import java.awt.*;
@@ -28,11 +30,44 @@ public class LayerTile {
 
         // PREPARATION for future collision (smaller than 1 tile collision)
         // read from properties to determine following variables
+
         int collisionWidth = tileWidth;
         int collisionHeight = tileHeight;
 
         int collisionOffsetX = 0;
         int collisionOffsetY = 0;
+
+        // adjust collision for doors to be able to touch the tile to unlock it
+        if(this.properties.containsKey(Properties.DOOR_DIRECTION_KEY)){
+            Properties.DoorDirection doorDirection = Properties.DoorDirection.valueOf(this.properties.get(Properties.DOOR_DIRECTION_KEY).toString());
+
+            final int collisionInset = 7;
+            switch (doorDirection){
+                case N:
+                    collisionOffsetY = collisionInset;
+                    collisionHeight -= collisionInset;
+                    break;
+
+                case S:
+                    collisionOffsetY = 0;
+                    collisionHeight -= collisionInset;
+                    break;
+
+                case E:
+                    collisionOffsetX = collisionInset;
+                    collisionWidth -= collisionInset;
+                    break;
+
+                case W:
+                    collisionOffsetX = 0;
+                    collisionWidth -= collisionInset;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
 
         if (cornerIndex == Map.Corner.topLeft.ordinal()) {
             collisionEdge.x += collisionOffsetX + collisionWidth;

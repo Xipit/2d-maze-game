@@ -238,7 +238,10 @@ public class Map {
                 continue;
             }
 
-            if(cornerTiles[cornerIndex].base.properties.containsKey(Properties.COLLISION_KEY)) {
+            MapProperties baseProperties = cornerTiles[cornerIndex].base.properties;
+
+            if(baseProperties.containsKey(Properties.COLLISION_KEY) ||
+                    (baseProperties.containsKey(Properties.DOOR_DIRECTION_KEY) && baseProperties.containsKey(Properties.DOOR_STATUS_KEY) && baseProperties.containsKey(Properties.DOOR_TYPE_KEY))) {
                 Vector2 cornerCorrectionVector = calculateMoveCorrectionVector(moveVector, cornerIndex);
 
                 correctionVectors.add(cornerCorrectionVector);
