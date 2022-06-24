@@ -8,6 +8,8 @@ import com.maze.game.maps.Map;
 import com.maze.game.types.PlayerPosition;
 
 import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -18,7 +20,7 @@ public class Player {
     private final int height;
     public PlayerPosition position;
 
-    private List<Integer> heldKeys;
+    private List<Integer> heldKeys = new ArrayList<Integer>();
 
 
     public Player(Point startPosition){
@@ -68,12 +70,12 @@ public class Player {
     }
 
     public void addKey(int keyType){
-        if(!heldKeys.contains(keyType)){
+        if(heldKeys != null && !heldKeys.contains(keyType)){
             heldKeys.add(keyType);
         }
     }
     public boolean useKey(int keyType){
-        if(heldKeys.contains(keyType)){
+        if(heldKeys != null && heldKeys.contains(keyType)){
             heldKeys.remove(keyType);
             return true;
         }
