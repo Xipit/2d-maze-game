@@ -274,6 +274,9 @@ public class Map {
                 if(baseProperties.containsKey(Properties.TRAP_KEY)){
                     // TODO die
                 }
+                if(baseProperties.containsKey(Properties.VICTORY_KEY)){
+                    // TODO win game
+                }
             }
 
             if(cornerTiles[cornerIndex].interaction.tile != null){
