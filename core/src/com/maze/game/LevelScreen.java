@@ -30,7 +30,7 @@ public class LevelScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         // Player movement by keystroke
-        player.input(map);
+        player.input(map, this);
 
         // update Camera position
         camera.update(player.position.getCenter(), map.widthInPixel, map.heightInPixel);
@@ -45,7 +45,8 @@ public class LevelScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
+        super.dispose();
         map.dispose();
-        player.disposeTextures();
+        // player.disposeTextures(); TODO remove: asset manager should maintain resources for the entire game session
     }
 }

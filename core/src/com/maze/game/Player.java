@@ -27,7 +27,7 @@ public class Player {
         this.position = new PlayerPosition(startPosition.x, startPosition.y, this.width, this.height);
     }
 
-    public void input(Map map) {
+    public void input(Map map, LevelScreen levelScreen) {
         Vector2 vector = new Vector2(0, 0);
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
@@ -44,7 +44,7 @@ public class Player {
         if(!vector.isZero()){
             move(vector.scl(speed), map);
 
-            checkForTriggers(map);
+            checkForTriggers(map, levelScreen);
         }
     }
 
@@ -59,8 +59,8 @@ public class Player {
 
     }
 
-    private void checkForTriggers(Map map){
-        map.checkForTriggers(position);
+    private void checkForTriggers(Map map, LevelScreen levelScreen){
+        map.checkForTriggers(position, levelScreen);
     }
 
     public void disposeTextures() {

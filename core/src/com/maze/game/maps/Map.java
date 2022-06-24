@@ -6,8 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.maze.game.Assets;
-import com.maze.game.Properties;
+import com.maze.game.*;
 import com.maze.game.types.*;
 
 import java.awt.*;
@@ -261,7 +260,7 @@ public class Map {
         return moveCorrectionVector;
     }
 
-    public void checkForTriggers(PlayerPosition currentPlayerPosition){
+    public void checkForTriggers(PlayerPosition currentPlayerPosition, LevelScreen levelScreen){
         if(!moveCorrectionVector.isZero()){
             calculateCollisionData(currentPlayerPosition);
         }
@@ -281,9 +280,15 @@ public class Map {
                 }
                 if(baseProperties.containsKey(Properties.TRAP_KEY)){
                     // TODO die
+                    levelScreen.dispose();
+                    MazeGame.instance.setScreen(new LevelScreen());
+                    return;
                 }
                 if(baseProperties.containsKey(Properties.VICTORY_KEY)){
                     // TODO win game
+                    levelScreen.dispose();
+                    MazeGame.instance.setScreen(new VictoryScreen());
+                    return;
                 }
             }
 
@@ -300,7 +305,7 @@ public class Map {
 
     public void dispose() {
         this.tiledMap.dispose();
-        this.renderer.dispose();
+        // this.renderer.dispose(); TODO crash
+        this.resetData();
     }
-
 }

@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 
-public class StartMenuScreen extends ScreenAdapter {
+public class VictoryScreen extends ScreenAdapter {
 
-    public StartMenuScreen() {
+    public VictoryScreen() {
     }
 
     @Override
@@ -16,7 +16,7 @@ public class StartMenuScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         this.dispose();
-        MazeGame.instance.setScreen(new LevelScreen());
+        MazeGame.instance.setScreen(new StartMenuScreen());
     }
 
     @Override
