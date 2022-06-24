@@ -8,14 +8,18 @@ import com.maze.game.maps.Map;
 import com.maze.game.types.PlayerPosition;
 
 import java.awt.*;
+import java.util.List;
 
 public class Player {
     public Texture texture;
 
     private final float speed = 200;
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
     public PlayerPosition position;
+
+    private List<Integer> heldKeys;
+
 
     public Player(Point startPosition){
         texture = Assets.manager.get("prototyp_cat_32.png", Texture.class);
@@ -60,7 +64,20 @@ public class Player {
     }
 
     private void checkForTriggers(Map map, LevelScreen levelScreen){
-        map.checkForTriggers(position, levelScreen);
+        map.checkForTriggers(this, levelScreen);
+    }
+
+    public void addKey(int keyType){
+        if(!heldKeys.contains(keyType)){
+            heldKeys.add(keyType);
+        }
+    }
+    public boolean useKey(int keyType){
+        if(heldKeys.contains(keyType)){
+            heldKeys.remove(keyType);
+            return true;
+        }
+        return false;
     }
 
     public void disposeTextures() {

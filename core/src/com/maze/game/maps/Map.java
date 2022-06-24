@@ -263,7 +263,8 @@ public class Map {
         return moveCorrectionVector;
     }
 
-    public void checkForTriggers(PlayerPosition currentPlayerPosition, LevelScreen levelScreen){
+    public void checkForTriggers(Player player, LevelScreen levelScreen){
+        PlayerPosition currentPlayerPosition = player.position;
         if(!moveCorrectionVector.isZero()){
             calculateCollisionData(currentPlayerPosition);
         }
@@ -282,13 +283,13 @@ public class Map {
                     // TODO open door if have key, change texture
                 }
                 if(baseProperties.containsKey(Properties.TRAP_KEY)){
-                    // TODO die
+                    // the player dies
                     levelScreen.dispose();
                     MazeGame.instance.setScreen(new LevelScreen());
                     return;
                 }
                 if(baseProperties.containsKey(Properties.VICTORY_KEY)){
-                    // TODO win game
+                    // the player wins the game
                     levelScreen.dispose();
                     MazeGame.instance.setScreen(new VictoryScreen());
                     return;
@@ -300,6 +301,8 @@ public class Map {
 
                 if(interactionProperties.containsKey(Properties.KEY_TYPE_KEY) && interactionProperties.containsKey(Properties.KEY_STATUS_KEY)) {
                     // TODO collect key, change texture
+                    int keyType = (int) interactionProperties.get(Properties.KEY_TYPE_KEY);
+                    player.addKey(keyType);
                 }
             }
         }
