@@ -1,9 +1,5 @@
 package com.maze.game.types;
 
-import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.maze.game.maps.Map;
-
 import java.awt.*;
 
 public class Tile {

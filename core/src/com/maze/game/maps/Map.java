@@ -30,7 +30,7 @@ public class Map {
     public Map(String fileName) {
         this.tiledMap = Assets.manager.get(fileName, TiledMap.class);
         this.renderer = new OrthogonalTiledMapRenderer(this.tiledMap);
-        this.baseLayer = (TiledMapTileLayer) this.tiledMap.getLayers().get("tiles"); //TODO change layer name to base
+        this.baseLayer = (TiledMapTileLayer) this.tiledMap.getLayers().get("base");
         this.interactionLayer = (TiledMapTileLayer) this.tiledMap.getLayers().get("interaction");
 
         width = this.tiledMap.getProperties().get("width", Integer.class);
@@ -95,11 +95,19 @@ public class Map {
                     this.baseLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile(),
                     cornerIndex);
 
-            LayerTile interactionCornerTile = new LayerTile(
-                    cornerTileIndex,
-                    this.interactionLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile().getProperties(),
-                    this.interactionLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile(),
-                    cornerIndex);
+            // The base layer always has tiles associated with the cells, but this does not apply to the interaction layer.
+            LayerTile interactionCornerTile;
+            TiledMapTileLayer.Cell interactionCornerCell;
+            if ((interactionCornerCell = this.interactionLayer.getCell(cornerTileIndex.x, cornerTileIndex.y)) != null) {
+                interactionCornerTile = new LayerTile(
+                        cornerTileIndex,
+                        interactionCornerCell.getTile().getProperties(),
+                        interactionCornerCell.getTile(),
+                        cornerIndex);
+            }
+            else {
+                interactionCornerTile = null;
+            }
 
             cornerTiles[cornerIndex] = new Tile(baseCornerTile, interactionCornerTile);
         }
@@ -269,7 +277,7 @@ public class Map {
                 MapProperties baseProperties = cornerTiles[cornerIndex].base.properties;
 
                 if(baseProperties.containsKey(Properties.DOOR_DIRECTION_KEY) && baseProperties.containsKey(Properties.DOOR_STATUS_KEY) && baseProperties.containsKey(Properties.DOOR_TYPE_KEY)){
-                    // TODO open door if have key
+                    // TODO open door if have key, change texture
                 }
                 if(baseProperties.containsKey(Properties.TRAP_KEY)){
                     // TODO die
@@ -279,11 +287,11 @@ public class Map {
                 }
             }
 
-            if(cornerTiles[cornerIndex].interaction.tile != null){
+            if(cornerTiles[cornerIndex].interaction != null && cornerTiles[cornerIndex].interaction.tile != null){
                 MapProperties interactionProperties = cornerTiles[cornerIndex].interaction.properties;
 
                 if(interactionProperties.containsKey(Properties.KEY_TYPE_KEY) && interactionProperties.containsKey(Properties.KEY_STATUS_KEY)) {
-                    // TODO collect key
+                    // TODO collect key, change texture
                 }
             }
         }

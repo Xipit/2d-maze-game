@@ -18,7 +18,7 @@ public class Player {
     public PlayerPosition position;
 
     public Player(Point startPosition){
-        texture = Assets.manager.get("prototyp_cat.png", Texture.class);
+        texture = Assets.manager.get("prototyp_cat_32.png", Texture.class);
 
         this.width = this.texture.getWidth();
         this.height = this.texture.getHeight();

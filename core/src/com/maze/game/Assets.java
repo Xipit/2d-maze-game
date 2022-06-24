@@ -12,9 +12,9 @@ public class Assets {
 
     public static void load() {
         manager.setLoader(TiledMap.class, new TmxMapLoader());
-        manager.load("prototyp_tilemap_64.tmx", TiledMap.class);
+        manager.load("prototyp_1.tmx", TiledMap.class);
 
-        manager.load("prototyp_cat.png", Texture.class);
+        manager.load("prototyp_cat_32.png", Texture.class);
 
         manager.finishLoading();
     }
