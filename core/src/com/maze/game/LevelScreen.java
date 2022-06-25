@@ -47,6 +47,5 @@ public class LevelScreen extends ScreenAdapter {
     public void dispose() {
         super.dispose();
         map.dispose();
-        // player.disposeTextures(); TODO remove: asset manager should maintain resources for the entire game session
     }
 }

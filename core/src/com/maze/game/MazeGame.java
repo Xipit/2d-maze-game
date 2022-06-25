@@ -10,7 +10,8 @@ public class MazeGame extends Game {
 	}
 	@Override
 	public void create () {
-		Assets.load();
+		Assets.loadTextures();
+		Assets.loadTileMaps();
 
 		setScreen(new StartMenuScreen());
 	}

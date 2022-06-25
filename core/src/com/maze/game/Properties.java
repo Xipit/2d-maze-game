@@ -14,10 +14,6 @@ public class Properties {
     }   // Direction specifies the side in which the player approaches the door
         // use with Properties.DoorDirection.value()
 
-
-    public static final String DOOR_STATUS_KEY = "door_status";
-    // 0 -> opened, 1-> closed
-
     public static final String DOOR_TYPE_KEY = "door_type";
     // 0, 1, 2 -> corresponds to KEY_TYPE
 

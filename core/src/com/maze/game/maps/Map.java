@@ -1,6 +1,5 @@
 package com.maze.game.maps;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -24,6 +23,7 @@ public class Map {
     protected final TiledMapTileLayer interactionLayer;
 
     private CornerPosition[] cornerPositions;
+    private Cell[] cornerCells;
     private Tile[] cornerTiles;
     private Vector2 moveCorrectionVector;
 
@@ -67,6 +67,7 @@ public class Map {
     //region Data-calculation
     private void resetData(){
         cornerPositions = new CornerPosition[]{null, null, null, null};
+        cornerCells = new Cell[]{null, null, null, null};
         cornerTiles = new Tile[]{null, null, null, null};
         moveCorrectionVector = new Vector2(0,0);
     }
@@ -89,16 +90,17 @@ public class Map {
 
             Point cornerTileIndex = Tile.getIndex(cornerPositions[cornerIndex].expected, tileWidthInPixel, tileHeightInPixel);
 
+            TiledMapTileLayer.Cell baseCornerCell = this.baseLayer.getCell(cornerTileIndex.x, cornerTileIndex.y);
             LayerTile baseCornerTile = new LayerTile(
                     cornerTileIndex,
-                    this.baseLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile().getProperties(),
-                    this.baseLayer.getCell(cornerTileIndex.x, cornerTileIndex.y).getTile(),
+                    baseCornerCell.getTile().getProperties(),
+                    baseCornerCell.getTile(),
                     cornerIndex);
 
             // The base layer always has tiles associated with the cells, but this does not apply to the interaction layer.
             LayerTile interactionCornerTile;
-            TiledMapTileLayer.Cell interactionCornerCell;
-            if ((interactionCornerCell = this.interactionLayer.getCell(cornerTileIndex.x, cornerTileIndex.y)) != null) {
+            TiledMapTileLayer.Cell interactionCornerCell = this.interactionLayer.getCell(cornerTileIndex.x, cornerTileIndex.y);
+            if (interactionCornerCell != null) {
                 interactionCornerTile = new LayerTile(
                         cornerTileIndex,
                         interactionCornerCell.getTile().getProperties(),
@@ -109,6 +111,7 @@ public class Map {
                 interactionCornerTile = null;
             }
 
+            cornerCells[cornerIndex] = new Cell(baseCornerCell, interactionCornerCell);
             cornerTiles[cornerIndex] = new Tile(baseCornerTile, interactionCornerTile);
         }
     }
@@ -268,7 +271,6 @@ public class Map {
             calculateCollisionData(currentPlayerPosition);
         }
 
-
         for(int cornerIndex = 0; cornerIndex < Corner.values().length; cornerIndex ++){
             if(cornerTiles[cornerIndex] == null){
                 continue;
@@ -278,11 +280,13 @@ public class Map {
             if(cornerTiles[cornerIndex].base.tile != null){
                 MapProperties baseProperties = cornerTiles[cornerIndex].base.properties;
 
-                if(baseProperties.containsKey(Properties.DOOR_DIRECTION_KEY) && baseProperties.containsKey(Properties.DOOR_STATUS_KEY) && baseProperties.containsKey(Properties.DOOR_TYPE_KEY)){
-                    // TODO change texture
+                // regarding texture change: the tile id of the tile set starts at 1 instead 0
+
+                if(baseProperties.containsKey(Properties.DOOR_DIRECTION_KEY) && baseProperties.containsKey(Properties.DOOR_TYPE_KEY)){
                     int doorType = (int) baseProperties.get(Properties.DOOR_TYPE_KEY);
                     if(player.useKey(doorType)){
-                        baseProperties.put(Properties.DOOR_STATUS_KEY, 0);
+                        // TODO universal Id in numerical dependence to DOOR_DIRECTION_KEY
+                        cornerCells[cornerIndex].base.setTile(tiledMap.getTileSets().getTile(1));
                     };
                 }
                 if(baseProperties.containsKey(Properties.TRAP_KEY)){
@@ -303,18 +307,18 @@ public class Map {
                 MapProperties interactionProperties = cornerTiles[cornerIndex].interaction.properties;
 
                 if(interactionProperties.containsKey(Properties.KEY_TYPE_KEY) && interactionProperties.containsKey(Properties.KEY_STATUS_KEY)) {
-                    // TODO change texture
                     int keyType = (int) interactionProperties.get(Properties.KEY_TYPE_KEY);
+                    // TODO universal Id
+                    cornerCells[cornerIndex].interaction.setTile(tiledMap.getTileSets().getTile(22));
                     player.addKey(keyType);
                 }
             }
         }
-
     }
 
     public void dispose() {
+        // TODO tiledMap !?
         this.tiledMap.dispose();
-        // this.renderer.dispose(); TODO crash
         this.resetData();
     }
 }
