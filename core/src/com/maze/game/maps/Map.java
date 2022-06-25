@@ -279,7 +279,7 @@ public class Map {
                 MapProperties baseProperties = cornerTiles[cornerIndex].base.properties;
 
                 if(baseProperties.containsKey(Properties.DOOR_DIRECTION_KEY) && baseProperties.containsKey(Properties.DOOR_STATUS_KEY) && baseProperties.containsKey(Properties.DOOR_TYPE_KEY)){
-                    // TODO open door if have key, change texture
+                    // TODO change texture
                     int doorType = (int) baseProperties.get(Properties.DOOR_TYPE_KEY);
                     if(player.useKey(doorType)){
                         baseProperties.put(Properties.DOOR_STATUS_KEY, 0);
