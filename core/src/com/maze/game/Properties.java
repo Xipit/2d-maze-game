@@ -11,7 +11,7 @@ public class Properties {
     public static final String DOOR_DIRECTION_KEY = "door_direction";
     public enum DoorDirection{
         N, S, W, E
-    }   // Direction in which the player has to move to go through the door
+    }   // Direction specifies the side in which the player approaches the door
         // use with Properties.DoorDirection.value()
 
 

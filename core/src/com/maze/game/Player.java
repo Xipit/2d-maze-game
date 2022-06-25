@@ -71,12 +71,16 @@ public class Player {
 
     public void addKey(int keyType){
         if(heldKeys != null && !heldKeys.contains(keyType)){
+            Gdx.app.log("MAZEGAME", "KEY ADDED with type: " + keyType);
+
             heldKeys.add(keyType);
         }
     }
     public boolean useKey(int keyType){
         if(heldKeys != null && heldKeys.contains(keyType)){
-            heldKeys.remove(keyType);
+            Gdx.app.log("MAZEGAME", "KEY USED with type: " + keyType);
+
+            heldKeys.remove((Object) keyType);
             return true;
         }
         return false;
