@@ -1,5 +1,7 @@
 package com.maze.game.types;
 
+import com.maze.game.Properties;
+
 import java.awt.*;
 
 public class Tile {
@@ -17,8 +19,18 @@ public class Tile {
         return new Point(xIndex, yIndex);
     }
 
-    public static boolean containsKey(LayerTile tile, String key){
-        return tile != null && tile.properties.containsKey(key);
+    public boolean collidesWithWall(){
+        return base.properties.containsKey(Properties.COLLISION_KEY);
+    }
+    public boolean collidesWithDoor(Point cornerPosition, int tileWidth, int tileHeight){
+        boolean tileIsDoor = base.properties.containsKey(Properties.DOOR_DIRECTION_KEY)
+                && base.properties.containsKey(Properties.DOOR_STATUS_KEY)
+                && base.properties.containsKey(Properties.DOOR_TYPE_KEY);
+
+        if(tileIsDoor){
+            return this.base.isInCollisionBox(cornerPosition, tileWidth, tileHeight);
+        }
+        return false;
     }
 }
 

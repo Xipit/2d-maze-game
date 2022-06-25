@@ -1,5 +1,6 @@
 package com.maze.game.maps;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -238,10 +239,8 @@ public class Map {
                 continue;
             }
 
-            MapProperties baseProperties = cornerTiles[cornerIndex].base.properties;
-
-            if(baseProperties.containsKey(Properties.COLLISION_KEY) ||
-                    (baseProperties.containsKey(Properties.DOOR_DIRECTION_KEY) && baseProperties.containsKey(Properties.DOOR_STATUS_KEY) && baseProperties.containsKey(Properties.DOOR_TYPE_KEY))) {
+            if(cornerTiles[cornerIndex].collidesWithWall() ||
+                    cornerTiles[cornerIndex].collidesWithDoor(cornerPositions[cornerIndex].expected, tileWidthInPixel, tileHeightInPixel)) {
                 Vector2 cornerCorrectionVector = calculateMoveCorrectionVector(moveVector, cornerIndex);
 
                 correctionVectors.add(cornerCorrectionVector);

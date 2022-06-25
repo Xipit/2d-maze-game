@@ -25,6 +25,21 @@ public class LayerTile {
         return new Point(index.x * tileWidth, index.y * tileHeight);
     }
 
+    public boolean isInCollisionBox(Point cornerPosition, int tileWidth, int tileHeight){
+        Point collisionEdge = getCollisionEdge(tileWidth, tileHeight);
+
+        if (cornerIndex == Map.Corner.topLeft.ordinal()) {
+            return (cornerPosition.x <= collisionEdge.x && cornerPosition.y >= collisionEdge.y);
+        } else if (cornerIndex == Map.Corner.topRight.ordinal()) {
+            return (cornerPosition.x >= collisionEdge.x && cornerPosition.y >= collisionEdge.y);
+        } else if (cornerIndex == Map.Corner.bottomLeft.ordinal()) {
+            return (cornerPosition.x <= collisionEdge.x && cornerPosition.y <= collisionEdge.y);
+        } else if (cornerIndex == Map.Corner.bottomRight.ordinal()) {
+            return (cornerPosition.x >= collisionEdge.x && cornerPosition.y <= collisionEdge.y);
+        }
+        return false;
+    }
+
     public Point getCollisionEdge(int tileWidth, int tileHeight) {
         Point collisionEdge = getPosition(tileWidth, tileHeight); // bottomLeft of Tile
 
