@@ -11,13 +11,14 @@ public class GameScreen implements Screen {
 
     SpriteBatch batch;
     Texture img;
+    MazeGame game;
 
-
-    public GameScreen() {
+    public GameScreen(MazeGame game) {
+        this.game = game;
         batch = new SpriteBatch();
         img = new Texture("badlogic.jpg");
     }
-    
+
     @Override
     public void dispose() {
         batch.dispose();
@@ -26,7 +27,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        
+
     }
 
     @Override
