@@ -73,7 +73,7 @@ public class MenuScreen implements Screen {
             game.batch.draw(lvan, x + lvlknopf_breit, 350, lvlknopf_breit, lvlknopf_hoch);
             if(Gdx.input.justTouched()) {
                 this.dispose();
-                game.setScreen(new LevelScreen(game));
+                game.setScreen(new AuswahlScreen(game));
 
             }
 

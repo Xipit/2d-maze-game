@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class LevelScreen implements Screen {
+public class AuswahlScreen implements Screen {
 
     private static final int lv1knopf_breit = 300;
     private static final int lv1knopf_hoch = 150;
@@ -25,7 +25,7 @@ public class LevelScreen implements Screen {
     Texture lv3an;
     Texture lv3aus;
 
-    public LevelScreen (MazeGame game){
+    public AuswahlScreen(MazeGame game){
         this.game = game;
         batch = new SpriteBatch();
         lv1an = new Texture("lv1_an.png");
