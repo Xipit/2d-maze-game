@@ -17,7 +17,9 @@ public class LevelScreen extends ScreenAdapter {
     public LevelScreen() {
         camera = new MazeGameCamera(zoomFactor);
 
+        Assets.loadTileMap(PrototypeMap.TILEMAP_FILENAME);
         map = new PrototypeMap();
+
         player = new Player(map.getStartingPoint());
 
         sb = new SpriteBatch();

@@ -52,6 +52,7 @@ public class Map {
         return new Point(tileWidthInPixel, tileHeightInPixel);
     }
 
+
     /*
        0 - 1       topLeft     -   topRight
        |   |       |                      |

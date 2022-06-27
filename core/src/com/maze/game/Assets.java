@@ -17,7 +17,13 @@ public class Assets {
 
     public static void loadTileMaps() {
         manager.setLoader(TiledMap.class, new TmxMapLoader());
-        manager.load("prototyp_1.tmx", TiledMap.class);
+        manager.finishLoading();
+    }
+
+    public static void loadTileMap(String fileName){
+        if(manager.isLoaded(fileName)) manager.unload(fileName);
+
+        manager.load(fileName, TiledMap.class);
         manager.finishLoading();
     }
 
