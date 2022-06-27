@@ -1,5 +1,6 @@
 package com.maze.game.maps;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -23,7 +24,7 @@ public class Map {
     protected final TiledMapTileLayer interactionLayer;
 
     private CornerPosition[] cornerPositions;
-    private Cell[] cornerCells;
+
     private Tile[] cornerTiles;
     private Vector2 moveCorrectionVector;
 
@@ -68,7 +69,6 @@ public class Map {
     //region Data-calculation
     private void resetData(){
         cornerPositions = new CornerPosition[]{null, null, null, null};
-        cornerCells = new Cell[]{null, null, null, null};
         cornerTiles = new Tile[]{null, null, null, null};
         moveCorrectionVector = new Vector2(0,0);
     }
@@ -96,6 +96,7 @@ public class Map {
                     cornerTileIndex,
                     baseCornerCell.getTile().getProperties(),
                     baseCornerCell.getTile(),
+                    baseCornerCell,
                     cornerIndex);
 
             // The base layer always has tiles associated with the cells, but this does not apply to the interaction layer.
@@ -106,13 +107,13 @@ public class Map {
                         cornerTileIndex,
                         interactionCornerCell.getTile().getProperties(),
                         interactionCornerCell.getTile(),
+                        interactionCornerCell,
                         cornerIndex);
             }
             else {
                 interactionCornerTile = null;
             }
 
-            cornerCells[cornerIndex] = new Cell(baseCornerCell, interactionCornerCell);
             cornerTiles[cornerIndex] = new Tile(baseCornerTile, interactionCornerTile);
         }
     }
@@ -147,22 +148,22 @@ public class Map {
             2 - 3       bottomLeft - bottomRight
         */
 
-        if (moveVector.x < 0 || moveVector.y > 0){
+        if (moveVector.isZero() || moveVector.x < 0 || moveVector.y > 0){
             cornerPositions[Corner.topLeft.ordinal()] = new CornerPosition(
                     new Point(playerPosition.xMin, playerPosition.yMax),
                     new Point(previousPlayerPosition.xMin, previousPlayerPosition.yMax)); // topLeft
         }
-        if (moveVector.x > 0 || moveVector.y > 0){
+        if (moveVector.isZero() || moveVector.x > 0 || moveVector.y > 0){
             cornerPositions[Corner.topRight.ordinal()] = new CornerPosition(
                     new Point(playerPosition.xMax, playerPosition.yMax),
                     new Point(previousPlayerPosition.xMax, previousPlayerPosition.yMax)); // topRight
         }
-        if (moveVector.x < 0 || moveVector.y < 0) {
+        if (moveVector.isZero() || moveVector.x < 0 || moveVector.y < 0) {
             cornerPositions[Corner.bottomLeft.ordinal()] = new CornerPosition(
                     new Point(playerPosition.xMin, playerPosition.yMin),
                     new Point(previousPlayerPosition.xMin, previousPlayerPosition.yMin)); // bottomLeft
         }
-        if (moveVector.x > 0 || moveVector.y < 0) {
+        if (moveVector.isZero() || moveVector.x > 0 || moveVector.y < 0) {
             cornerPositions[Corner.bottomRight.ordinal()] = new CornerPosition(
                     new Point(playerPosition.xMax, playerPosition.yMin),
                     new Point(previousPlayerPosition.xMax, previousPlayerPosition.yMin)); // bottomRight
@@ -261,6 +262,7 @@ public class Map {
             accumulatedCorrectionVector = correction;
         }
 
+
         moveCorrectionVector.add(accumulatedCorrectionVector);
 
         return moveCorrectionVector;
@@ -269,7 +271,7 @@ public class Map {
     public void checkForTriggers(Player player, LevelScreen levelScreen){
         PlayerPosition currentPlayerPosition = player.position;
         if(!moveCorrectionVector.isZero()){
-            calculateCollisionData(currentPlayerPosition);
+            calculateCollisionData(moveCorrectionVector, currentPlayerPosition);
         }
 
         for(int cornerIndex = 0; cornerIndex < Corner.values().length; cornerIndex ++){
@@ -282,12 +284,12 @@ public class Map {
                 MapProperties baseProperties = cornerTiles[cornerIndex].base.properties;
 
                 // regarding texture change: the tile id of the tile set starts at 1 instead 0
-
                 if(baseProperties.containsKey(Properties.DOOR_DIRECTION_KEY) && baseProperties.containsKey(Properties.DOOR_TYPE_KEY)){
                     int doorType = (int) baseProperties.get(Properties.DOOR_TYPE_KEY);
                     if(player.useKey(doorType)){
                         // TODO universal Id in numerical dependence to DOOR_DIRECTION_KEY
-                        cornerCells[cornerIndex].base.setTile(tiledMap.getTileSets().getTile(1));
+
+                        cornerTiles[cornerIndex].base.updateTile(tiledMap.getTileSets().getTile(1));
                     };
                 }
                 if(baseProperties.containsKey(Properties.TRAP_KEY)){
@@ -310,7 +312,7 @@ public class Map {
                 if(interactionProperties.containsKey(Properties.KEY_TYPE_KEY) && interactionProperties.containsKey(Properties.KEY_STATUS_KEY)) {
                     int keyType = (int) interactionProperties.get(Properties.KEY_TYPE_KEY);
                     // TODO universal Id
-                    cornerCells[cornerIndex].interaction.setTile(tiledMap.getTileSets().getTile(22));
+                    cornerTiles[cornerIndex].interaction.updateTile(tiledMap.getTileSets().getTile(22));
                     player.addKey(keyType);
                 }
             }
