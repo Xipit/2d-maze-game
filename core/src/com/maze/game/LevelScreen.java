@@ -4,12 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.maze.game.maps.Map;
-import com.maze.game.maps.PrototypeMap;
+import com.maze.game.maps.Level;
+import com.maze.game.maps.PrototypeLevel;
 
 public class LevelScreen extends ScreenAdapter {
     private final MazeGameCamera camera;
-    private final Map map;
+    private final Level level;
     private final Player player;
     private final SpriteBatch sb;
     private final float zoomFactor = 1/4F;
@@ -17,10 +17,10 @@ public class LevelScreen extends ScreenAdapter {
     public LevelScreen() {
         camera = new MazeGameCamera(zoomFactor);
 
-        Assets.loadTileMap(PrototypeMap.TILEMAP_FILENAME);
-        map = new PrototypeMap();
+        Assets.loadTileMap(PrototypeLevel.TILEMAP_FILENAME);
+        level = new PrototypeLevel();
 
-        player = new Player(map.getStartingPoint());
+        player = new Player(level.getStartingPoint());
 
         sb = new SpriteBatch();
     }
@@ -32,12 +32,12 @@ public class LevelScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         // Player movement by keystroke
-        player.input(map, this);
+        player.input(level, this);
 
         // update Camera position
-        camera.update(player.position.getCenter(), map.widthInPixel, map.heightInPixel);
+        camera.update(player.position.getCenter(), level.widthInPixel, level.heightInPixel);
 
-        map.render(camera);
+        level.render(camera);
 
         sb.setProjectionMatrix(camera.combined);
         sb.begin();
@@ -48,6 +48,6 @@ public class LevelScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         super.dispose();
-        map.dispose();
+        level.dispose();
     }
 }

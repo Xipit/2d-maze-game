@@ -4,11 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.maze.game.maps.Map;
+import com.maze.game.maps.Level;
 import com.maze.game.types.PlayerPosition;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class Player {
         this.position = new PlayerPosition(startPosition.x, startPosition.y, this.width, this.height);
     }
 
-    public void input(Map map, LevelScreen levelScreen) {
+    public void input(Level level, LevelScreen levelScreen) {
         Vector2 vector = new Vector2(0, 0);
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
@@ -48,25 +47,25 @@ public class Player {
         vector.nor();  //normalize vector -> length = 1
 
         if(!vector.isZero()){
-            move(vector.scl(speed), map);
+            move(vector.scl(speed), level);
 
-            checkForTriggers(map, levelScreen);
+            checkForTriggers(level, levelScreen);
         }
     }
 
-    private void move(Vector2 moveVector, Map map) {
+    private void move(Vector2 moveVector, Level level) {
         moveVector.scl(Gdx.graphics.getDeltaTime());
         moveVector = new Vector2((float)Math.ceil(moveVector.x), (float)Math.ceil(moveVector.y));
 
-        Vector2 moveCorrectionVector = map.getMoveCorrectionVector(moveVector, position);
+        Vector2 moveCorrectionVector = level.getMoveCorrectionVector(moveVector, position);
 
         Vector2 correctedMoveVector = moveVector.add(moveCorrectionVector);
         this.position = position.update(correctedMoveVector);
 
     }
 
-    private void checkForTriggers(Map map, LevelScreen levelScreen){
-        map.checkForTriggers(this, levelScreen);
+    private void checkForTriggers(Level level, LevelScreen levelScreen){
+        level.checkForTriggers(this, levelScreen);
     }
 
     public void addKey(int keyType){

@@ -1,6 +1,5 @@
 package com.maze.game.maps;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -13,7 +12,7 @@ import com.maze.game.types.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Map {
+public class Level {
     public final int width, height;
     public final int widthInPixel, heightInPixel;
     public final int tileWidthInPixel, tileHeightInPixel;
@@ -28,7 +27,7 @@ public class Map {
     private Tile[] cornerTiles;
     private Vector2 moveCorrectionVector;
 
-    public Map(String fileName) {
+    public Level(String fileName) {
         this.tiledMap = Assets.manager.get(fileName, TiledMap.class);
         this.renderer = new OrthogonalTiledMapRenderer(this.tiledMap);
         this.baseLayer = (TiledMapTileLayer) this.tiledMap.getLayers().get("base");
@@ -71,10 +70,6 @@ public class Map {
         cornerPositions = new CornerPosition[]{null, null, null, null};
         cornerTiles = new Tile[]{null, null, null, null};
         moveCorrectionVector = new Vector2(0,0);
-    }
-
-    private void calculateCollisionData(PlayerPosition currenPlayerPosition){
-        calculateCollisionData(new Vector2(0,0), currenPlayerPosition);
     }
 
     private void calculateCollisionData(Vector2 moveVector, PlayerPosition previousPlayerPosition) {

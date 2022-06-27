@@ -27,7 +27,7 @@ else if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Ke
 }
 
 vector.nor();  //normalize vector length = 1
-if(!vector.isZero()) move(vector.scl(speed), map);
+if(!vector.isZero()) move(vector.scl(speed), level);
 ```
 
 #### [Player.move]
@@ -39,7 +39,7 @@ float deltaTime = Gdx.graphics.getDeltaTime();
 
 moveVector.scl(deltaTime);
 
-moveVector.add(map.accountForCollision(moveVector, position));
+moveVector.add(level.accountForCollision(moveVector, position));
 ```
 
 ## Map
@@ -102,7 +102,7 @@ for (int i = 0; i < cornerPoints.length; i ++) {
 }
 ```
 
-#### [map.getTileIndex]
+#### [level.getTileIndex]
 1. Berechnung der Indizes mithilfe der globalen statischen Werte TILE_WIDTH und TILE_HEIGHT.
 2. Rückgabe eines Punktes mit den Indizes.
 ```java
@@ -161,7 +161,7 @@ return accumulatedCorrectionVector;
 1. Die Position wird mit dem Bewegungsvektor aktualisiert.
 
 ```java
-moveVector.add(map.accountForCollision(moveVector, position));
+moveVector.add(level.accountForCollision(moveVector, position));
 
 position.update(moveVector);
 ```

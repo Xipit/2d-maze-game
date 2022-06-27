@@ -1,11 +1,10 @@
 package com.maze.game.types;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.maze.game.Properties;
-import com.maze.game.maps.Map;
+import com.maze.game.maps.Level;
 
 import java.awt.*;
 
@@ -37,13 +36,13 @@ public class LayerTile {
     public boolean isInCollisionBox(Point cornerPosition, int tileWidth, int tileHeight){
         Point collisionEdge = getCollisionEdge(tileWidth, tileHeight);
 
-        if (playerCornerIndex == Map.Corner.topLeft.ordinal()) {
+        if (playerCornerIndex == Level.Corner.topLeft.ordinal()) {
             return (cornerPosition.x <= collisionEdge.x && cornerPosition.y >= collisionEdge.y);
-        } else if (playerCornerIndex == Map.Corner.topRight.ordinal()) {
+        } else if (playerCornerIndex == Level.Corner.topRight.ordinal()) {
             return (cornerPosition.x >= collisionEdge.x && cornerPosition.y >= collisionEdge.y);
-        } else if (playerCornerIndex == Map.Corner.bottomLeft.ordinal()) {
+        } else if (playerCornerIndex == Level.Corner.bottomLeft.ordinal()) {
             return (cornerPosition.x <= collisionEdge.x && cornerPosition.y <= collisionEdge.y);
-        } else if (playerCornerIndex == Map.Corner.bottomRight.ordinal()) {
+        } else if (playerCornerIndex == Level.Corner.bottomRight.ordinal()) {
             return (cornerPosition.x >= collisionEdge.x && cornerPosition.y <= collisionEdge.y);
         }
         return false;
@@ -93,16 +92,16 @@ public class LayerTile {
         }
 
 
-        if (playerCornerIndex == Map.Corner.topLeft.ordinal()) {
+        if (playerCornerIndex == Level.Corner.topLeft.ordinal()) {
             collisionEdge.x += collisionOffsetX + collisionWidth;
             collisionEdge.y += collisionOffsetY - 1;
-        } else if (playerCornerIndex == Map.Corner.topRight.ordinal()) {
+        } else if (playerCornerIndex == Level.Corner.topRight.ordinal()) {
             collisionEdge.x += collisionOffsetX - 1;
             collisionEdge.y += collisionOffsetY - 1;
-        } else if (playerCornerIndex == Map.Corner.bottomLeft.ordinal()) {
+        } else if (playerCornerIndex == Level.Corner.bottomLeft.ordinal()) {
             collisionEdge.x += collisionOffsetX + collisionWidth;
             collisionEdge.y += collisionOffsetY + collisionHeight;
-        } else if (playerCornerIndex == Map.Corner.bottomRight.ordinal()) {
+        } else if (playerCornerIndex == Level.Corner.bottomRight.ordinal()) {
             collisionEdge.x += collisionOffsetX - 1;
             collisionEdge.y += collisionOffsetY + collisionHeight;
         }

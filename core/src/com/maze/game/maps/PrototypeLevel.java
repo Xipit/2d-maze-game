@@ -1,12 +1,9 @@
 package com.maze.game.maps;
 
-import com.maze.game.Assets;
-
-public class PrototypeMap extends Map{
+public class PrototypeLevel extends Level {
 
     public static final String TILEMAP_FILENAME = "prototyp_1.tmx";
-    public PrototypeMap() {
+    public PrototypeLevel() {
         super(TILEMAP_FILENAME);
-
     }
 }
