@@ -61,7 +61,7 @@ public class LayerTile {
         int collisionOffsetY = 0;
 
         // adjust collision for doors to be able to touch the tile to unlock it
-        if(this.properties.containsKey(Properties.DOOR_DIRECTION_KEY)){
+        if(this.properties.containsKey(Properties.DOOR_DIRECTION_KEY) && (int) this.properties.get(Properties.DOOR_STATUS_KEY) == 1){
             Properties.DoorDirection doorDirection = Properties.DoorDirection.valueOf(this.properties.get(Properties.DOOR_DIRECTION_KEY).toString());
 
             final int collisionInset = 7;

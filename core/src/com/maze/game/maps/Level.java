@@ -275,7 +275,8 @@ public class Level {
                 MapProperties baseProperties = cornerTiles[cornerIndex].base.properties;
 
                 // regarding texture change: the tile id of the tile set starts at 1 instead 0
-                if(baseProperties.containsKey(Properties.DOOR_DIRECTION_KEY) && baseProperties.containsKey(Properties.DOOR_TYPE_KEY)){
+
+                if(baseProperties.containsKey(Properties.DOOR_DIRECTION_KEY) && baseProperties.containsKey(Properties.DOOR_STATUS_KEY) && baseProperties.containsKey(Properties.DOOR_TYPE_KEY)){
                     int doorType = (int) baseProperties.get(Properties.DOOR_TYPE_KEY);
                     if(player.useKey(doorType)){
                         // TODO universal Id in numerical dependence to DOOR_DIRECTION_KEY

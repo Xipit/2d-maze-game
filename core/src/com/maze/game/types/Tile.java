@@ -24,6 +24,9 @@ public class Tile {
     }
     public boolean collidesWithDoor(Point cornerPosition, int tileWidth, int tileHeight){
         boolean tileIsDoor = base.properties.containsKey(Properties.DOOR_DIRECTION_KEY)
+                && base.properties.containsKey(Properties.DOOR_STATUS_KEY)
+                && base.properties.containsKey(Properties.DOOR_TYPE_KEY)
+                && (int) base.properties.get(Properties.DOOR_STATUS_KEY) == 1
                 && base.properties.containsKey(Properties.DOOR_TYPE_KEY);
 
         if(tileIsDoor){
