@@ -94,8 +94,6 @@ public class Map {
             TiledMapTileLayer.Cell baseCornerCell = this.baseLayer.getCell(cornerTileIndex.x, cornerTileIndex.y);
             LayerTile baseCornerTile = new LayerTile(
                     cornerTileIndex,
-                    baseCornerCell.getTile().getProperties(),
-                    baseCornerCell.getTile(),
                     baseCornerCell,
                     cornerIndex);
 
@@ -105,8 +103,6 @@ public class Map {
             if (interactionCornerCell != null) {
                 interactionCornerTile = new LayerTile(
                         cornerTileIndex,
-                        interactionCornerCell.getTile().getProperties(),
-                        interactionCornerCell.getTile(),
                         interactionCornerCell,
                         cornerIndex);
             }

@@ -16,10 +16,10 @@ public class LayerTile {
     private final TiledMapTileLayer.Cell cell;
     private final int playerCornerIndex;
 
-    public LayerTile(Point index, MapProperties properties, TiledMapTile tile, TiledMapTileLayer.Cell cell, int playerCornerIndex) {
+    public LayerTile(Point index, TiledMapTileLayer.Cell cell, int playerCornerIndex) {
         this.index = index;
-        this.properties = properties;
-        this.tile = tile;
+        this.properties = cell.getTile().getProperties();
+        this.tile = cell.getTile();
         this.cell = cell;
         this.playerCornerIndex = playerCornerIndex;
     }
