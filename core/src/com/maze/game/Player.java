@@ -28,7 +28,6 @@ public class Player {
         this.width = this.texture.getWidth();
         this.height = this.texture.getHeight();
 
-        // create a Rectangle
         this.position = new PlayerPosition(startPosition.x, startPosition.y, this.width, this.height);
     }
 
@@ -55,7 +54,7 @@ public class Player {
 
     private void move(Vector2 moveVector, Level level) {
         moveVector.scl(Gdx.graphics.getDeltaTime());
-        moveVector = new Vector2((float)Math.ceil(moveVector.x), (float)Math.ceil(moveVector.y));
+        moveVector = new Vector2(cleanNumber(moveVector.x), cleanNumber(moveVector.y));
 
         Vector2 moveCorrectionVector = level.getMoveCorrectionVector(moveVector, position);
 
@@ -89,4 +88,8 @@ public class Player {
         texture.dispose();
     }
 
+
+    private float cleanNumber (float number){
+        return (float) (number > 0 ? Math.ceil(number) : Math.floor(number));
+    }
 }
