@@ -11,6 +11,7 @@ public class MazeGame extends Game {
 	@Override
 	public void create () {
 		Assets.loadTextures();
+		Assets.loadAudio();
 		Assets.loadTileMaps();
 
 		setScreen(new StartMenuScreen());
@@ -20,6 +21,5 @@ public class MazeGame extends Game {
 	public void dispose(){
 		super.dispose();
 		Assets.dispose();
-		Audio.dispose();
 	}
 }
