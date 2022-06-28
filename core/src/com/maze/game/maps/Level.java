@@ -265,7 +265,7 @@ public class Level {
     public void checkForTriggers(Player player, LevelScreen levelScreen){
         PlayerPosition currentPlayerPosition = player.position;
         if(!moveCorrectionVector.isZero()){
-            calculateCollisionData(moveCorrectionVector, currentPlayerPosition);
+            calculateCollisionData(moveCorrectionVector.scl(-1), currentPlayerPosition);
         }
 
         for(int cornerIndex = 0; cornerIndex < Corner.values().length; cornerIndex ++){
