@@ -4,72 +4,84 @@
  <tile id="1">
   <properties>
    <property name="door_direction" value="E"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="2">
   <properties>
    <property name="door_direction" value="E"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="3">
   <properties>
    <property name="door_direction" value="E"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="2"/>
   </properties>
  </tile>
  <tile id="4">
   <properties>
    <property name="door_direction" value="N"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="5">
   <properties>
    <property name="door_direction" value="N"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="6">
   <properties>
    <property name="door_direction" value="N"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="2"/>
   </properties>
  </tile>
  <tile id="7">
   <properties>
    <property name="door_direction" value="S"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="8">
   <properties>
    <property name="door_direction" value="S"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="9">
   <properties>
    <property name="door_direction" value="S"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="2"/>
   </properties>
  </tile>
  <tile id="10">
   <properties>
    <property name="door_direction" value="W"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="11">
   <properties>
    <property name="door_direction" value="W"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="12">
   <properties>
    <property name="door_direction" value="W"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="2"/>
   </properties>
  </tile>

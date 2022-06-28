@@ -20,5 +20,6 @@ public class MazeGame extends Game {
 	public void dispose(){
 		super.dispose();
 		Assets.dispose();
+		Audio.dispose();
 	}
 }

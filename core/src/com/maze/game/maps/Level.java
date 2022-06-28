@@ -1,5 +1,6 @@
 package com.maze.game.maps;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -39,6 +40,8 @@ public class Level {
         tileHeightInPixel = this.tiledMap.getProperties().get("tileheight", Integer.class);
         widthInPixel = width * tileWidthInPixel;
         heightInPixel = height * tileHeightInPixel;
+
+        Audio.playSound(Audio.LEVEL_START_SOUND);
     }
 
     public void render(OrthographicCamera camera) {
@@ -279,19 +282,24 @@ public class Level {
                 if(baseProperties.containsKey(Properties.DOOR_DIRECTION_KEY) && baseProperties.containsKey(Properties.DOOR_STATUS_KEY) && baseProperties.containsKey(Properties.DOOR_TYPE_KEY)){
                     int doorType = (int) baseProperties.get(Properties.DOOR_TYPE_KEY);
                     if(player.useKey(doorType)){
-                        // TODO universal Id in numerical dependence to DOOR_DIRECTION_KEY
+                        Audio.playSound(Audio.OPEN_DOOR_SOUND);
 
+                        // TODO universal Id in numerical dependence to DOOR_DIRECTION_KEY
                         cornerTiles[cornerIndex].base.updateTile(tiledMap.getTileSets().getTile(1));
                     };
                 }
                 if(baseProperties.containsKey(Properties.TRAP_KEY)){
                     // the player dies
+                    Audio.playSound(Audio.STEP_ON_TRAP_SOUND);
+
                     levelScreen.dispose();
                     MazeGame.instance.setScreen(new LevelScreen());
                     return;
                 }
                 if(baseProperties.containsKey(Properties.VICTORY_KEY)){
                     // the player wins the game
+                    Audio.playSound(Audio.LEVEL_FINISHED_SOUND);
+
                     levelScreen.dispose();
                     MazeGame.instance.setScreen(new VictoryScreen());
                     return;
@@ -302,6 +310,8 @@ public class Level {
                 MapProperties interactionProperties = cornerTiles[cornerIndex].interaction.properties;
 
                 if(interactionProperties.containsKey(Properties.KEY_TYPE_KEY) && interactionProperties.containsKey(Properties.KEY_STATUS_KEY)) {
+                    Audio.playSound(Audio.COLLECT_KEY_SOUND);
+
                     int keyType = (int) interactionProperties.get(Properties.KEY_TYPE_KEY);
                     // TODO universal Id
                     cornerTiles[cornerIndex].interaction.updateTile(tiledMap.getTileSets().getTile(22));
