@@ -28,12 +28,16 @@ public class MazeGameCamera extends OrthographicCamera {
         Vector3 cameraPosition = this.position;
 
         Vector3 targetPosition = new Vector3(
-                (playerCenter.x < Gdx.graphics.getWidth() * this.zoom / 2)
-                        ? (float) Gdx.graphics.getWidth() * this.zoom / 2
-                        : Math.min(playerCenter.x, (mapWidthPixel - (float) Gdx.graphics.getWidth() * this.zoom / 2)),
-                (playerCenter.y < Gdx.graphics.getHeight() * this.zoom / 2)
-                        ? (float) Gdx.graphics.getHeight() * this.zoom / 2
-                        : Math.min(playerCenter.y, (mapHeightPixel - (float) Gdx.graphics.getHeight() * this.zoom / 2)),
+                (Gdx.graphics.getWidth() >= (mapWidthPixel) * (1 / this.zoom))
+                        ? (float) mapWidthPixel / 2
+                        : (playerCenter.x < Gdx.graphics.getWidth() * this.zoom / 2)
+                                ? (float) Gdx.graphics.getWidth() * this.zoom / 2
+                                : Math.min(playerCenter.x, (mapWidthPixel - (float) Gdx.graphics.getWidth() * this.zoom / 2)),
+                (Gdx.graphics.getHeight() >= (mapHeightPixel) * (1 / this.zoom))
+                        ? (float)  mapHeightPixel / 2
+                        : (playerCenter.y < Gdx.graphics.getHeight() * this.zoom / 2)
+                                ? (float) Gdx.graphics.getHeight() * this.zoom / 2
+                                : Math.min(playerCenter.y, (mapHeightPixel - (float) Gdx.graphics.getHeight() * this.zoom / 2)),
                 0);
 
 

@@ -86,7 +86,7 @@ public class Level {
                         return new Point(x - 1, y);
                     else if (y == 1)
                         return new Point(x, y + 1);
-                    else if (y == height -2)
+                    else if (y == height - 2)
                         return new Point(x, y - 1);
                 }
             }
@@ -366,6 +366,7 @@ public class Level {
     }
 
     public Point getStartingPoint(int playerHeight){
+        // centered in y according to player height
         return new Point(this.entryTileIndex.x * tileWidthInPixel, this.entryTileIndex.y * tileHeightInPixel + (tileHeightInPixel - playerHeight) / 2);
     }
 
