@@ -6,6 +6,12 @@ import com.badlogic.gdx.math.Vector3;
 
 import java.awt.*;
 
+/**
+ * <h1>Kamera</h1>
+ * Steuert die Position der Kamera und somit auch deren Verhalten wenn sich der Spieler bewegt.
+ *
+ * @author  Hanno Witzleb, Jörn Drechsler
+ */
 public class MazeGameCamera extends OrthographicCamera {
 
     public MazeGameCamera(float levelZoomFactor){

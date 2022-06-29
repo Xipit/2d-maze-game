@@ -4,6 +4,13 @@ import com.maze.game.Properties;
 
 import java.awt.*;
 
+/**
+ * <h1>Kachel für alle Ebenen</h1>
+ * Bringt Ebenen Kacheln für die Basis- und die Interaktionsebene zusammen.<br/>
+ * Schnittstelle für Kollisionsberechnung.
+ *
+ * @author  Hanno Witzleb, Jörn Drechsler
+ */
 public class Tile {
     public LayerTile base;
     public LayerTile interaction;

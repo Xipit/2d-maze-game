@@ -7,7 +7,12 @@ import com.maze.game.Properties;
 import com.maze.game.maps.Level;
 
 import java.awt.*;
-
+/**
+ * <h1>Ebenen Kachel</h1>
+ * Datenklasse, die als Schnittstelle zwischen den TileMap Daten einer Kachel und den benötigten Daten in der Kollisionsberechnung fungiert.
+ *
+ * @author  Hanno Witzleb
+ */
 public class LayerTile {
     public Point index;
     public MapProperties properties;

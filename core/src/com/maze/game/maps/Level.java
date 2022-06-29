@@ -8,11 +8,22 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.maze.game.*;
+import com.maze.game.screens.LevelScreen;
+import com.maze.game.screens.VictoryScreen;
 import com.maze.game.types.*;
 
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * <h1>Level</h1>
+ * Zentrale Stelle für die Gameplay Logik.<br/>
+ * Verantwortlich für:<br/>
+ *  - Kollision<br/>
+ *  - Gameplay Logik (Schlüssel, Türen, Fallen)
+ *
+ * @author   Hanno Witzleb, Jörn Drechsler
+ */
 public class Level {
     public final int width, height;
     public final int widthInPixel, heightInPixel;

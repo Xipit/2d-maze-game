@@ -3,7 +3,12 @@ package com.maze.game.types;
 import com.badlogic.gdx.math.Vector2;
 
 import java.awt.*;
-
+/**
+ * <h1>Spielerposition</h1>
+ * Datenklasse für die, an Kollision angepasste, Darstellung der Spieler Position.
+ *
+ * @author  Hanno Witzleb, Jörn Drechsler
+ */
 public class PlayerPosition {
     public int xMin, xMax, yMin, yMax;
 

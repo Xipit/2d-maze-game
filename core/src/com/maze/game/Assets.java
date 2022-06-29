@@ -6,6 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
+/**
+ * <h1>Assetmanager</h1>
+ * Statische Klasse (soweit es Java erlaubt) zum zentralen Managen aller möglichen Assets und deren Aufrufe.
+ *
+ * @author  Hanno Witzleb, Jörn Drechsler
+ */
 public class Assets {
     public static AssetManager manager = new AssetManager();
 

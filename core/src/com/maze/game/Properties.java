@@ -1,5 +1,11 @@
 package com.maze.game;
 
+/**
+ * <h1>Eigenschaften</h1>
+ * Statische Klasse (soweit es Java erlaubt) zur Referenz und Dokumentation der Tilemap Properties.
+ *
+ * @author   Hanno Witzleb, Jörn Drechsler
+ */
 public class Properties {
     private Properties(){}
 
