@@ -35,8 +35,8 @@ public class Level {
     protected final TiledMapTileLayer baseLayer;
     protected final TiledMapTileLayer interactionLayer;
 
-    private Point startTileIndex;
-    private int transparentTileID;
+    private final Point entryTileIndex;
+    private final int transparentTileId;
 
     private CornerPosition[] cornerPositions;
 
@@ -57,33 +57,37 @@ public class Level {
         widthInPixel = width * tileWidthInPixel;
         heightInPixel = height * tileHeightInPixel;
 
-        // different start of tile id: 0 (tiled), 1 (libgdx)
+        this.transparentTileId = getTransparentTileId();
+        this.entryTileIndex = getEntryIndex();
 
-        int i = 0;
-        while (this.tiledMapTileSet.getTile(++i) != null) {
-            if (this.tiledMapTileSet.getTile(i).getProperties().containsKey(Properties.TRANSPARENT_KEY)) {
-                this.transparentTileID = i;
-                break;
+        Audio.playSound(Audio.LEVEL_START_SOUND);
+    }
+
+    private int getTransparentTileId(){
+        int id = 0;
+        while (this.tiledMapTileSet.getTile(++id) != null) {
+            if (this.tiledMapTileSet.getTile(id).getProperties().containsKey(Properties.TRANSPARENT_KEY)) {
+                return id;
             }
         }
+        // different start of tile id: 0 (tiled), 1 (libgdx)
+        return 1;
+    }
 
-        outer:
+    private Point getEntryIndex(){
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (this.baseLayer.getCell(x, y).getTile().getProperties().containsKey(Properties.ENTRY_KEY)) {
                     // The predefined tile set is limited to a placement of the entry door on one of the two side walls by design.
                     if (x<=1)
-                        this.startTileIndex = new Point(x+1, y);
+                        return new Point(x+1, y);
                     else
-                        this.startTileIndex = new Point(x-1, y);
-                    break outer;
+                        return new Point(x-1, y);
                 }
             }
         }
-        if (this.startTileIndex == null)
-            this.startTileIndex = new Point(2,2);
 
-        Audio.playSound(Audio.LEVEL_START_SOUND);
+        return new Point(2,2);
     }
 
     public void render(OrthographicCamera camera) {
@@ -319,7 +323,7 @@ public class Level {
                     if(player.useKey(doorType)){
                         Audio.playSound(Audio.OPEN_DOOR_SOUND);
                         cornerTiles[cornerIndex].base.updateTile(this.tiledMapTileSet.getTile(cornerTiles[cornerIndex].base.tile.getId() + 2));
-                    };
+                    }
                 }
                 if(baseProperties.containsKey(Properties.TRAP_KEY)){
                     // the player dies
@@ -348,7 +352,7 @@ public class Level {
 
                     int keyType = (int) interactionProperties.get(Properties.KEY_TYPE_KEY);
 
-                    cornerTiles[cornerIndex].interaction.updateTile(this.tiledMapTileSet.getTile(transparentTileID));
+                    cornerTiles[cornerIndex].interaction.updateTile(this.tiledMapTileSet.getTile(transparentTileId));
 
                     player.addKey(keyType);
                 }
@@ -357,7 +361,7 @@ public class Level {
     }
 
     public Point getStartingPoint(int playerHeight){
-        return new Point(this.startTileIndex.x * tileWidthInPixel, this.startTileIndex.y * tileHeightInPixel + (tileHeightInPixel - playerHeight) / 2);
+        return new Point(this.entryTileIndex.x * tileWidthInPixel, this.entryTileIndex.y * tileHeightInPixel + (tileHeightInPixel - playerHeight) / 2);
     }
 
     public void dispose() {
