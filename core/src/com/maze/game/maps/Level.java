@@ -71,18 +71,23 @@ public class Level {
             }
         }
         // different start of tile id: 0 (tiled), 1 (libgdx)
+        // first valid tile id as fallback
         return 1;
     }
 
     private Point getEntryIndex(){
+        // The guidelines for compatible tilesets have to be fulfilled for the automatic assignment of the start position from the map.
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (this.baseLayer.getCell(x, y).getTile().getProperties().containsKey(Properties.ENTRY_KEY)) {
-                    // The predefined tile set is limited to a placement of the entry door on one of the two side walls by design.
-                    if (x<=1)
-                        return new Point(x+1, y);
-                    else
-                        return new Point(x-1, y);
+                    if (x == 1)
+                        return new Point(x + 1, y);
+                    else if (x == width - 2)
+                        return new Point(x - 1, y);
+                    else if (y == 1)
+                        return new Point(x, y + 1);
+                    else if (y == height -2)
+                        return new Point(x, y - 1);
                 }
             }
         }
