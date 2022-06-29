@@ -1,10 +1,10 @@
 package com.maze.game.maps;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.maze.game.*;
@@ -19,9 +19,13 @@ public class Level {
     public final int tileWidthInPixel, tileHeightInPixel;
 
     private final TiledMap tiledMap;
+    private final TiledMapTileSet tiledMapTileSet;
     private final OrthogonalTiledMapRenderer renderer;
     protected final TiledMapTileLayer baseLayer;
     protected final TiledMapTileLayer interactionLayer;
+
+    private Point startTileIndex;
+    private int transparentTileID;
 
     private CornerPosition[] cornerPositions;
 
@@ -30,6 +34,7 @@ public class Level {
 
     public Level(String fileName) {
         this.tiledMap = Assets.manager.get(fileName, TiledMap.class);
+        this.tiledMapTileSet = this.tiledMap.getTileSets().getTileSet(0);
         this.renderer = new OrthogonalTiledMapRenderer(this.tiledMap);
         this.baseLayer = (TiledMapTileLayer) this.tiledMap.getLayers().get("base");
         this.interactionLayer = (TiledMapTileLayer) this.tiledMap.getLayers().get("interaction");
@@ -41,6 +46,32 @@ public class Level {
         widthInPixel = width * tileWidthInPixel;
         heightInPixel = height * tileHeightInPixel;
 
+        // different start of tile id: 0 (tiled), 1 (libgdx)
+
+        int i = 0;
+        while (this.tiledMapTileSet.getTile(++i) != null) {
+            if (this.tiledMapTileSet.getTile(i).getProperties().containsKey(Properties.TRANSPARENT_KEY)) {
+                this.transparentTileID = i;
+                break;
+            }
+        }
+
+        outer:
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (this.baseLayer.getCell(x, y).getTile().getProperties().containsKey(Properties.ENTRY_KEY)) {
+                    // The predefined tile set is limited to a placement of the entry door on one of the two side walls by design.
+                    if (x<=1)
+                        this.startTileIndex = new Point(x+1, y);
+                    else
+                        this.startTileIndex = new Point(x-1, y);
+                    break outer;
+                }
+            }
+        }
+        if (this.startTileIndex == null)
+            this.startTileIndex = new Point(2,2);
+
         Audio.playSound(Audio.LEVEL_START_SOUND);
     }
 
@@ -49,12 +80,6 @@ public class Level {
         this.renderer.setView(camera);
         this.renderer.render();
     }
-
-
-    public Point getStartingPoint(){
-        return new Point(tileWidthInPixel, tileHeightInPixel);
-    }
-
 
     /*
        0 - 1       topLeft     -   topRight
@@ -277,15 +302,12 @@ public class Level {
             if(cornerTiles[cornerIndex].base.tile != null){
                 MapProperties baseProperties = cornerTiles[cornerIndex].base.properties;
 
-                // regarding texture change: the tile id of the tile set starts at 1 instead 0
-
                 if(baseProperties.containsKey(Properties.DOOR_DIRECTION_KEY) && baseProperties.containsKey(Properties.DOOR_STATUS_KEY) && baseProperties.containsKey(Properties.DOOR_TYPE_KEY)){
+                    // the door is opened
                     int doorType = (int) baseProperties.get(Properties.DOOR_TYPE_KEY);
                     if(player.useKey(doorType)){
                         Audio.playSound(Audio.OPEN_DOOR_SOUND);
-
-                        // TODO universal Id in numerical dependence to DOOR_DIRECTION_KEY
-                        cornerTiles[cornerIndex].base.updateTile(tiledMap.getTileSets().getTile(1));
+                        cornerTiles[cornerIndex].base.updateTile(this.tiledMapTileSet.getTile(cornerTiles[cornerIndex].base.tile.getId() + 2));
                     };
                 }
                 if(baseProperties.containsKey(Properties.TRAP_KEY)){
@@ -310,19 +332,24 @@ public class Level {
                 MapProperties interactionProperties = cornerTiles[cornerIndex].interaction.properties;
 
                 if(interactionProperties.containsKey(Properties.KEY_TYPE_KEY) && interactionProperties.containsKey(Properties.KEY_STATUS_KEY)) {
+                    // the key is collected
                     Audio.playSound(Audio.COLLECT_KEY_SOUND);
 
                     int keyType = (int) interactionProperties.get(Properties.KEY_TYPE_KEY);
-                    // TODO universal Id
-                    cornerTiles[cornerIndex].interaction.updateTile(tiledMap.getTileSets().getTile(22));
+
+                    cornerTiles[cornerIndex].interaction.updateTile(this.tiledMapTileSet.getTile(transparentTileID));
+
                     player.addKey(keyType);
                 }
             }
         }
     }
 
+    public Point getStartingPoint(int playerHeight){
+        return new Point(this.startTileIndex.x * tileWidthInPixel, this.startTileIndex.y * tileHeightInPixel + (tileHeightInPixel - playerHeight) / 2);
+    }
+
     public void dispose() {
-        // TODO tiledMap !?
         this.tiledMap.dispose();
         this.resetData();
     }

@@ -22,12 +22,13 @@ public class Player {
     private List<Integer> heldKeys = new ArrayList<Integer>();
 
 
-    public Player(Point startPosition){
+    public Player(Level level){
         texture = Assets.manager.get("prototyp_cat_32.png", Texture.class);
 
         this.width = this.texture.getWidth();
         this.height = this.texture.getHeight();
 
+        Point startPosition = level.getStartingPoint(this.height);
         this.position = new PlayerPosition(startPosition.x, startPosition.y, this.width, this.height);
     }
 
@@ -83,11 +84,6 @@ public class Player {
         }
         return false;
     }
-
-    public void disposeTextures() {
-        texture.dispose();
-    }
-
 
     private float cleanNumber (float number){
         return (float) (number > 0 ? Math.ceil(number) : Math.floor(number));

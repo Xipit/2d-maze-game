@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.maze.game.maps.Level;
 import com.maze.game.maps.PrototypeLevel;
 
+
 public class LevelScreen extends ScreenAdapter {
     private final MazeGameCamera camera;
     private final Level level;
@@ -20,7 +21,7 @@ public class LevelScreen extends ScreenAdapter {
         Assets.loadTileMap(PrototypeLevel.TILEMAP_FILENAME);
         level = new PrototypeLevel();
 
-        player = new Player(level.getStartingPoint());
+        player = new Player(level);
 
         sb = new SpriteBatch();
     }
