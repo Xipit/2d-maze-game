@@ -61,7 +61,7 @@ public class Player {
             checkForTriggers(level, levelScreen);
         }
 
-        renderData.update(vector, this.position);
+        this.renderData.update(vector, this.position);
     }
 
     private void move(Vector2 moveVector, Level level) {
@@ -69,12 +69,9 @@ public class Player {
         moveVector = new Vector2(cleanNumber(moveVector.x), cleanNumber(moveVector.y));
 
         Vector2 moveCorrectionVector = level.getMoveCorrectionVector(moveVector, position);
-
         Vector2 correctedMoveVector = moveVector.add(moveCorrectionVector);
-        this.position = position.update(correctedMoveVector);
 
-
-
+        this.position.update(correctedMoveVector);
     }
 
     private void checkForTriggers(Level level, LevelScreen levelScreen){
@@ -83,14 +80,12 @@ public class Player {
 
     public void addKey(int keyType){
         if(heldKeys != null && !heldKeys.contains(keyType)){
-            Gdx.app.log("MAZEGAME", "KEY ADDED with type: " + keyType);
 
             heldKeys.add(keyType);
         }
     }
     public boolean useKey(int keyType){
         if(heldKeys != null && heldKeys.contains(keyType)){
-            Gdx.app.log("MAZEGAME", "KEY USED with type: " + keyType);
 
             heldKeys.remove((Object) keyType);
             return true;
