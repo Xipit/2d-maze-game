@@ -20,7 +20,7 @@ verkürzte Schreibweise: Textur (in Größe einer Kachel) mit den Eigenschaften 
       &nbsp;&nbsp;&nbsp;- door_direction = [string] ∈{N,E,S,W}  
       &nbsp;&nbsp;&nbsp;- door_type = [int] ℕ   
       &nbsp;&nbsp;&nbsp;- door_status [int] 1  
-      und eine (door_direction, door_type , door_status),  
+      und eine (door_direction, door_type , door_status)  
       &nbsp;&nbsp;&nbsp;- door_direction = [string] ∈{N,E,S,W}  
       &nbsp;&nbsp;&nbsp;- door_type = [int] ℕ   
       &nbsp;&nbsp;&nbsp;- door_status [int] 0  
