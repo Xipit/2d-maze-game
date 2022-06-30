@@ -17,6 +17,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Maze Game");
+		config.setWindowIcon("design/Character/Cat/png/32px/Cat_sitting.png");
 		new Lwjgl3Application(new MazeGame(), config);
 	}
 }
