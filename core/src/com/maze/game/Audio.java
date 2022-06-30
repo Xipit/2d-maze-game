@@ -17,11 +17,11 @@ public class Audio {
 
 
 
-    public static final Sound COLLECT_KEY_SOUND =     Assets.manager.get(Assets.COLLECT_KEY_SOUND_FILENAME, Sound.class);
-    public static final Sound STEP_ON_TRAP_SOUND =    Assets.manager.get(Assets.STEP_ON_TRAP_SOUND_FILENAME, Sound.class);
-    public static final Sound OPEN_DOOR_SOUND =       Assets.manager.get(Assets.OPEN_DOOR_SOUND_FILENAME, Sound.class);
-    public static final Sound LEVEL_START_SOUND =     Assets.manager.get(Assets.LEVEL_START_SOUND_FILENAME, Sound.class);
-    public static final Sound LEVEL_FINISHED_SOUND =  Assets.manager.get(Assets.LEVEL_FINISHED_SOUND_FILENAME, Sound.class);
+    public static final Sound COLLECT_KEY_SOUND =     Assets.manager.get(Assets.COLLECT_KEY_SOUND, Sound.class);
+    public static final Sound STEP_ON_TRAP_SOUND =    Assets.manager.get(Assets.STEP_ON_TRAP_SOUND, Sound.class);
+    public static final Sound OPEN_DOOR_SOUND =       Assets.manager.get(Assets.OPEN_DOOR_SOUND, Sound.class);
+    public static final Sound LEVEL_START_SOUND =     Assets.manager.get(Assets.LEVEL_START_SOUND, Sound.class);
+    public static final Sound LEVEL_FINISHED_SOUND =  Assets.manager.get(Assets.LEVEL_FINISHED_SOUND, Sound.class);
 
     public static void playSound (Sound sound){;
         sound.play(1f);

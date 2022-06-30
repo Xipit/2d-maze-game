@@ -51,7 +51,7 @@ public class LevelScreen extends ScreenAdapter {
 
         sb.setProjectionMatrix(camera.combined);
         sb.begin();
-        sb.draw(player.texture, player.position.xMin, player.position.yMin);
+        player.renderData.sprite.draw(sb);
         sb.end();
     }
 

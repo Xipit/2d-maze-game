@@ -2,32 +2,40 @@ package com.maze.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.maze.game.levels.Level;
 import com.maze.game.screens.LevelScreen;
 import com.maze.game.types.PlayerPosition;
+import com.maze.game.types.PlayerRenderData;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <h1>Spieler</h1>
+ * Repräsentiert die Spielfigur.<br/>
+ * Verantwortlich für:<br/>
+ *  - Position<br/>
+ *  - Rendering<br/>
+ *  - Input<br/>
+ *  - Bewegung<br/>
+ *
+ * @author  Hanno Witzleb, Jörn Drechsler, Lilia Schneider
+ */
 public class Player {
-    public Texture texture;
+    public PlayerRenderData renderData;
 
     private final float speed = 200;
-    private final int width;
-    private final int height;
+    public final int width = 28;
+    public final int height = 28;
     public PlayerPosition position;
 
     private List<Integer> heldKeys = new ArrayList<Integer>();
 
 
     public Player(Level level){
-        texture = Assets.manager.get(Assets.CAT_SITTING, Texture.class);
-
-        this.width = this.texture.getWidth();
-        this.height = this.texture.getHeight();
+        this.renderData = new PlayerRenderData(this.width, this.height);
 
         Point startPosition = level.getStartingPoint(this.height);
         this.position = new PlayerPosition(startPosition.x, startPosition.y, this.width, this.height);
@@ -52,6 +60,8 @@ public class Player {
 
             checkForTriggers(level, levelScreen);
         }
+
+        renderData.update(vector, this.position);
     }
 
     private void move(Vector2 moveVector, Level level) {
@@ -62,6 +72,8 @@ public class Player {
 
         Vector2 correctedMoveVector = moveVector.add(moveCorrectionVector);
         this.position = position.update(correctedMoveVector);
+
+
 
     }
 
@@ -89,4 +101,6 @@ public class Player {
     private float cleanNumber (float number){
         return (float) (number > 0 ? Math.ceil(number) : Math.floor(number));
     }
+
+
 }

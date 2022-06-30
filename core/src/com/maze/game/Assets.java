@@ -17,39 +17,44 @@ public class Assets {
 
     private Assets(){}
 
-    public static final String CAT_DIAGONAL_LEFT_FOOT =     "assets/character/Cat_diagonal_leftFoot.png";
-    public static final String CAT_DIAGONAL_MIDDLE =        "assets/character/Cat_diagonal_middle.png";
-    public static final String CAT_DIAGONAL_RIGHT_FOOT =    "assets/character/Cat_diagonal_rightFoot.png";
-    public static final String CAT_LEFT_FOOT =              "assets/character/Cat_leftFoot.png";
-    public static final String CAT_MIDDLE =                 "assets/character/Cat_middle.png";
-    public static final String CAT_RIGHT_FOOT =             "assets/character/Cat_rightFoot.png";
-    public static final String CAT_SITTING =                "assets/character/Cat_sitting.png";
+    // Standard Direction: Top Left
+    public static final String[] CAT_DIAGONAL =
+            {"assets/character/Cat_diagonal_leftFoot.png",
+            "assets/character/Cat_diagonal_middle.png",
+            "assets/character/Cat_diagonal_rightFoot.png"};
+    // Standard Direction: Top
+    public static final String[] CAT_VERTICAL =
+            {"assets/character/Cat_leftFoot.png",
+            "assets/character/Cat_middle.png",
+            "assets/character/Cat_rightFoot.png"};
+
+    public static final String CAT_SITTING =        "assets/character/Cat_sitting.png";
             ;
 
     public static void loadTextures() {
-        manager.load(CAT_DIAGONAL_LEFT_FOOT, Texture.class);
-        manager.load(CAT_DIAGONAL_MIDDLE, Texture.class);
-        manager.load(CAT_DIAGONAL_RIGHT_FOOT, Texture.class);
-        manager.load(CAT_LEFT_FOOT, Texture.class);
-        manager.load(CAT_MIDDLE, Texture.class);
-        manager.load(CAT_RIGHT_FOOT, Texture.class);
+        manager.load(CAT_DIAGONAL[0], Texture.class);
+        manager.load(CAT_DIAGONAL[1], Texture.class);
+        manager.load(CAT_DIAGONAL[2], Texture.class);
+        manager.load(CAT_VERTICAL[0], Texture.class);
+        manager.load(CAT_VERTICAL[1], Texture.class);
+        manager.load(CAT_VERTICAL[2], Texture.class);
         manager.load(CAT_SITTING, Texture.class);
         manager.finishLoading();
     }
 
-    public static final String COLLECT_KEY_SOUND_FILENAME =     "assets/sound/collect_key.mp3";
-    public static final String STEP_ON_TRAP_SOUND_FILENAME =    "assets/sound/cat_steps_on_trap.mp3";
-    public static final String OPEN_DOOR_SOUND_FILENAME =       "assets/sound/open_door.mp3";
-    public static final String LEVEL_START_SOUND_FILENAME =     "assets/sound/level_start_meow.mp3";
-    public static final String LEVEL_FINISHED_SOUND_FILENAME =  "assets/sound/level_finished.mp3";
+    public static final String COLLECT_KEY_SOUND =     "assets/sound/collect_key.mp3";
+    public static final String STEP_ON_TRAP_SOUND =    "assets/sound/cat_steps_on_trap.mp3";
+    public static final String OPEN_DOOR_SOUND =       "assets/sound/open_door.mp3";
+    public static final String LEVEL_START_SOUND =     "assets/sound/level_start_meow.mp3";
+    public static final String LEVEL_FINISHED_SOUND =  "assets/sound/level_finished.mp3";
 
     public static void loadAudio() {
 
-        manager.load(COLLECT_KEY_SOUND_FILENAME, Sound.class);
-        manager.load(STEP_ON_TRAP_SOUND_FILENAME, Sound.class);
-        manager.load(OPEN_DOOR_SOUND_FILENAME, Sound.class);
-        manager.load(LEVEL_FINISHED_SOUND_FILENAME, Sound.class);
-        manager.load(LEVEL_START_SOUND_FILENAME, Sound.class);
+        manager.load(COLLECT_KEY_SOUND, Sound.class);
+        manager.load(STEP_ON_TRAP_SOUND, Sound.class);
+        manager.load(OPEN_DOOR_SOUND, Sound.class);
+        manager.load(LEVEL_FINISHED_SOUND, Sound.class);
+        manager.load(LEVEL_START_SOUND, Sound.class);
         manager.finishLoading();
     }
 
