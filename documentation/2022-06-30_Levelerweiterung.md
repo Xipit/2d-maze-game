@@ -20,7 +20,7 @@ verkürzte Schreibweise: Textur (in Größe einer Kachel) mit den Eigenschaften 
       &nbsp;&nbsp;&nbsp;- door_direction = [string] ∈{N,E,S,W}  
       &nbsp;&nbsp;&nbsp;- door_type = [int] ℕ   
       &nbsp;&nbsp;&nbsp;- door_status [int] 1  
-      und (door_direction, door_type , door_status),  
+      und eine (door_direction, door_type , door_status),  
       &nbsp;&nbsp;&nbsp;- door_direction = [string] ∈{N,E,S,W}  
       &nbsp;&nbsp;&nbsp;- door_type = [int] ℕ   
       &nbsp;&nbsp;&nbsp;- door_status [int] 0  
@@ -31,7 +31,7 @@ verkürzte Schreibweise: Textur (in Größe einer Kachel) mit den Eigenschaften 
      dabei ist key_type gleich dem door_type des dazugehörigen Türtypen
     - eine (transparent)
 
-- TSM
+- TMX
     - Nutzung zweier Kachelebenen:  
     „interaction“ enthält die Schlüssel (key_status, key_type)  
     „base“ enthält alle weiten Texturen
