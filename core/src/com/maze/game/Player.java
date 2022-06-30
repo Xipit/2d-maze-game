@@ -24,7 +24,7 @@ public class Player {
 
 
     public Player(Level level){
-        texture = Assets.manager.get("prototyp_cat_32.png", Texture.class);
+        texture = Assets.manager.get(Assets.CAT_SITTING, Texture.class);
 
         this.width = this.texture.getWidth();
         this.height = this.texture.getHeight();
