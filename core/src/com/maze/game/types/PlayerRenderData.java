@@ -23,6 +23,7 @@ public class PlayerRenderData {
 
     private Texture texture;
     private String textureName;
+    private float textureRotation;
     public Sprite sprite;
 
     private LocalDateTime lastTextureChange = LocalDateTime.now();
@@ -42,15 +43,17 @@ public class PlayerRenderData {
         final String textureName = determineTextureName(currentDirectionVector);
         final float textureRotation = determineTextureRotation(currentDirectionVector);
 
-        if(!Objects.equals(this.textureName, textureName)){
+        if(textureName != null && !Objects.equals(this.textureName, textureName)){
             this.lastTextureChange = LocalDateTime.now();
 
             this.textureName = textureName;
+            this.textureRotation = textureRotation;
             this.texture =  Assets.manager.get(textureName);
         }
 
+
         this.sprite.setTexture(this.texture);
-        this.sprite.setRotation(textureRotation);
+        this.sprite.setRotation((textureName == null) ? this.textureRotation : textureRotation);
         this.sprite.setPosition(playerPosition.xMin - (30 - playerWidth), playerPosition.yMin - (30 - playerHeight));
     }
 
@@ -65,7 +68,7 @@ public class PlayerRenderData {
             return Assets.CAT_SITTING;
         }
 
-        return this.textureName;
+        return null;
     }
 
     private int getTextureIndex(){
