@@ -4,7 +4,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.maze.game.Properties;
-import com.maze.game.maps.Level;
+import com.maze.game.levels.Level;
 
 import java.awt.*;
 /**

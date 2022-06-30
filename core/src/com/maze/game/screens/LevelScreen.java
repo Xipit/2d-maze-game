@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.maze.game.Assets;
 import com.maze.game.MazeGameCamera;
 import com.maze.game.Player;
-import com.maze.game.maps.Level;
-import com.maze.game.maps.PrototypeLevel;
+import com.maze.game.levels.Level;
+import com.maze.game.levels.PrototypeLevel;
 
 /**
  * <h1>LevelScreen</h1>

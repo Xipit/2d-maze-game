@@ -1,4 +1,4 @@
-package com.maze.game.maps;
+package com.maze.game.levels;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapProperties;

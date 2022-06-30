@@ -1,4 +1,4 @@
-package com.maze.game.maps;
+package com.maze.game.levels;
 
 /**
  * <h1>Prototyp Level</h1>
