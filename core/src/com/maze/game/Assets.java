@@ -18,17 +18,19 @@ public class Assets {
     private Assets(){}
 
     public static void loadTextures() {
+        String directory = "assets/sound/";
         manager.load("prototyp_cat_32.png", Texture.class);
         manager.finishLoading();
     }
 
     public static void loadAudio() {
         String directory = "assets/sound/";
-        manager.load(directory + "collect_key.mp3", Sound.class);
-        manager.load(directory + "cat_steps_on_trap.mp3", Sound.class);
-        manager.load(directory + "open_door.mp3", Sound.class);
-        manager.load(directory + "level_start_meow.mp3", Sound.class);
-        manager.load(directory + "level_finished.mp3", Sound.class);
+        manager.load(Audio.COLLECT_KEY_SOUND_FILENAME, Sound.class);
+        manager.load(Audio.STEP_ON_TRAP_SOUND_FILENAME, Sound.class);
+        manager.load(Audio.OPEN_DOOR_SOUND_FILENAME, Sound.class);
+        manager.load(Audio.LEVEL_FINISHED_SOUND_FILENAME, Sound.class);
+        manager.load(Audio.LEVEL_START_SOUND_FILENAME, Sound.class);
+        manager.finishLoading();
     }
 
     public static void loadTileMaps() {
