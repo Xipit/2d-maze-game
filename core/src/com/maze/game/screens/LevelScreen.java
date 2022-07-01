@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.maze.game.Assets;
 import com.maze.game.MazeGameCamera;
 import com.maze.game.Player;
-import com.maze.game.levels.Level;
-import com.maze.game.levels.PrototypeLevel;
-import com.maze.game.levels.Tutorial1Level;
-import com.maze.game.levels.Tutorial2Level;
+import com.maze.game.levels.*;
 
 /**
  * <h1>LevelScreen</h1>
@@ -29,8 +26,8 @@ public class LevelScreen extends ScreenAdapter {
     public LevelScreen() {
         camera = new MazeGameCamera(zoomFactor);
 
-        Assets.loadTileMap(Tutorial2Level.TILEMAP_FILENAME);
-        level = new Tutorial2Level();
+        Assets.loadTileMap(Tutorial3Level.TILEMAP_FILENAME);
+        level = new Tutorial3Level();
 
         player = new Player(level);
 

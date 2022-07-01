@@ -1,8 +1,8 @@
 package com.maze.game.levels;
 
 /**
- * <h1>Erstes Tutorial Level</h1>
- * Bringt grundlegende "Victory" Bedingung bei
+ * <h1>Zweites Tutorial Level</h1>
+ * Bringt bei das Level sehr chaotisch sein können und sie ein Labyrinth darstellen
  *
  * @author  Hanno Witzleb
  */
