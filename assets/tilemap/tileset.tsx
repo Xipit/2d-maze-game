@@ -228,7 +228,7 @@
  <tile id="36">
   <properties>
    <property name="door_direction" value="N"/>
-   <property name="door_status" value="1"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="2"/>
   </properties>
  </tile>
@@ -241,7 +241,7 @@
  <tile id="38">
   <properties>
    <property name="door_direction" value="N"/>
-   <property name="door_status" value="0"/>
+   <property name="door_status" type="int" value="0"/>
    <property name="door_type" type="int" value="2"/>
   </properties>
  </tile>
@@ -254,7 +254,7 @@
  <tile id="40">
   <properties>
    <property name="door_direction" value="E"/>
-   <property name="door_status" value="1"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="2"/>
   </properties>
  </tile>
@@ -280,7 +280,7 @@
  <tile id="44">
   <properties>
    <property name="door_direction" value="S"/>
-   <property name="door_status" value="1"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="2"/>
   </properties>
  </tile>
@@ -306,7 +306,7 @@
  <tile id="48">
   <properties>
    <property name="door_direction" value="W"/>
-   <property name="door_status" value="1"/>
+   <property name="door_status" type="int" value="1"/>
    <property name="door_type" type="int" value="2"/>
   </properties>
  </tile>
