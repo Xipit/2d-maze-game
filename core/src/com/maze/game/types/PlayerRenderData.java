@@ -26,12 +26,13 @@ public class PlayerRenderData {
     private float textureRotation;
     public Sprite sprite;
 
+    private Vector2 lastNonZeroMoveVector;
     private LocalDateTime lastTextureChange = LocalDateTime.now();
     private int textureCycleIndex = 0;
     private final int[] textureIndexCycle = {1, 0, 1, 2};
 
     public PlayerRenderData(int playerWidth, int playerHeight){
-        texture = Assets.manager.get(Assets.CAT_SITTING, Texture.class);
+        texture = Assets.manager.get(Assets.CAT_SITTING_RIGHT, Texture.class);
 
         this.playerWidth = playerWidth;
         this.playerHeight = playerHeight;
@@ -40,6 +41,8 @@ public class PlayerRenderData {
 
 
     public void update(Vector2 currentDirectionVector, PlayerPosition playerPosition){
+        if (this.lastNonZeroMoveVector == null) this.lastNonZeroMoveVector = currentDirectionVector;
+
         final String textureName = determineTextureName(currentDirectionVector);
         final float textureRotation = determineTextureRotation(currentDirectionVector);
 
@@ -51,10 +54,11 @@ public class PlayerRenderData {
             this.texture =  Assets.manager.get(textureName);
         }
 
-
         this.sprite.setTexture(this.texture);
         this.sprite.setRotation((textureName == null) ? this.textureRotation : textureRotation);
         this.sprite.setPosition(playerPosition.xMin - (30 - playerWidth), playerPosition.yMin - (30 - playerHeight));
+
+        if (!currentDirectionVector.equals(new Vector2(0, 0))) this.lastNonZeroMoveVector = currentDirectionVector;
     }
 
     private String determineTextureName(Vector2 currentMoveVector){
@@ -65,7 +69,9 @@ public class PlayerRenderData {
             return Assets.CAT_VERTICAL[getTextureIndex()];
         }
         else if(MILLIS.between(this.lastTextureChange, LocalDateTime.now()) > 200 + 150){ // only sit after 150ms of no input
-            return Assets.CAT_SITTING;
+            if (this.lastNonZeroMoveVector.x > 0)
+                return Assets.CAT_SITTING_LEFT;
+            return Assets.CAT_SITTING_RIGHT;
         }
 
         return null;
@@ -104,5 +110,4 @@ public class PlayerRenderData {
 
         return 0F;
     }
-
 }

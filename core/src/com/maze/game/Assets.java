@@ -28,8 +28,8 @@ public class Assets {
             "assets/character/Cat_middle.png",
             "assets/character/Cat_rightFoot.png"};
 
-    public static final String CAT_SITTING =        "assets/character/Cat_sitting.png";
-            ;
+    public static final String CAT_SITTING_LEFT =        "assets/character/Cat_sitting_left.png";
+    public static final String CAT_SITTING_RIGHT =        "assets/character/Cat_sitting_right.png";
 
     public static void loadTextures() {
         manager.load(CAT_DIAGONAL[0], Texture.class);
@@ -38,7 +38,8 @@ public class Assets {
         manager.load(CAT_VERTICAL[0], Texture.class);
         manager.load(CAT_VERTICAL[1], Texture.class);
         manager.load(CAT_VERTICAL[2], Texture.class);
-        manager.load(CAT_SITTING, Texture.class);
+        manager.load(CAT_SITTING_LEFT, Texture.class);
+        manager.load(CAT_SITTING_RIGHT, Texture.class);
         manager.finishLoading();
     }
 
