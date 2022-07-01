@@ -9,6 +9,8 @@ import com.maze.game.MazeGameCamera;
 import com.maze.game.Player;
 import com.maze.game.levels.Level;
 import com.maze.game.levels.PrototypeLevel;
+import com.maze.game.levels.Tutorial1Level;
+import com.maze.game.levels.Tutorial2Level;
 
 /**
  * <h1>LevelScreen</h1>
@@ -27,8 +29,8 @@ public class LevelScreen extends ScreenAdapter {
     public LevelScreen() {
         camera = new MazeGameCamera(zoomFactor);
 
-        Assets.loadTileMap(PrototypeLevel.TILEMAP_FILENAME);
-        level = new PrototypeLevel();
+        Assets.loadTileMap(Tutorial2Level.TILEMAP_FILENAME);
+        level = new Tutorial2Level();
 
         player = new Player(level);
 
