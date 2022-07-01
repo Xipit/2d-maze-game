@@ -1,6 +1,7 @@
 package com.maze.game;
 
 import com.badlogic.gdx.Game;
+import com.maze.game.screens.MenuScreen;
 import com.maze.game.screens.StartMenuScreen;
 
 /**
@@ -12,6 +13,9 @@ import com.maze.game.screens.StartMenuScreen;
 public class MazeGame extends Game {
 	public static MazeGame instance;
 
+	public static final int SCREEN_WIDTH = 1080;
+	public static final int SCREEN_HEIGHT = 720;
+
 	public MazeGame() {
 		MazeGame.instance = this;
 	}
@@ -21,7 +25,7 @@ public class MazeGame extends Game {
 		Assets.loadAudio();
 		Assets.loadTileMaps();
 
-		setScreen(new StartMenuScreen());
+		setScreen(new MenuScreen());
 	}
 
 	@Override
