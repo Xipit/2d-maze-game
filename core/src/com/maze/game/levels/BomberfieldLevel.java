@@ -2,7 +2,7 @@ package com.maze.game.levels;
 
 /**
  * <h1>Bomberfield Level</h1>
- * Dieses Level besitzt ein Feld mit vielen Fallen --> Bomberfield
+ * Dieses Level besitzt einen Bereich mit vielen Fallen --> Bomberfield
  *
  * @author  Simeon Baumann
  */
