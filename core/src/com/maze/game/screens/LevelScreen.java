@@ -23,13 +23,16 @@ public class LevelScreen extends ScreenAdapter {
     private final SpriteBatch sb;
     private final float zoomFactor = 1/4F;
 
-    public LevelScreen() {
+    public LevelScreen(LevelData levelData){
         camera = new MazeGameCamera(zoomFactor);
 
-        Assets.loadTileMap(BomberfieldLevel.TILEMAP_FILENAME);
-        level = new BomberfieldLevel();
 
-        player = new Player(level);
+        Assets.loadTileMap(levelData.getFileName());
+        this.level = new Level(levelData);
+
+
+
+        player = new Player(this.level);
 
         sb = new SpriteBatch();
     }

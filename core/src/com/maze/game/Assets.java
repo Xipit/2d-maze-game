@@ -18,35 +18,28 @@ public class Assets {
 
     private Assets(){}
 
-
-    public static final Class[] LEVELS = {
-            Tutorial1Level.class,
-            Tutorial2Level.class,
-            Tutorial3Level.class,
-            Tutorial4Level.class,
-            Tutorial5Level.class
+    public static final LevelData[] LEVEL_DATA = {
+            new TutorialLevel1Data(),
+            new TutorialLevel2Data(),
+            new TutorialLevel3Data(),
+            new TutorialLevel4Data(),
+            new TutorialLevel5Data()
     };
 
     public static final String LEVELS_BACKGRUND = "assets/menu/background_levelScreen.png";
 
-    public static final String[] LEVEL_BUTTONS = {
-        "assets/menu/lv1_an.png",
-        "assets/menu/lv2_an.png",
-        "assets/menu/lv3_an.png"
-    };
+    public static final String LEVELS_BACK = "assets/menu/tutorial1_button.png";
+    public static final String LEVELS_FORWARD = "assets/menu/tutorial1_button.png";
 
-    public static final String[] LEVEL_BUTTONS_PRESSED = {
-            "assets/menu/lv1_aus.png",
-            "assets/menu/lv2_aus.png",
-            "assets/menu/lv3_aus.png"
-    };
 
     public static void loadLevelSelectMenuTextures(){
-        for(int i = 0; i < LEVEL_BUTTONS.length; i ++){
-            manager.load(LEVEL_BUTTONS[i], Texture.class);
-            manager.load(LEVEL_BUTTONS_PRESSED[i], Texture.class);
+        for (LevelData levelDatum : LEVEL_DATA) {
+            manager.load(levelDatum.getButtonName(), Texture.class);
+            manager.load(levelDatum.getButtonPressedName(), Texture.class);
         }
         manager.load(LEVELS_BACKGRUND, Texture.class);
+        manager.load(LEVELS_BACK, Texture.class);
+        manager.load(LEVELS_FORWARD, Texture.class);
         manager.finishLoading();
     }
 
