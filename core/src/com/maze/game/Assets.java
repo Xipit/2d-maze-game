@@ -23,7 +23,10 @@ public class Assets {
             new TutorialLevel2Data(),
             new TutorialLevel3Data(),
             new TutorialLevel4Data(),
-            new TutorialLevel5Data()
+            new TutorialLevel5Data(),
+            new BomberfieldLevelData(),
+            new SecretChamberLevelData(),
+            new TangleOfPathsLevelData()
     };
 
     public static final String LEVELS_BACKGRUND = "assets/menu/background_levelScreen.png";
