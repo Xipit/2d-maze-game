@@ -11,6 +11,12 @@ import com.maze.game.MazeGame;
 
 import java.awt.*;
 
+/**
+ * <h1>Levelauswahl Screen</h1>
+ * Erlaubt es das Level auszuwählen.
+ *
+ * @author  Hanno Witzleb, Lucas Neugebauer
+ */
 public class LevelSelectScreen extends ScreenAdapter {
 
     private final Point levelButtonDimensions = new Point(300, 150);
@@ -36,8 +42,10 @@ public class LevelSelectScreen extends ScreenAdapter {
 
     private final SpriteBatch sb;
 
-    public LevelSelectScreen(){
-        maxRange = Assets.LEVEL_DATA.length ;
+
+    public LevelSelectScreen(int startOfVisibleRange){
+        this.maxRange = Assets.LEVEL_DATA.length ;
+        this.startOfVisibleRange = Math.min(startOfVisibleRange, maxRange);
         Assets.loadLevelSelectMenuTextures();
 
         for (int i = 0; i < levelTextures.length; i++) {
@@ -54,6 +62,10 @@ public class LevelSelectScreen extends ScreenAdapter {
         escapeTexture = Assets.manager.get(Assets.LEVELS_BACK);
 
         sb = new SpriteBatch();
+    }
+
+    public LevelSelectScreen(){
+        this(0);
     }
 
     @Override
@@ -78,7 +90,7 @@ public class LevelSelectScreen extends ScreenAdapter {
     }
 
     public void input(){
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             MazeGame.instance.setScreen(new MenuScreen());
         }
     }

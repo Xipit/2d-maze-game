@@ -2,7 +2,6 @@ package com.maze.game;
 
 import com.badlogic.gdx.Game;
 import com.maze.game.screens.MenuScreen;
-import com.maze.game.screens.StartMenuScreen;
 
 /**
  * <h1>Zentrale Spielinstanz</h1>

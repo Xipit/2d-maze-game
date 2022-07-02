@@ -11,6 +11,7 @@ import com.maze.game.MazeGameCamera;
 import com.maze.game.Player;
 import com.maze.game.levels.*;
 
+
 /**
  * <h1>LevelScreen</h1>
  * Verantwortlich um alle notwendigen Objekte für ein Level zu instanziieren und für den Aufruf von GameLogik (Input, usw.) für jeden Frame.<br/>
@@ -62,9 +63,20 @@ public class LevelScreen extends ScreenAdapter {
     }
 
     public void input(){
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            MazeGame.instance.setScreen(new LevelSelectScreen());
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+
+            MazeGame.instance.setScreen(new LevelSelectScreen(findIndexOfLevel(level.levelData)));
         }
+    }
+
+    private int findIndexOfLevel(LevelData levelData){
+
+        for(int i = 0; i < Assets.LEVEL_DATA.length; i++) {
+            if(Assets.LEVEL_DATA[i] == levelData) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     @Override

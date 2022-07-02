@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * @author   Hanno Witzleb, Jörn Drechsler
  */
 public class Level {
-    private final LevelData levelData;
+    public final LevelData levelData;
     public final int width, height;
     public final int widthInPixel, heightInPixel;
     public final int tileWidthInPixel, tileHeightInPixel;

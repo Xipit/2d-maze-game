@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.maze.game.MazeGame;
-import com.maze.game.screens.StartMenuScreen;
 
 /**
  * TODO: @Lucas add Docu krams
@@ -23,7 +22,9 @@ public class VictoryScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         this.dispose();
-        MazeGame.instance.setScreen(new StartMenuScreen());
+
+        //TODO add VictoryScreen
+        MazeGame.instance.setScreen(new MenuScreen());
     }
 
     @Override
