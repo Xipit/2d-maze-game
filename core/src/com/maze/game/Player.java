@@ -28,13 +28,14 @@ public class Player {
     public PlayerRenderData renderData;
 
     private final float speed = 170;
-    public final int width = 28;
-    public final int height = 28;
+    public int width = 28;
+    public int height = 28;
     public PlayerPosition position;
 
     private List<Integer> heldKeys = new ArrayList<Integer>();
 
     private final LevelData levelData;
+    public Boolean allowMovement = true;
 
 
     public Player(Level level){
@@ -59,13 +60,14 @@ public class Player {
 
         vector.nor();  //normalize vector -> length = 1
 
-        if(!vector.isZero()){
+        if(!vector.isZero() && allowMovement){
             move(vector.scl(speed), level);
 
             checkForTriggers(level, levelScreen);
         }
 
-        this.renderData.update(vector, this.position);
+        if(allowMovement) this.renderData.update(vector, this.position);
+        else this.renderData.sprite.setTexture(Assets.manager.get(Assets.CAT_SITTING_LEFT));
     }
 
     private void move(Vector2 moveVector, Level level) {

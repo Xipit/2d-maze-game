@@ -1,5 +1,6 @@
 package com.maze.game.levels;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import com.maze.game.*;
 import com.maze.game.screens.LevelScreen;
 import com.maze.game.screens.VictoryScreen;
@@ -43,6 +45,8 @@ public class Level {
 
     private Tile[] cornerTiles;
     private Vector2 moveCorrectionVector;
+
+    private Boolean playerDied = false;
 
     public Level(LevelData levelData) {
         this.levelData = levelData;
@@ -336,8 +340,20 @@ public class Level {
                     // the player dies
                     Audio.playSound(Audio.STEP_ON_TRAP_SOUND);
 
-                    levelScreen.dispose();
-                    MazeGame.instance.setScreen(new LevelScreen(levelData));
+                    final float deathDelay = 0.5F;
+                    player.allowMovement = false;
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            levelScreen.dispose();
+                            MazeGame.instance.setScreen(new LevelScreen(levelData));
+                        }
+
+
+                    }, deathDelay);
+
+
+
                     return;
                 }
                 if(baseProperties.containsKey(Properties.VICTORY_KEY)){
