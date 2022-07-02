@@ -1,10 +1,12 @@
 package com.maze.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.maze.game.Assets;
+import com.maze.game.MazeGame;
 import com.maze.game.MazeGameCamera;
 import com.maze.game.Player;
 import com.maze.game.levels.*;
@@ -46,6 +48,8 @@ public class LevelScreen extends ScreenAdapter {
         // Player movement by keystroke
         player.input(level, this);
 
+        this.input();
+
         // update Camera position
         camera.update(player.position.getCenter(), level.widthInPixel, level.heightInPixel);
 
@@ -55,6 +59,12 @@ public class LevelScreen extends ScreenAdapter {
         sb.begin();
         player.renderData.sprite.draw(sb);
         sb.end();
+    }
+
+    public void input(){
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            MazeGame.instance.setScreen(new LevelSelectScreen());
+        }
     }
 
     @Override

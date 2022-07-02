@@ -1,6 +1,7 @@
 package com.maze.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Camera;
@@ -72,6 +73,7 @@ public class MenuScreen extends ScreenAdapter {
         sb.end();
 
     }
+
 
     public void drawLevelButton(){
         final int middle = MazeGame.SCREEN_WIDTH / 2 - ausknopf_breit / 2;
