@@ -25,6 +25,7 @@ import java.util.ArrayList;
  * @author   Hanno Witzleb, Jörn Drechsler
  */
 public class Level {
+    private final LevelData levelData;
     public final int width, height;
     public final int widthInPixel, heightInPixel;
     public final int tileWidthInPixel, tileHeightInPixel;
@@ -43,8 +44,9 @@ public class Level {
     private Tile[] cornerTiles;
     private Vector2 moveCorrectionVector;
 
-    public Level(String fileName) {
-        this.tiledMap = Assets.manager.get(fileName, TiledMap.class);
+    public Level(LevelData levelData) {
+        this.levelData = levelData;
+        this.tiledMap = Assets.manager.get(levelData.getFileName(), TiledMap.class);
         this.tiledMapTileSet = this.tiledMap.getTileSets().getTileSet(0);
         this.renderer = new OrthogonalTiledMapRenderer(this.tiledMap);
         this.baseLayer = (TiledMapTileLayer) this.tiledMap.getLayers().get("base");
@@ -335,7 +337,7 @@ public class Level {
                     Audio.playSound(Audio.STEP_ON_TRAP_SOUND);
 
                     levelScreen.dispose();
-                    MazeGame.instance.setScreen(new LevelScreen());
+                    MazeGame.instance.setScreen(new LevelScreen(levelData));
                     return;
                 }
                 if(baseProperties.containsKey(Properties.VICTORY_KEY)){

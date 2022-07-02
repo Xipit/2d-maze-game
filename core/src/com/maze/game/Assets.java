@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.maze.game.levels.*;
 
 /**
  * <h1>Assetmanager</h1>
@@ -16,6 +17,54 @@ public class Assets {
     public static AssetManager manager = new AssetManager();
 
     private Assets(){}
+
+    public static final LevelData[] LEVEL_DATA = {
+            new TutorialLevel1Data(),
+            new TutorialLevel2Data(),
+            new TutorialLevel3Data(),
+            new TutorialLevel4Data(),
+            new TutorialLevel5Data(),
+            new BomberfieldLevelData(),
+            new SecretChamberLevelData(),
+            new TangleOfPathsLevelData()
+    };
+
+    public static final String LEVELS_BACKGRUND = "assets/menu/background_levelScreen.png";
+
+    public static final String LEVELS_BACK = "assets/menu/tutorial1_button.png";
+    public static final String LEVELS_FORWARD = "assets/menu/tutorial1_button.png";
+
+
+    public static void loadLevelSelectMenuTextures(){
+        for (LevelData levelDatum : LEVEL_DATA) {
+            manager.load(levelDatum.getButtonName(), Texture.class);
+            manager.load(levelDatum.getButtonPressedName(), Texture.class);
+        }
+        manager.load(LEVELS_BACKGRUND, Texture.class);
+        manager.load(LEVELS_BACK, Texture.class);
+        manager.load(LEVELS_FORWARD, Texture.class);
+        manager.finishLoading();
+    }
+
+    public static final String GAME_BUTTON =            "assets/menu/anknopf.png";
+    public static final String GAME_BUTTON_PRESSED =    "assets/menu/anknopf_an.png";
+    public static final String END_BUTTON =             "assets/menu/endeknopf.png";
+    public static final String END_BUTTON_PRESSED =     "assets/menu/endeknopf_an.png";
+    public static final String LEVEL_BUTTON =           "assets/menu/Level_an.png";
+    public static final String LEVEL_BUTTON_PRESSED =   "assets/menu/Level_aus.png";
+    public static final String BACKGROUND =             "assets/menu/background_real.png";
+
+    public static void loadMenuTextures(){
+        manager.load(GAME_BUTTON, Texture.class);
+        manager.load(GAME_BUTTON_PRESSED, Texture.class);
+        manager.load(END_BUTTON, Texture.class);
+        manager.load(END_BUTTON_PRESSED, Texture.class);
+        manager.load(LEVEL_BUTTON, Texture.class);
+        manager.load(LEVEL_BUTTON_PRESSED, Texture.class);
+        manager.load(BACKGROUND, Texture.class);
+        manager.finishLoading();
+
+    }
 
     // Standard Direction: Top Left
     public static final String[] CAT_DIAGONAL =
