@@ -1,5 +1,7 @@
 package com.maze.game.levels;
 
+import com.maze.game.Assets;
+
 public class LevelData {
 
     protected final String textureAssetDirectory = "assets/menu/";
@@ -19,5 +21,14 @@ public class LevelData {
     }
     public String getButtonPressedName(){
         return "";
+    }
+
+    public int findIndex(){
+        for(int i = 0; i < Assets.LEVEL_DATA.length; i++) {
+            if(Assets.LEVEL_DATA[i] == this) {
+                return i;
+            }
+        }
+        return 0;
     }
 }

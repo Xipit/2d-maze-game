@@ -3,7 +3,13 @@ package com.maze.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.maze.game.Assets;
 import com.maze.game.MazeGame;
+import com.maze.game.levels.LevelData;
+
+import java.awt.*;
 
 /**
  * TODO: @Lucas add Docu krams
@@ -11,20 +17,82 @@ import com.maze.game.MazeGame;
  * @author  Lucas Neugebauer, Jörn Drechsler
  */
 public class VictoryScreen extends ScreenAdapter {
+    private final Texture victoryImageTexture;
 
-    public VictoryScreen() {
+    private final Point nextLevelButtonDimension = new Point(300, 150);
+    private final Texture nextLevelTexture;
+
+    private final Point backButtonDimensons = new Point(100, 100);
+    private final Texture backTexture;
+
+    private final SpriteBatch sb;
+
+    private final LevelData wonLevelData;
+
+    public VictoryScreen(LevelData levelData) {
+        this.wonLevelData = levelData;
+
+        Assets.loadVictoryMenuTextures();
+
+        victoryImageTexture = Assets.manager.get(Assets.VICTORY_IMAGE);
+        nextLevelTexture = Assets.manager.get(Assets.NEXT_LEVEL);
+        backTexture = Assets.manager.get(Assets.LEVELS_BACKWARD);
+
+        sb = new SpriteBatch();
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-        this.dispose();
 
-        //TODO add VictoryScreen
-        MazeGame.instance.setScreen(new MenuScreen());
+        sb.begin();
+        sb.draw(victoryImageTexture, 200, 200);
+
+        drawBackButton(backTexture, backTexture);
+        drawNextLevelButton(nextLevelTexture, nextLevelTexture);
+
+        sb.end();
+    }
+
+    public void drawBackButton(Texture texture, Texture texturePressed){
+        int xOffset = 200;
+        final int yOffset = 20;
+
+        if (Gdx.input.getX() < xOffset + backButtonDimensons.x
+                && Gdx.input.getX() > xOffset
+                && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < yOffset + backButtonDimensons.y
+                && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() > yOffset ) {
+
+            sb.draw(texture, xOffset, yOffset, backButtonDimensons.x, backButtonDimensons.y);
+            if(Gdx.input.justTouched()) {
+                MazeGame.instance.setScreen(new LevelSelectScreen(wonLevelData.findIndex()));
+            }
+        }else {
+            sb.draw(texturePressed, xOffset, yOffset, backButtonDimensons.x, backButtonDimensons.y);
+        }
+
+    }
+
+    public void drawNextLevelButton(Texture texture, Texture texturePressed){
+        int xOffset = 582;
+        final int yOffset = 20;
+
+        if (Gdx.input.getX() < xOffset + nextLevelButtonDimension.x
+                && Gdx.input.getX() > xOffset
+                && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < yOffset + nextLevelButtonDimension.y
+                && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() > yOffset ) {
+
+            sb.draw(texture, xOffset, yOffset, nextLevelButtonDimension.x, nextLevelButtonDimension.y);
+            if(Gdx.input.justTouched()) {
+                MazeGame.instance.setScreen(new LevelScreen(Assets.LEVEL_DATA[Math.min(wonLevelData.findIndex() + 1, Assets.LEVEL_DATA.length - 1)]));
+            }
+        }else {
+            sb.draw(texturePressed, xOffset, yOffset, nextLevelButtonDimension.x, nextLevelButtonDimension.y);
+        }
+
     }
 
     @Override

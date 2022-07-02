@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.maze.game.levels.Level;
+import com.maze.game.levels.LevelData;
 import com.maze.game.screens.LevelScreen;
 import com.maze.game.types.PlayerPosition;
 import com.maze.game.types.PlayerRenderData;
@@ -26,15 +27,18 @@ import java.util.List;
 public class Player {
     public PlayerRenderData renderData;
 
-    private final float speed = 200;
+    private final float speed = 170;
     public final int width = 28;
     public final int height = 28;
     public PlayerPosition position;
 
     private List<Integer> heldKeys = new ArrayList<Integer>();
 
+    private final LevelData levelData;
+
 
     public Player(Level level){
+        this.levelData = level.levelData;
         this.renderData = new PlayerRenderData(this.width, this.height);
 
         Point startPosition = level.getStartingPoint(this.height);
@@ -75,7 +79,7 @@ public class Player {
     }
 
     private void checkForTriggers(Level level, LevelScreen levelScreen){
-        level.checkForTriggers(this, levelScreen);
+        level.checkForTriggers(this, levelScreen, levelData);
     }
 
     public void addKey(int keyType){

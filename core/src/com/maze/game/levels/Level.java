@@ -309,7 +309,7 @@ public class Level {
         return moveCorrectionVector;
     }
 
-    public void checkForTriggers(Player player, LevelScreen levelScreen){
+    public void checkForTriggers(Player player, LevelScreen levelScreen, LevelData levelData){
         PlayerPosition currentPlayerPosition = player.position;
         if(!moveCorrectionVector.isZero()){
             calculateCollisionData(moveCorrectionVector.scl(-1), currentPlayerPosition);
@@ -345,7 +345,7 @@ public class Level {
                     Audio.playSound(Audio.LEVEL_FINISHED_SOUND);
 
                     levelScreen.dispose();
-                    MazeGame.instance.setScreen(new VictoryScreen());
+                    MazeGame.instance.setScreen(new VictoryScreen(levelData));
                     return;
                 }
             }

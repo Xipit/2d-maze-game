@@ -53,13 +53,13 @@ public class LevelSelectScreen extends ScreenAdapter {
             levelPressedTextures[i] = Assets.manager.get(Assets.LEVEL_DATA[i].getButtonPressedName());
         }
 
-        backTexture = Assets.manager.get(Assets.LEVELS_BACK);
+        backTexture = Assets.manager.get(Assets.LEVELS_BACKWARD);
         forwardTexture = Assets.manager.get(Assets.LEVELS_FORWARD);
 
         backgroundTexture = Assets.manager.get(Assets.LEVELS_BACKGRUND);
 
         //TODO add special escape texture
-        escapeTexture = Assets.manager.get(Assets.LEVELS_BACK);
+        escapeTexture = Assets.manager.get(Assets.LEVELS_BACKWARD);
 
         sb = new SpriteBatch();
     }

@@ -18,6 +18,17 @@ public class Assets {
 
     private Assets(){}
 
+    public static final String VICTORY_IMAGE = "assets/menu/victoryScreen.png";
+    public static final String NEXT_LEVEL = "assets/menu/tutorial1_button.png"; //TODO add custom next level texture
+
+    public static void loadVictoryMenuTextures(){
+        manager.load(VICTORY_IMAGE, Texture.class);
+        manager.load(NEXT_LEVEL, Texture.class);
+        manager.load(LEVELS_BACKWARD, Texture.class);
+        manager.finishLoading();
+    }
+
+
     public static final LevelData[] LEVEL_DATA = {
             new TutorialLevel1Data(),
             new TutorialLevel2Data(),
@@ -31,7 +42,8 @@ public class Assets {
 
     public static final String LEVELS_BACKGRUND = "assets/menu/background_levelScreen.png";
 
-    public static final String LEVELS_BACK = "assets/menu/tutorial1_button.png";
+    // TODO add custom Forward & Backward textures
+    public static final String LEVELS_BACKWARD = "assets/menu/tutorial1_button.png";
     public static final String LEVELS_FORWARD = "assets/menu/tutorial1_button.png";
 
 
@@ -41,7 +53,7 @@ public class Assets {
             manager.load(levelDatum.getButtonPressedName(), Texture.class);
         }
         manager.load(LEVELS_BACKGRUND, Texture.class);
-        manager.load(LEVELS_BACK, Texture.class);
+        manager.load(LEVELS_BACKWARD, Texture.class);
         manager.load(LEVELS_FORWARD, Texture.class);
         manager.finishLoading();
     }

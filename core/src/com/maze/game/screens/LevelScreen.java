@@ -65,19 +65,11 @@ public class LevelScreen extends ScreenAdapter {
     public void input(){
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
 
-            MazeGame.instance.setScreen(new LevelSelectScreen(findIndexOfLevel(level.levelData)));
+            MazeGame.instance.setScreen(new LevelSelectScreen(level.levelData.findIndex()));
         }
     }
 
-    private int findIndexOfLevel(LevelData levelData){
 
-        for(int i = 0; i < Assets.LEVEL_DATA.length; i++) {
-            if(Assets.LEVEL_DATA[i] == levelData) {
-                return i;
-            }
-        }
-        return 0;
-    }
 
     @Override
     public void dispose() {
