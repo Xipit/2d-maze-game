@@ -23,13 +23,13 @@ public class LevelScreen extends ScreenAdapter {
     private final SpriteBatch sb;
     private final float zoomFactor = 1/4F;
 
-    public LevelScreen(Class level) throws NoSuchFieldException, IllegalAccessException {
+    public LevelScreen(LevelData levelData){
         camera = new MazeGameCamera(zoomFactor);
 
-        if(level.isInstance(Level.class)){
-            Assets.loadTileMap((level).getDeclaredField("TILEMAP_FILENAME").get(null).toString());
-            this.level = new level.newInstance();
-        }
+
+        Assets.loadTileMap(levelData.getFileName());
+        this.level = new Level(levelData);
+
 
 
         player = new Player(this.level);

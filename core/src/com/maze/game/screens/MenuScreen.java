@@ -122,7 +122,7 @@ public class MenuScreen extends ScreenAdapter {
             sb.draw(gkaus, middle, 550, anknopf_breit, anknopf_hoch);
             if(Gdx.input.justTouched()) {
                 this.dispose();
-                MazeGame.instance.setScreen(new LevelScreen());
+                //MazeGame.instance.setScreen(new LevelScreen());
 
             }
 
