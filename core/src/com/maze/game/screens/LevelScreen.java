@@ -26,8 +26,8 @@ public class LevelScreen extends ScreenAdapter {
     public LevelScreen() {
         camera = new MazeGameCamera(zoomFactor);
 
-        Assets.loadTileMap(Tutorial5Level.TILEMAP_FILENAME);
-        level = new Tutorial5Level();
+        Assets.loadTileMap(BomberfieldLevel.TILEMAP_FILENAME);
+        level = new BomberfieldLevel();
 
         player = new Player(level);
 
