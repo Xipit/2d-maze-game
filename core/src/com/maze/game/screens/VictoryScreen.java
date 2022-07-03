@@ -45,8 +45,8 @@ public class VictoryScreen extends ScreenAdapter {
         nextLevelTexture = Assets.manager.get(Assets.NEXT_LEVEL);
         nextLevelTexturePressed = Assets.manager.get(Assets.NEXT_LEVEL_PRESSED);
         //TODO implement specific texture for repeat button
-        repeatLevelTexture = Assets.manager.get(Assets.NEXT_LEVEL);
-        repeatLevelTexturePressed = Assets.manager.get(Assets.NEXT_LEVEL_PRESSED);
+        repeatLevelTexture = Assets.manager.get(Assets.RELOAD_LEVEL);
+        repeatLevelTexturePressed = Assets.manager.get(Assets.RELOAD_LEVEL_PRESSED);
         backTexture = Assets.manager.get(Assets.LEVELS_BACKWARD);
         backTexturePressed = Assets.manager.get(Assets.LEVELS_BACKWARD_PRESSED);
 

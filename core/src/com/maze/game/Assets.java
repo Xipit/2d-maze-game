@@ -21,12 +21,16 @@ public class Assets {
     public static final String VICTORY_IMAGE = "assets/menu/victoryScreen.png";
     public static final String NEXT_LEVEL = "assets/menu/nextlvl_aus.png"; //TODO add custom next level texture
     public static final String NEXT_LEVEL_PRESSED = "assets/menu/nextlvl_an.png";
+    public static final String RELOAD_LEVEL = "assets/menu/repeat_aus.png";
+    public static final String RELOAD_LEVEL_PRESSED = "assets/menu/repeat_an.png";
 
     public static void loadVictoryMenuTextures(){
         manager.load(VICTORY_IMAGE, Texture.class);
         manager.load(NEXT_LEVEL, Texture.class);
         manager.load(NEXT_LEVEL_PRESSED, Texture.class);
         manager.load(LEVELS_BACKWARD, Texture.class);
+        manager.load(RELOAD_LEVEL, Texture.class);
+        manager.load(RELOAD_LEVEL_PRESSED, Texture.class);
         manager.finishLoading();
     }
 
