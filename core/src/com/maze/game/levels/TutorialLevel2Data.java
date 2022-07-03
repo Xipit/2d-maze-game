@@ -2,7 +2,7 @@ package com.maze.game.levels;
 
 /**
  * <h1>Zweites Tutorial Level</h1>
- * Bringt die generelle Atmosphäre und den Levelaufbau näher.
+ * Bringt die generelle Atmosphäre und den Levelaufbau näher. Außerdem versucht es dem Spieler beizubringen das Diagonalbewegung wichtig ist.
  *
  * @author   Hanno Witzleb
  */
