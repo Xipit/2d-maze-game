@@ -31,6 +31,7 @@ public class Assets {
     }
 
 
+    // determines Appearance in Game and Order in LevelSelectScreen
     public static final LevelData[] LEVEL_DATA = {
             new TutorialLevel1Data(),
             new TutorialLevel2Data(),
