@@ -1,5 +1,12 @@
 package com.maze.game.levels;
 
+/**
+ * <h1>TheSecretChambers Level</h1>
+ * Dieses Level beinhaltet viele Räume und Türen, für die mehrere verschiedene Schlüssel benötigt werden.
+ *
+ * @author  Laurenz Oppelt
+ */
+
 public class SecretChamberLevelData extends LevelData{
     private final String name = "Secret Chamber";
     private final String fileName = "Level_theSecretChambers.tmx";
