@@ -24,7 +24,7 @@ public class VictoryScreen extends ScreenAdapter {
     private final Texture nextLevelTexture;
     private final Texture nextLevelTexturePressed;
 
-    private final Point backButtonDimensons = new Point(100, 100);
+    private final Point backButtonDimensions = new Point(100, 100);
     private final Texture backTexture;
     private final Texture backTexturePressed;
 
@@ -73,17 +73,17 @@ public class VictoryScreen extends ScreenAdapter {
         int xOffset = 200;
         final int yOffset = 20;
 
-        if (Gdx.input.getX() < xOffset + backButtonDimensons.x
+        if (Gdx.input.getX() < xOffset + backButtonDimensions.x
                 && Gdx.input.getX() > xOffset
-                && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < yOffset + backButtonDimensons.y
+                && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < yOffset + backButtonDimensions.y
                 && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() > yOffset ) {
 
-            sb.draw(texturePressed, xOffset, yOffset, backButtonDimensons.x, backButtonDimensons.y);
+            sb.draw(texturePressed, xOffset, yOffset, backButtonDimensions.x, backButtonDimensions.y);
             if(Gdx.input.justTouched()) {
                 MazeGame.instance.setScreen(new LevelSelectScreen(wonLevelData.findIndex()));
             }
         }else {
-            sb.draw(texture, xOffset, yOffset, backButtonDimensons.x, backButtonDimensons.y);
+            sb.draw(texture, xOffset, yOffset, backButtonDimensions.x, backButtonDimensions.y);
         }
 
     }
