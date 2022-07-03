@@ -3,8 +3,8 @@ package com.maze.game.levels;
 public class SecretChamberLevelData extends LevelData{
     private final String name = "Secret Chamber";
     private final String fileName = "Level_theSecretChambers.tmx";
-    private final String buttonName = "tutorial1_button.png";
-    private final String buttonPressedName = "tutorial1_buttonPressed.png";
+    private final String buttonName = "secret_aus.png";
+    private final String buttonPressedName = "secret_an.png";
 
     @Override
     public String getName(){

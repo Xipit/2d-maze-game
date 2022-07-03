@@ -19,11 +19,13 @@ public class Assets {
     private Assets(){}
 
     public static final String VICTORY_IMAGE = "assets/menu/victoryScreen.png";
-    public static final String NEXT_LEVEL = "assets/menu/tutorial1_button.png"; //TODO add custom next level texture
+    public static final String NEXT_LEVEL = "assets/menu/nextlvl_aus.png"; //TODO add custom next level texture
+    public static final String NEXT_LEVEL_PRESSED = "assets/menu/nextlvl_an.png";
 
     public static void loadVictoryMenuTextures(){
         manager.load(VICTORY_IMAGE, Texture.class);
         manager.load(NEXT_LEVEL, Texture.class);
+        manager.load(NEXT_LEVEL_PRESSED, Texture.class);
         manager.load(LEVELS_BACKWARD, Texture.class);
         manager.finishLoading();
     }
@@ -41,11 +43,15 @@ public class Assets {
             new TangleOfPathsLevelData()
     };
 
-    public static final String LEVELS_BACKGRUND = "assets/menu/background_levelScreen.png";
+    public static final String LEVELS_BACKGRUND = "assets/menu/levelbg.png";
 
     // TODO add custom Forward & Backward textures
-    public static final String LEVELS_BACKWARD = "assets/menu/tutorial1_button.png";
-    public static final String LEVELS_FORWARD = "assets/menu/tutorial1_button.png";
+    public static final String LEVELS_BACKWARD = "assets/menu/back_aus.png";
+    public static final String LEVELS_FORWARD = "assets/menu/forward_aus.png";
+    public static final String LEVELS_ESCAPE = "assets/menu/escape_off.png";
+    public static final String LEVELS_BACKWARD_PRESSED = "assets/menu/back_an.png";
+    public static final String LEVELS_FORWARD_PRESSED = "assets/menu/forward_an.png";
+    public static final String LEVELS_ESCAPE_PRESSED = "assets/menu/escape_on.png";
 
 
     public static void loadLevelSelectMenuTextures(){
@@ -56,16 +62,20 @@ public class Assets {
         manager.load(LEVELS_BACKGRUND, Texture.class);
         manager.load(LEVELS_BACKWARD, Texture.class);
         manager.load(LEVELS_FORWARD, Texture.class);
+        manager.load(LEVELS_ESCAPE, Texture.class);
+        manager.load(LEVELS_BACKWARD_PRESSED, Texture.class);
+        manager.load(LEVELS_FORWARD_PRESSED, Texture.class);
+        manager.load(LEVELS_ESCAPE_PRESSED, Texture.class);
         manager.finishLoading();
     }
 
     public static final String GAME_BUTTON =            "assets/menu/anknopf.png";
     public static final String GAME_BUTTON_PRESSED =    "assets/menu/anknopf_an.png";
-    public static final String END_BUTTON =             "assets/menu/endeknopf.png";
-    public static final String END_BUTTON_PRESSED =     "assets/menu/endeknopf_an.png";
+    public static final String END_BUTTON =             "assets/menu/ende_aus.png";
+    public static final String END_BUTTON_PRESSED =     "assets/menu/ende_an.png";
     public static final String LEVEL_BUTTON =           "assets/menu/level_an.png";
     public static final String LEVEL_BUTTON_PRESSED =   "assets/menu/level_aus.png";
-    public static final String BACKGROUND =             "assets/menu/background_real.png";
+    public static final String BACKGROUND =             "assets/menu/test.png";
 
     public static void loadMenuTextures(){
         manager.load(GAME_BUTTON, Texture.class);

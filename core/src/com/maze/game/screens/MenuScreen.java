@@ -19,6 +19,7 @@ import java.awt.*;
 public class MenuScreen extends ScreenAdapter {
 
     private static final Point buttonDimensions = new Point(300, 150);
+    private static final Point levelbuttonDimensions = new Point(600, 150);
 
     private final SpriteBatch sb;
 
@@ -59,15 +60,15 @@ public class MenuScreen extends ScreenAdapter {
 
 
     public void drawLevelButton(){
-        final int middle = MazeGame.SCREEN_WIDTH / 2 - buttonDimensions.x / 2;
-        final int y = 200;
+        final int middle = MazeGame.SCREEN_WIDTH / 2 - levelbuttonDimensions.x / 2;
+        final int y = 220;
 
-        if (Gdx.input.getX() < middle + buttonDimensions.x
+        if (Gdx.input.getX() < middle + levelbuttonDimensions.x
                 && Gdx.input.getX() > middle
-                && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < y + buttonDimensions.y
+                && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < y + levelbuttonDimensions.y
                 && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() > y ) {
 
-            sb.draw(levelTexture, middle, y, buttonDimensions.x, buttonDimensions.x);
+            sb.draw(levelTexture, middle, y, levelbuttonDimensions.x, levelbuttonDimensions.y);
             if(Gdx.input.justTouched()) {
                 this.dispose();
                 MazeGame.instance.setScreen(new LevelSelectScreen());
@@ -75,7 +76,7 @@ public class MenuScreen extends ScreenAdapter {
             }
 
         }else {
-            sb.draw(levelTexturePressed, middle, y, buttonDimensions.x, buttonDimensions.y);
+            sb.draw(levelTexturePressed, middle, y, levelbuttonDimensions.x, levelbuttonDimensions.y);
         }
     }
 
