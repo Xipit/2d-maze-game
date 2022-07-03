@@ -41,7 +41,8 @@ public class Assets {
             new TutorialLevel6Data(),
             new BomberfieldLevelData(),
             new SecretChamberLevelData(),
-            new TangleOfPathsLevelData()
+            new TangleOfPathsLevelData(),
+            new IllusionLevelData()
     };
 
     public static final String LEVELS_BACKGRUND = "assets/menu/levelbg.png";
