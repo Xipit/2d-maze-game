@@ -24,6 +24,10 @@ public class VictoryScreen extends ScreenAdapter {
     private final Texture nextLevelTexture;
     private final Texture nextLevelTexturePressed;
 
+    private final Point repeatLevelButtonDimension = new Point(150, 150);
+    private final Texture repeatLevelTexture;
+    private final Texture repeatLevelTexturePressed;
+
     private final Point backButtonDimensions = new Point(100, 100);
     private final Texture backTexture;
     private final Texture backTexturePressed;
@@ -40,6 +44,9 @@ public class VictoryScreen extends ScreenAdapter {
         victoryImageTexture = Assets.manager.get(Assets.VICTORY_IMAGE);
         nextLevelTexture = Assets.manager.get(Assets.NEXT_LEVEL);
         nextLevelTexturePressed = Assets.manager.get(Assets.NEXT_LEVEL_PRESSED);
+        //TODO implement specific texture for repeat button
+        repeatLevelTexture = Assets.manager.get(Assets.NEXT_LEVEL);
+        repeatLevelTexturePressed = Assets.manager.get(Assets.NEXT_LEVEL_PRESSED);
         backTexture = Assets.manager.get(Assets.LEVELS_BACKWARD);
         backTexturePressed = Assets.manager.get(Assets.LEVELS_BACKWARD_PRESSED);
 
@@ -59,6 +66,7 @@ public class VictoryScreen extends ScreenAdapter {
 
         drawBackButton(backTexture, backTexturePressed);
         drawNextLevelButton(nextLevelTexture, nextLevelTexturePressed);
+        drawRepeatLevelButton(repeatLevelTexture, repeatLevelTexturePressed);
 
         sb.end();
     }
@@ -103,6 +111,25 @@ public class VictoryScreen extends ScreenAdapter {
             }
         }else {
             sb.draw(texture, xOffset, yOffset, nextLevelButtonDimension.x, nextLevelButtonDimension.y);
+        }
+
+    }
+
+    public void drawRepeatLevelButton(Texture texture, Texture texturePressed){
+        int xOffset = 422;
+        final int yOffset = 20;
+
+        if (Gdx.input.getX() < xOffset + repeatLevelButtonDimension.x
+                && Gdx.input.getX() > xOffset
+                && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < yOffset + repeatLevelButtonDimension.y
+                && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() > yOffset ) {
+
+            sb.draw(texturePressed, xOffset, yOffset, repeatLevelButtonDimension.x, repeatLevelButtonDimension.y);
+            if(Gdx.input.justTouched()) {
+                MazeGame.instance.setScreen(new LevelScreen(Assets.LEVEL_DATA[wonLevelData.findIndex()]));
+            }
+        }else {
+            sb.draw(texture, xOffset, yOffset, repeatLevelButtonDimension.x, repeatLevelButtonDimension.y);
         }
 
     }
