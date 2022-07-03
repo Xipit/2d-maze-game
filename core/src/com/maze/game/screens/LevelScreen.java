@@ -3,6 +3,7 @@ package com.maze.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -66,7 +67,7 @@ public class LevelScreen extends ScreenAdapter {
         levelSpriteBatch.setProjectionMatrix(camera.combined);
         levelSpriteBatch.begin();
 
-        player.renderData.sprite.draw(levelSpriteBatch);
+        player.renderData.sprite.draw(levelSpriteBatch, player.allowMovement ? 1F: 0.5F);
 
         levelSpriteBatch.end();
 
@@ -76,6 +77,7 @@ public class LevelScreen extends ScreenAdapter {
         for (int i = 0; i < player.heldKeys.size(); i++) {
             drawHeldKey(keyTextures[player.heldKeys.get(i).keyType], i);
         }
+
 
         UISpriteBatch.end();
     }
