@@ -9,8 +9,8 @@ package com.maze.game.levels;
 public class TutorialLevel6Data extends LevelData{
     private final String name = "Door Decisions";
     private final String fileName = "tutorial_6.tmx";
-    private final String buttonName = "tutorial1_button.png";
-    private final String buttonPressedName = "tutorial1_buttonPressed.png";
+    private final String buttonName = "level6_aus.png";
+    private final String buttonPressedName = "level6_an.png";
 
     @Override
     public String getName(){

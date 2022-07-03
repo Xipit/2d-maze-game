@@ -33,7 +33,6 @@ public class LevelSelectScreen extends ScreenAdapter {
     private final Texture forwardTexturePressed;
     private final Texture backTextureDisabled;
     private final Texture forwardTextureDisabled;
-
     private final Texture escapeTexture;
     private final Texture escapeTexturePressed;
     private final Point escapeButtonDimensions = new Point(50, 50);
@@ -63,8 +62,8 @@ public class LevelSelectScreen extends ScreenAdapter {
         backTexturePressed = Assets.manager.get(Assets.LEVELS_BACKWARD_PRESSED);
         forwardTexturePressed = Assets.manager.get(Assets.LEVELS_FORWARD_PRESSED);
         //TODO change disabled Texture
-        backTextureDisabled = Assets.manager.get(Assets.LEVELS_BACKWARD_PRESSED);
-        forwardTextureDisabled = Assets.manager.get(Assets.LEVELS_FORWARD_PRESSED);
+        backTextureDisabled = Assets.manager.get(Assets.LEVELS_BACKWARD_DISABLED);
+        forwardTextureDisabled = Assets.manager.get(Assets.LEVELS_FORWARD_DISABLED);
 
         backgroundTexture = Assets.manager.get(Assets.LEVELS_BACKGRUND);
 

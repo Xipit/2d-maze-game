@@ -68,7 +68,7 @@ public class MenuScreen extends ScreenAdapter {
                 && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < y + levelbuttonDimensions.y
                 && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() > y ) {
 
-            sb.draw(levelTexture, middle, y, levelbuttonDimensions.x, levelbuttonDimensions.y);
+            sb.draw(levelTexturePressed, middle, y, levelbuttonDimensions.x, levelbuttonDimensions.y);
             if(Gdx.input.justTouched()) {
                 this.dispose();
                 MazeGame.instance.setScreen(new LevelSelectScreen());
@@ -76,7 +76,7 @@ public class MenuScreen extends ScreenAdapter {
             }
 
         }else {
-            sb.draw(levelTexturePressed, middle, y, levelbuttonDimensions.x, levelbuttonDimensions.y);
+            sb.draw(levelTexture, middle, y, levelbuttonDimensions.x, levelbuttonDimensions.y);
         }
     }
 

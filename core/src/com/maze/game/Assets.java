@@ -53,7 +53,8 @@ public class Assets {
     public static final String LEVELS_BACKWARD_PRESSED = "assets/menu/back_an.png";
     public static final String LEVELS_FORWARD_PRESSED = "assets/menu/forward_an.png";
     public static final String LEVELS_ESCAPE_PRESSED = "assets/menu/escape_on.png";
-
+    public static final String LEVELS_FORWARD_DISABLED = "assets/menu/forward_grau.png";
+    public static final String LEVELS_BACKWARD_DISABLED = "assets/menu/back_grau.png";
 
     public static void loadLevelSelectMenuTextures(){
         for (LevelData levelDatum : LEVEL_DATA) {
@@ -67,6 +68,8 @@ public class Assets {
         manager.load(LEVELS_BACKWARD_PRESSED, Texture.class);
         manager.load(LEVELS_FORWARD_PRESSED, Texture.class);
         manager.load(LEVELS_ESCAPE_PRESSED, Texture.class);
+        manager.load(LEVELS_FORWARD_DISABLED, Texture.class);
+        manager.load(LEVELS_BACKWARD_DISABLED, Texture.class);
         manager.finishLoading();
     }
 
@@ -74,7 +77,7 @@ public class Assets {
     public static final String GAME_BUTTON_PRESSED =    "assets/menu/anknopf_an.png";
     public static final String END_BUTTON =             "assets/menu/ende_aus.png";
     public static final String END_BUTTON_PRESSED =     "assets/menu/ende_an.png";
-    public static final String LEVEL_BUTTON =           "assets/menu/level_an.png";
+    public static final String LEVEL_BUTTON =           "assets/menu/level_aus.png";
     public static final String LEVEL_BUTTON_PRESSED =   "assets/menu/level_an.png";
     public static final String BACKGROUND =             "assets/menu/test.png";
 
