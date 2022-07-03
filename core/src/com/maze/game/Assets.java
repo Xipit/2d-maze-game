@@ -74,7 +74,7 @@ public class Assets {
     public static final String END_BUTTON =             "assets/menu/ende_aus.png";
     public static final String END_BUTTON_PRESSED =     "assets/menu/ende_an.png";
     public static final String LEVEL_BUTTON =           "assets/menu/level_an.png";
-    public static final String LEVEL_BUTTON_PRESSED =   "assets/menu/level_aus.png";
+    public static final String LEVEL_BUTTON_PRESSED =   "assets/menu/level_an.png";
     public static final String BACKGROUND =             "assets/menu/test.png";
 
     public static void loadMenuTextures(){
