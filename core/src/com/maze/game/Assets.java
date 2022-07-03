@@ -40,8 +40,6 @@ public class Assets {
             new TangleOfPathsLevelData()
     };
 
-    public static final String LEVELS_BACKGRUND = "assets/menu/background_levelScreen.png";
-
     // TODO add custom Forward & Backward textures
     public static final String LEVELS_BACKWARD = "assets/menu/tutorial1_button.png";
     public static final String LEVELS_FORWARD = "assets/menu/tutorial1_button.png";
@@ -52,7 +50,6 @@ public class Assets {
             manager.load(levelDatum.getButtonName(), Texture.class);
             manager.load(levelDatum.getButtonPressedName(), Texture.class);
         }
-        manager.load(LEVELS_BACKGRUND, Texture.class);
         manager.load(LEVELS_BACKWARD, Texture.class);
         manager.load(LEVELS_FORWARD, Texture.class);
         manager.finishLoading();
@@ -131,6 +128,9 @@ public class Assets {
         manager.load(fileName, TiledMap.class);
         manager.finishLoading();
     }
+
+    public static final String MENU_FONT = "assets/font/LiberationSansBold.ttf";
+    // TODO maybe load TrueFont somehow
 
     public static void dispose() {
         // Textures are not disposed of during the session as the asset manager is supposed to maintain resources for the entire game session,

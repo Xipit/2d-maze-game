@@ -41,6 +41,12 @@ task dist(type: Jar) {
     with jar
 }
 
+dependencies {
+    implementation 'com.badlogicgames.gdx:gdx-freetype-platform:1.11.0'
+    api 'com.badlogicgames.gdx:gdx-freetype:1.11.0'
+    implementation 'com.jtransc.gdx:gdx-freetype-jtransc:0.6.7'
+}
+
 
 dist.dependsOn classes
 

@@ -3,9 +3,12 @@ package com.maze.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.maze.game.Assets;
 import com.maze.game.MazeGame;
 
@@ -33,12 +36,16 @@ public class LevelSelectScreen extends ScreenAdapter {
     private final Texture escapeTexture;
     private final Point escapeButtonDimensions = new Point(50, 50);
 
+    private final FreeTypeFontGenerator fontGenerator;
+    private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+    private final BitmapFont font;
+    private String textColour = "#E68D33";
+    private int textSize = 40;
+    private int textIndentation = MazeGame.SCREEN_WIDTH / 20;
 
     private int startOfVisibleRange = 0;
     private int range = 3;
     private final int maxRange;
-
-    private final Texture backgroundTexture;
 
     private final SpriteBatch sb;
 
@@ -48,6 +55,12 @@ public class LevelSelectScreen extends ScreenAdapter {
         this.startOfVisibleRange = Math.min(startOfVisibleRange, maxRange);
         Assets.loadLevelSelectMenuTextures();
 
+        fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal(Assets.MENU_FONT));
+        fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.size = textSize;
+        fontParameter.color = Color.valueOf(textColour);
+        font = fontGenerator.generateFont(fontParameter);
+
         for (int i = 0; i < levelTextures.length; i++) {
             levelTextures[i] = Assets.manager.get(Assets.LEVEL_DATA[i].getButtonName());
             levelPressedTextures[i] = Assets.manager.get(Assets.LEVEL_DATA[i].getButtonPressedName());
@@ -55,8 +68,6 @@ public class LevelSelectScreen extends ScreenAdapter {
 
         backTexture = Assets.manager.get(Assets.LEVELS_BACKWARD);
         forwardTexture = Assets.manager.get(Assets.LEVELS_FORWARD);
-
-        backgroundTexture = Assets.manager.get(Assets.LEVELS_BACKGRUND);
 
         //TODO add special escape texture
         escapeTexture = Assets.manager.get(Assets.LEVELS_BACKWARD);
@@ -78,7 +89,7 @@ public class LevelSelectScreen extends ScreenAdapter {
 
         sb.begin();
 
-        sb.draw(backgroundTexture, 0, 0);
+        font.draw(sb, "Movement using\nWASD\nor Arrow-Keys", textIndentation, textSize * 3 + textIndentation);
 
         for (int i = startOfVisibleRange; i < Math.min(startOfVisibleRange + range, Assets.LEVEL_DATA.length); i++) {
             drawLevelButton(levelTextures[i], levelPressedTextures[i], i);
