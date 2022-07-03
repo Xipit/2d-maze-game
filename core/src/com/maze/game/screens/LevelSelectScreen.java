@@ -29,8 +29,11 @@ public class LevelSelectScreen extends ScreenAdapter {
 
     private final Texture backTexture;
     private final Texture forwardTexture;
+    private final Texture backTexturePRESSED;
+    private final Texture forwardTexturePRESSED;
 
     private final Texture escapeTexture;
+    private final Texture escapeTexturePRESSED;
     private final Point escapeButtonDimensions = new Point(50, 50);
 
 
@@ -55,11 +58,15 @@ public class LevelSelectScreen extends ScreenAdapter {
 
         backTexture = Assets.manager.get(Assets.LEVELS_BACKWARD);
         forwardTexture = Assets.manager.get(Assets.LEVELS_FORWARD);
+        backTexturePRESSED = Assets.manager.get(Assets.LEVELS_BACKWARD_PRESSED);
+        forwardTexturePRESSED = Assets.manager.get(Assets.LEVELS_FORWARD_PRESSED);
 
         backgroundTexture = Assets.manager.get(Assets.LEVELS_BACKGRUND);
 
         //TODO add special escape texture
-        escapeTexture = Assets.manager.get(Assets.LEVELS_BACKWARD);
+        escapeTexture = Assets.manager.get(Assets.LEVELS_ESCAPE);
+        escapeTexturePRESSED = Assets.manager.get(Assets.LEVELS_ESCAPE_PRESSED);
+
 
         sb = new SpriteBatch();
     }
@@ -84,7 +91,7 @@ public class LevelSelectScreen extends ScreenAdapter {
             drawLevelButton(levelTextures[i], levelPressedTextures[i], i);
         }
         drawNavigationButtons();
-        drawEscapeButton(escapeTexture, escapeTexture);
+        drawEscapeButton(escapeTexture, escapeTexturePRESSED);
 
         sb.end();
     }
@@ -104,18 +111,18 @@ public class LevelSelectScreen extends ScreenAdapter {
                 && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < yOffset + escapeButtonDimensions.y
                 && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() > yOffset ) {
 
-            sb.draw(texture, xOffset, yOffset, escapeButtonDimensions.x, escapeButtonDimensions.y);
+            sb.draw(texturePressed, xOffset, yOffset, escapeButtonDimensions.x, escapeButtonDimensions.y);
             if(Gdx.input.justTouched()) {
                 MazeGame.instance.setScreen(new MenuScreen());
             }
         }else {
-            sb.draw(texturePressed, xOffset, yOffset, escapeButtonDimensions.x, escapeButtonDimensions.y);
+            sb.draw(texture, xOffset, yOffset, escapeButtonDimensions.x, escapeButtonDimensions.y);
         }
 
     }
 
     public void drawLevelButton(Texture texture, Texture texturePressed, int levelIndex){
-        int xOffset = 100 + 300 * (levelIndex - startOfVisibleRange);
+        int xOffset = 70 + 320 * (levelIndex - startOfVisibleRange);
         final int yOffset = 450;
 
         if (Gdx.input.getX() < xOffset + levelButtonDimensions.x
@@ -123,13 +130,13 @@ public class LevelSelectScreen extends ScreenAdapter {
                 && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < yOffset + levelButtonDimensions.y
                 && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() > yOffset ) {
 
-            sb.draw(texture, xOffset, yOffset, levelButtonDimensions.x, levelButtonDimensions.y);
+            sb.draw(texturePressed, xOffset, yOffset, levelButtonDimensions.x, levelButtonDimensions.y);
             if(Gdx.input.justTouched()) {
                 Assets.loadTileMap(Assets.LEVEL_DATA[levelIndex].getFileName());
                 MazeGame.instance.setScreen(new LevelScreen(Assets.LEVEL_DATA[levelIndex]));
             }
         }else {
-            sb.draw(texturePressed, xOffset, yOffset, levelButtonDimensions.x, levelButtonDimensions.y);
+            sb.draw(texture, xOffset, yOffset, levelButtonDimensions.x, levelButtonDimensions.y);
         }
 
     }
@@ -146,7 +153,7 @@ public class LevelSelectScreen extends ScreenAdapter {
                 && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < yOffset + navigationButtonDimensions.y
                 && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() > yOffset ) {
 
-            sb.draw(backTexture, xOffsetBackward, yOffset, navigationButtonDimensions.x, navigationButtonDimensions.y);
+            sb.draw(backTexturePRESSED, xOffsetBackward, yOffset, navigationButtonDimensions.x, navigationButtonDimensions.y);
             if(Gdx.input.justTouched()) {
 
                 if(startOfVisibleRange == 0){
@@ -164,7 +171,7 @@ public class LevelSelectScreen extends ScreenAdapter {
                 && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < yOffset + navigationButtonDimensions.y
                 && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() > yOffset ) {
 
-            sb.draw(forwardTexture, xOffsetForward, yOffset, navigationButtonDimensions.x, navigationButtonDimensions.y);
+            sb.draw(forwardTexturePRESSED, xOffsetForward, yOffset, navigationButtonDimensions.x, navigationButtonDimensions.y);
             if(Gdx.input.justTouched()) {
 
                 if(startOfVisibleRange + range >= maxRange){
