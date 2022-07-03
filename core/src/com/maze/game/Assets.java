@@ -35,6 +35,7 @@ public class Assets {
             new TutorialLevel3Data(),
             new TutorialLevel4Data(),
             new TutorialLevel5Data(),
+            new TutorialLevel6Data(),
             new BomberfieldLevelData(),
             new SecretChamberLevelData(),
             new TangleOfPathsLevelData()
@@ -78,6 +79,12 @@ public class Assets {
 
     }
 
+    public static final String[] KEYS = {
+            "assets/keys/key_blue.png",
+            "assets/keys/key_green.png",
+            "assets/keys/key_red.png"
+    };
+
     // Standard Direction: Top Left
     public static final String[] CAT_DIAGONAL =
             {"assets/character/Cat_diagonal_leftFoot.png",
@@ -101,6 +108,11 @@ public class Assets {
         manager.load(CAT_VERTICAL[2], Texture.class);
         manager.load(CAT_SITTING_LEFT, Texture.class);
         manager.load(CAT_SITTING_RIGHT, Texture.class);
+
+        for (String key: KEYS) {
+            manager.load(key, Texture.class);
+        }
+
         manager.finishLoading();
     }
 

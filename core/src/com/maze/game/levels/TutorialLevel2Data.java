@@ -1,7 +1,7 @@
 package com.maze.game.levels;
 
 public class TutorialLevel2Data extends LevelData{
-    private final String name = "TutorialLevel2";
+    private final String name = "Labyrinthisierend";
     private final String fileName = "tutorial_2.tmx";
     private final String buttonName = "tutorial1_button.png";
     private final String buttonPressedName = "tutorial1_buttonPressed.png";

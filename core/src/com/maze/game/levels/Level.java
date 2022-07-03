@@ -330,7 +330,7 @@ public class Level {
                 if(baseProperties.containsKey(Properties.DOOR_DIRECTION_KEY) && baseProperties.containsKey(Properties.DOOR_STATUS_KEY) && baseProperties.containsKey(Properties.DOOR_TYPE_KEY)){
                     // the door is opened
                     int doorType = (int) baseProperties.get(Properties.DOOR_TYPE_KEY);
-                    if(player.useKey(doorType)){
+                    if(player.useKey(doorType, cornerTiles[cornerIndex].base.index)){
                         Audio.playSound(Audio.OPEN_DOOR_SOUND);
                         cornerTiles[cornerIndex].base.updateTile(this.tiledMapTileSet.getTile(cornerTiles[cornerIndex].base.tile.getId() + 2));
                     }
@@ -350,7 +350,6 @@ public class Level {
 
 
                     }, deathDelay);
-
 
 
                     return;
@@ -376,7 +375,7 @@ public class Level {
 
                     cornerTiles[cornerIndex].interaction.updateTile(this.tiledMapTileSet.getTile(transparentTileId));
 
-                    player.addKey(keyType);
+                    player.addKey(keyType, cornerTiles[cornerIndex].interaction.index);
                 }
             }
         }

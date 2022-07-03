@@ -1,8 +1,8 @@
 package com.maze.game.levels;
 
-public class TutorialLevel3Data extends LevelData{
-    private final String name = "Schmerzende Abgründe";
-    private final String fileName = "tutorial_3.tmx";
+public class TutorialLevel6Data extends LevelData{
+    private final String name = "TutorialLevel6";
+    private final String fileName = "tutorial_6.tmx";
     private final String buttonName = "tutorial1_button.png";
     private final String buttonPressedName = "tutorial1_buttonPressed.png";
 
