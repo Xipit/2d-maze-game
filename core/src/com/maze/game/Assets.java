@@ -31,12 +31,14 @@ public class Assets {
     }
 
 
+    // determines Appearance in Game and Order in LevelSelectScreen
     public static final LevelData[] LEVEL_DATA = {
             new TutorialLevel1Data(),
             new TutorialLevel2Data(),
             new TutorialLevel3Data(),
             new TutorialLevel4Data(),
             new TutorialLevel5Data(),
+            new TutorialLevel6Data(),
             new BomberfieldLevelData(),
             new SecretChamberLevelData(),
             new TangleOfPathsLevelData()
@@ -73,7 +75,7 @@ public class Assets {
     public static final String END_BUTTON =             "assets/menu/ende_aus.png";
     public static final String END_BUTTON_PRESSED =     "assets/menu/ende_an.png";
     public static final String LEVEL_BUTTON =           "assets/menu/level_an.png";
-    public static final String LEVEL_BUTTON_PRESSED =   "assets/menu/level_aus.png";
+    public static final String LEVEL_BUTTON_PRESSED =   "assets/menu/level_an.png";
     public static final String BACKGROUND =             "assets/menu/test.png";
 
     public static void loadMenuTextures(){
@@ -87,6 +89,12 @@ public class Assets {
         manager.finishLoading();
 
     }
+
+    public static final String[] KEYS = {
+            "assets/keys/key_blue.png",
+            "assets/keys/key_green.png",
+            "assets/keys/key_red.png"
+    };
 
     // Standard Direction: Top Left
     public static final String[] CAT_DIAGONAL =
@@ -111,6 +119,11 @@ public class Assets {
         manager.load(CAT_VERTICAL[2], Texture.class);
         manager.load(CAT_SITTING_LEFT, Texture.class);
         manager.load(CAT_SITTING_RIGHT, Texture.class);
+
+        for (String key: KEYS) {
+            manager.load(key, Texture.class);
+        }
+
         manager.finishLoading();
     }
 

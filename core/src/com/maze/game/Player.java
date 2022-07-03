@@ -6,12 +6,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.maze.game.levels.Level;
 import com.maze.game.levels.LevelData;
 import com.maze.game.screens.LevelScreen;
+import com.maze.game.types.Key;
 import com.maze.game.types.PlayerPosition;
 import com.maze.game.types.PlayerRenderData;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <h1>Spieler</h1>
@@ -32,7 +34,8 @@ public class Player {
     public int height = 28;
     public PlayerPosition position;
 
-    private List<Integer> heldKeys = new ArrayList<Integer>();
+    public List<Key> heldKeys = new ArrayList<Key>();
+    public List<Point> openedDoorIndices = new ArrayList<Point>();
 
     private final LevelData levelData;
     public Boolean allowMovement = true;
@@ -84,20 +87,51 @@ public class Player {
         level.checkForTriggers(this, levelScreen, levelData);
     }
 
-    public void addKey(int keyType){
-        if(heldKeys != null && !heldKeys.contains(keyType)){
+    public void addKey(int keyType, Point tileIndex){
+        if(heldKeys != null && !containsKey(tileIndex)){
 
-            heldKeys.add(keyType);
+            heldKeys.add(new Key(keyType, tileIndex));
         }
     }
-    public boolean useKey(int keyType){
-        if(heldKeys != null && heldKeys.contains(keyType)){
+    public boolean useKey(int keyType, Point tileIndex){
+        if(heldKeys != null && containsKeyType(keyType) && !openedDoorIndices.contains(tileIndex)){
 
-            heldKeys.remove((Object) keyType);
+            openedDoorIndices.add(tileIndex);
+            removeOnly1Key(keyType);
             return true;
         }
         return false;
     }
+
+    private Boolean containsKeyType(int keyType){
+        for (Key key :
+                heldKeys) {
+            if(key != null && (key.keyType == keyType)){
+                return true;
+            }
+        }
+        return false;
+    }
+    private Boolean containsKey(Point tileIndex){
+        for (Key key :
+                heldKeys) {
+            if(key != null && (key.tileIndexOfkey.x == tileIndex.x && key.tileIndexOfkey.y == tileIndex.y)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean removeOnly1Key(int keyTypeToRemove){
+        for (int i = 0; i < heldKeys.size(); i++) {
+            if(keyTypeToRemove == heldKeys.get(i).keyType){
+                heldKeys.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private float cleanNumber (float number){
         return (float) (number > 0 ? Math.ceil(number) : Math.floor(number));

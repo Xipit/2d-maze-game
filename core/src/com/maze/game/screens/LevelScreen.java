@@ -3,7 +3,9 @@ package com.maze.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.maze.game.Assets;
 import com.maze.game.MazeGame;
@@ -23,8 +25,11 @@ public class LevelScreen extends ScreenAdapter {
     private final MazeGameCamera camera;
     private final Level level;
     private final Player player;
-    private final SpriteBatch sb;
+    private final SpriteBatch levelSpriteBatch;
+    private final SpriteBatch UISpriteBatch;
     private final float zoomFactor = 1/4F;
+
+    private final Texture[] keyTextures = new Texture[3];
 
     public LevelScreen(LevelData levelData){
         camera = new MazeGameCamera(zoomFactor);
@@ -33,11 +38,14 @@ public class LevelScreen extends ScreenAdapter {
         Assets.loadTileMap(levelData.getFileName());
         this.level = new Level(levelData);
 
-
+        for (int keyIndex = 0; keyIndex < Assets.KEYS.length; keyIndex++) {
+            keyTextures[keyIndex] = Assets.manager.get(Assets.KEYS[keyIndex]);
+        }
 
         player = new Player(this.level);
 
-        sb = new SpriteBatch();
+        levelSpriteBatch = new SpriteBatch();
+        UISpriteBatch = new SpriteBatch();
     }
 
     @Override
@@ -56,10 +64,22 @@ public class LevelScreen extends ScreenAdapter {
 
         level.render(camera);
 
-        sb.setProjectionMatrix(camera.combined);
-        sb.begin();
-        player.renderData.sprite.draw(sb);
-        sb.end();
+        levelSpriteBatch.setProjectionMatrix(camera.combined);
+        levelSpriteBatch.begin();
+
+        player.renderData.sprite.draw(levelSpriteBatch, player.allowMovement ? 1F: 0.5F);
+
+        levelSpriteBatch.end();
+
+
+        UISpriteBatch.begin();
+
+        for (int i = 0; i < player.heldKeys.size(); i++) {
+            drawHeldKey(keyTextures[player.heldKeys.get(i).keyType], i);
+        }
+
+
+        UISpriteBatch.end();
     }
 
     public void input(){
@@ -67,6 +87,13 @@ public class LevelScreen extends ScreenAdapter {
 
             MazeGame.instance.setScreen(new LevelSelectScreen(level.levelData.findIndex()));
         }
+    }
+
+    public void drawHeldKey(Texture texture, int keyIndex){
+        int xOffset = 50 + (keyIndex * 128);
+        final int yOffset = 30;
+
+        UISpriteBatch.draw(texture, xOffset, yOffset, 128, 128);
     }
 
 

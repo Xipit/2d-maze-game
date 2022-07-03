@@ -1,6 +1,7 @@
 package com.maze.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,7 +24,7 @@ public class VictoryScreen extends ScreenAdapter {
     private final Texture nextLevelTexture;
     private final Texture nextLevelTexturePressed;
 
-    private final Point backButtonDimensons = new Point(100, 100);
+    private final Point backButtonDimensions = new Point(100, 100);
     private final Texture backTexture;
     private final Texture backTexturePressed;
 
@@ -51,6 +52,7 @@ public class VictoryScreen extends ScreenAdapter {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
+        this.input();
 
         sb.begin();
         sb.draw(victoryImageTexture, 200, 200);
@@ -61,21 +63,27 @@ public class VictoryScreen extends ScreenAdapter {
         sb.end();
     }
 
+    public void input(){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            MazeGame.instance.setScreen(new LevelSelectScreen());
+        }
+    }
+
     public void drawBackButton(Texture texture, Texture texturePressed){
         int xOffset = 200;
         final int yOffset = 20;
 
-        if (Gdx.input.getX() < xOffset + backButtonDimensons.x
+        if (Gdx.input.getX() < xOffset + backButtonDimensions.x
                 && Gdx.input.getX() > xOffset
-                && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < yOffset + backButtonDimensons.y
+                && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() < yOffset + backButtonDimensions.y
                 && MazeGame.SCREEN_HEIGHT - Gdx.input.getY() > yOffset ) {
 
-            sb.draw(texturePressed, xOffset, yOffset, backButtonDimensons.x, backButtonDimensons.y);
+            sb.draw(texturePressed, xOffset, yOffset, backButtonDimensions.x, backButtonDimensions.y);
             if(Gdx.input.justTouched()) {
                 MazeGame.instance.setScreen(new LevelSelectScreen(wonLevelData.findIndex()));
             }
         }else {
-            sb.draw(texture, xOffset, yOffset, backButtonDimensons.x, backButtonDimensons.y);
+            sb.draw(texture, xOffset, yOffset, backButtonDimensions.x, backButtonDimensions.y);
         }
 
     }

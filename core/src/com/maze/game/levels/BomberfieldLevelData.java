@@ -1,5 +1,11 @@
 package com.maze.game.levels;
 
+/**
+ * <h1>Bomberfield Level</h1>
+ *
+ *
+ * @author   Simeon Baumann
+ */
 public class BomberfieldLevelData extends LevelData{
     private final String name = "Bomberfield";
     private final String fileName = "bomberfield.tmx";

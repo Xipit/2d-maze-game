@@ -2,6 +2,12 @@ package com.maze.game.levels;
 
 import com.maze.game.Assets;
 
+/**
+ * <h1>LevelData</h1>
+ * Datenklasse für alle relevanten Daten für ein Level.
+ *
+ * @author   Hanno Witzleb
+ */
 public class LevelData {
 
     protected final String textureAssetDirectory = "assets/menu/";
