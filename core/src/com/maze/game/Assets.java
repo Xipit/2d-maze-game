@@ -62,8 +62,8 @@ public class Assets {
     public static final String GAME_BUTTON_PRESSED =    "assets/menu/anknopf_an.png";
     public static final String END_BUTTON =             "assets/menu/endeknopf.png";
     public static final String END_BUTTON_PRESSED =     "assets/menu/endeknopf_an.png";
-    public static final String LEVEL_BUTTON =           "assets/menu/Level_an.png";
-    public static final String LEVEL_BUTTON_PRESSED =   "assets/menu/Level_aus.png";
+    public static final String LEVEL_BUTTON =           "assets/menu/level_an.png";
+    public static final String LEVEL_BUTTON_PRESSED =   "assets/menu/level_aus.png";
     public static final String BACKGROUND =             "assets/menu/background_real.png";
 
     public static void loadMenuTextures(){
