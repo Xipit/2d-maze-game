@@ -1,7 +1,13 @@
 package com.maze.game.levels;
 
+/**
+ * <h1>Drittes Tutorial Level</h1>
+ * Führt die Fallen ein.
+ *
+ * @author   Hanno Witzleb
+ */
 public class TutorialLevel3Data extends LevelData{
-    private final String name = "Schmerzende Abgründe";
+    private final String name = "Dangerous Cliffs";
     private final String fileName = "tutorial_3.tmx";
     private final String buttonName = "level3_aus.png";
     private final String buttonPressedName = "level3_an.png";

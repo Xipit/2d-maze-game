@@ -103,8 +103,8 @@ public class LevelSelectScreen extends ScreenAdapter {
     }
 
     public void drawEscapeButton(Texture texture, Texture texturePressed){
-        int xOffset = 50;
-        final int yOffset = MazeGame.SCREEN_HEIGHT - 100;
+        int xOffset = 20;
+        final int yOffset = MazeGame.SCREEN_HEIGHT - 60;
 
         if (Gdx.input.getX() < xOffset + escapeButtonDimensions.x
                 && Gdx.input.getX() > xOffset
@@ -145,7 +145,7 @@ public class LevelSelectScreen extends ScreenAdapter {
         int xOffsetBackward = 100 ;
         int xOffsetForward  = (100 + 300 * range) - navigationButtonDimensions.x;
 
-        final int yOffset = 250;
+        final int yOffset = 320;
 
         // Back button
         if (Gdx.input.getX() < xOffsetBackward + navigationButtonDimensions.x

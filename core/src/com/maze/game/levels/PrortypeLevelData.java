@@ -1,5 +1,11 @@
 package com.maze.game.levels;
 
+/**
+ * <h1>Prototyp LevelData</h1>
+ * Prototyp Level um Spielmechaniken schnell und einfach zu testen
+ *
+ * @author   Hanno Witzleb, Jörn Drechsler
+ */
 public class PrortypeLevelData extends LevelData{
     private final String name = "Prototyp Level";
     private final String fileName = "prototyp.tmx";

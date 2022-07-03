@@ -61,7 +61,7 @@ public class MenuScreen extends ScreenAdapter {
 
     public void drawLevelButton(){
         final int middle = MazeGame.SCREEN_WIDTH / 2 - levelbuttonDimensions.x / 2;
-        final int y = 220;
+        final int y = 270;
 
         if (Gdx.input.getX() < middle + levelbuttonDimensions.x
                 && Gdx.input.getX() > middle
