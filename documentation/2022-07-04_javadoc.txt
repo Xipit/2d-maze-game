@@ -1,0 +1,227 @@
+Assets.java
+10-/**
+11: * <h1>Assetmanager</h1>
+12- * Statische Klasse (soweit es Java erlaubt) zum zentralen Managen aller möglichen Assets und deren Aufrufe.
+13- *
+14- * @author  Hanno Witzleb, Jörn Drechsler
+15- */
+
+screens/MenuScreen.java
+13-/**
+14: * <h1>Startmenü Screen</h1>
+15- * Führt zur Levelauswahl. Hat Button um das Spiel zu beenden.
+16- *
+17- * @author  Hanno Witzleb, Lucas Neugebauer
+18- */
+
+screens/LevelSelectScreen.java
+14-/**
+15: * <h1>Levelauswahl Screen</h1>
+16- * Erlaubt es das Level auszuwählen.
+17- *
+18- * @author  Hanno Witzleb, Lucas Neugebauer
+19- */
+
+screens/LevelScreen.java
+17-/**
+18: * <h1>LevelScreen</h1>
+19- * Verantwortlich um alle notwendigen Objekte für ein Level zu instanziieren und für den Aufruf von GameLogik (Input, usw.) für jeden Frame.<br/>
+20- * Schnittstelle zwischen Gameplay und UI.
+21- *
+22- * @author  Jörn Drechsler, Hanno Witzleb, Lucas Neugebauer
+23- */
+
+Audio.java
+5-/**
+6: * <h1>Audio</h1>
+7- * Statische Klasse (soweit es Java erlaubt) zur zentralen Referenz und Aufruf von Sound Dateien. <br/>
+8- * Gedacht zur einfachen Integration eines möglichen Lautstärkereglers oder anderen Einstellungen.
+9- *
+10- * @author  Hanno Witzleb, Jörn Drechsler
+11- */
+
+MazeGame.java
+6-/**
+7: * <h1>Zentrale Spielinstanz</h1>
+8- * Von libgdx vorgesehene plattformübergreifende Schnittstelle der Software.
+9- *
+10- * @author  Jörn Drechsler, Hanno Witzleb, Lucas Neugebauer, Lilia Schneider, Simeon Baumann, Laurenz Oppelt
+11- */
+
+Properties.java
+3-/**
+4: * <h1>Eigenschaften</h1>
+5- * Statische Klasse (soweit es Java erlaubt) zur Referenz und Dokumentation der Tilemap Properties.
+6- *
+7- * @author   Hanno Witzleb, Jörn Drechsler
+8- */
+
+MazeGameCamera.java
+9-/**
+10: * <h1>Kamera</h1>
+11- * Steuert die Position der Kamera und somit auch deren Verhalten wenn sich der Spieler bewegt.
+12- *
+13- * @author  Hanno Witzleb, Jörn Drechsler
+14- */
+
+levels/TutorialLevel5Data.java
+3-/**
+4: * <h1>Fünftes Tutorial Level</h1>
+5- * Kombiniert Tür & Schlüssel mit Fallen, Weist auf mehrere Türen & Schlüssel hin.
+6- *
+7- * @author   Hanno Witzleb
+8- */
+
+levels/BomberfieldLevelData.java
+4: * <h1>Bomberfield Level</h1>
+5- *
+6- *
+7- * @author   Simeon Baumann
+8- */
+
+levels/TutorialLevel1Data.java
+3-/**
+4: * <h1>Erstes Tutorial Level</h1>
+5- * Bringt die "Win-Condition" bei.
+6- *
+7- * @author   Hanno Witzleb
+8- */
+
+levels/PrortypeLevelData.java
+3-/**
+4: * <h1>Prototyp LevelData</h1>
+5- * Prototyp Level um Spielmechaniken schnell und einfach zu testen
+6- *
+7- * @author   Hanno Witzleb, Jörn Drechsler
+8- */
+
+levels/SecretChamberLevelData.java
+3-/**
+4: * <h1>TheSecretChambers Level</h1>
+5- * Dieses Level beinhaltet viele Räume und Türen, für die mehrere verschiedene Schlüssel benötigt werden.
+6- *
+7- * @author  Laurenz Oppelt
+8- */
+
+levels/TutorialLevel4Data.java
+3-/**
+4: * <h1>Viertes Tutorial Level</h1>
+5- * Führt Tür & Schlüssel ein
+6- *
+7- * @author   Hanno Witzleb
+8- */
+
+levels/LevelData.java
+5-/**
+6: * <h1>LevelData</h1>
+7- * Datenklasse für alle relevanten Daten für ein Level.
+8- *
+9- * @author   Hanno Witzleb
+10- */
+
+levels/TutorialLevel6Data.java
+3-/**
+4: * <h1>Sechstes Tutorial Level</h1>
+5- * Führt alle Spielmechaniken zusammen.
+6- *
+7- * @author   Hanno Witzleb
+8- */
+
+levels/IllusionLevelData.java
+3-/**
+4: * <h1>Illusion Level</h1>
+5- * Das Level zielt auf die Verwirrung des Spielers ab:
+6- * sinnlose Schlüssel, verschlossen bleibende Türen, mehrere potenzielle Zielpunkte, an deren Erreichbarkeit zu zweifeln ist.
+7- * „Es ist nicht alles belohnende Milch, was milchig glänzt.“
+8- *
+9- * @author   Jörn Drechsler
+10- */
+
+levels/TutorialLevel3Data.java
+3-/**
+4: * <h1>Drittes Tutorial Level</h1>
+5- * Führt die Fallen ein.
+6- *
+7- * @author   Hanno Witzleb
+8- */
+
+levels/Level.java
+19-/**
+20: * <h1>Level</h1>
+21- * Zentrale Stelle für die Gameplay Logik.<br/>
+22- * Verantwortlich für:<br/>
+23- *  - Kollision<br/>
+24- *  - Gameplay Logik (Schlüssel, Türen, Fallen)
+25- *
+26- * @author   Hanno Witzleb, Jörn Drechsler
+27- */
+
+levels/TutorialLevel2Data.java
+4: * <h1>Zweites Tutorial Level</h1>
+5- * Bringt die generelle Atmosphäre und den Levelaufbau näher. Außerdem versucht es dem Spieler beizubringen das Diagonalbewegung wichtig ist.
+6- *
+7- * @author   Hanno Witzleb
+8- */
+
+types/Boolean2.java
+3-/**
+4: * <h1>2D Boolean</h1>
+5- * Nützlich für die Übersichtlichkeit von 2D Vektor Konditionen.
+6- *
+7- * @author  Hanno Witzleb
+8- */
+
+types/PlayerPosition.java
+6-/**
+7: * <h1>Spielerposition</h1>
+8- * Datenklasse für die, an Kollision angepasste, Darstellung der Spieler Position.
+9- *
+10- * @author  Hanno Witzleb, Jörn Drechsler
+11- */
+
+types/CornerPosition.java
+4-/**
+5: * <h1>Eck Position</h1>
+6- * Datentyp speziell für die Eck Positionen bei der Kollisionsberechnung.
+7- *
+8- * @author  Hanno Witzleb, Jörn Drechsler
+9- */
+
+types/LayerTile.java
+10-/**
+11: * <h1>Ebenen Kachel</h1>
+12- * Datenklasse, die als Schnittstelle zwischen den TileMap Daten einer Kachel und den benötigten Daten in der Kollisionsberechnung fungiert.
+13- *
+14- * @author  Hanno Witzleb
+15- */
+
+types/PlayerRenderData.java
+13-/**
+14: * <h1>Spieler Darstellung</h1>
+15- * Verantwortlich für alle Informationen zur Darstellung des Spielers.<br/>
+16- * Die tatsächliche Darstellung findet im LevelScreen statt.
+17- *
+18- * @author  Hanno Witzleb, Jörn Drechsler, Lilia Schneider
+19- */
+
+types/Tile.java
+7-/**
+8: * <h1>Kachel für alle Ebenen</h1>
+9- * Bringt Ebenen Kacheln für die Basis- und die Interaktionsebene zusammen.<br/>
+10- * Schnittstelle für Kollisionsberechnung.
+11- *
+12- * @author  Hanno Witzleb, Jörn Drechsler
+13- */
+
+Player.java
+17-/**
+18: * <h1>Spieler</h1>
+19- * Repräsentiert die Spielfigur.<br/>
+20- * Verantwortlich für:<br/>
+21- *  - Position<br/>
+22- *  - Rendering<br/>
+23- *  - Input<br/>
+24- *  - Bewegung<br/>
+25- *
+26- * @author  Hanno Witzleb, Jörn Drechsler, Lilia Schneider
+27- */
