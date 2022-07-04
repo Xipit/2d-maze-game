@@ -1,0 +1,406 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "com.maze.game.screens.LevelScreen#render(float)",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": true,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "MethodsOnly", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "com.maze.game.screens.LevelScreen",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_3344319 { 
+   	label=maze
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1648327873 { 
+   	label=game
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   subgraph cluster_1064505735 { 
+   	label=PlayerPosition
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   PlayerPosition686970209XXXcalculateNewPosition2002444079[
+	label="+ calculateNewPosition()"
+	style=filled
+	fillcolor=white
+	tooltip="PlayerPosition
+
+null"
+	fontcolor=darkgreen
+];
+
+PlayerPosition686970209XXXupdate2002444079[
+	label="+ update()"
+	style=filled
+	fillcolor=white
+	tooltip="PlayerPosition
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_1234602689 { 
+   	label=Level
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   Level68564983XXXcheckForTriggers121074111[
+	label="+ checkForTriggers()"
+	style=filled
+	fillcolor=white
+	tooltip="Level
+
+null"
+	fontcolor=darkgreen
+];
+
+Level68564983XXXgetMoveCorrectionVector1649016557[
+	label="+ getMoveCorrectionVector()"
+	style=filled
+	fillcolor=white
+	tooltip="Level
+
+null"
+	fontcolor=darkgreen
+];
+
+Level68564983XXXrender1380165739[
+	label="+ render()"
+	style=filled
+	fillcolor=white
+	tooltip="Level
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_1292951363 { 
+   	label=Tile
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   Tile686970209XXXcollidesWithDoor1096015440[
+	label="+ collidesWithDoor()"
+	style=filled
+	fillcolor=white
+	tooltip="Tile
+
+null"
+	fontcolor=darkgreen
+];
+
+Tile686970209XXXcollidesWithWall0[
+	label="+ collidesWithWall()"
+	style=filled
+	fillcolor=white
+	tooltip="Tile
+
+null"
+	fontcolor=darkgreen
+];
+
+Tile686970209XXXgetIndex1096015440[
+	label="+ getIndex()"
+	style=filled
+	fillcolor=white
+	tooltip="Tile
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_1861237872 { 
+   	label=MazeGameCamera
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   MazeGameCamera1065624724XXXupdate1096015440[
+	label="+ update()"
+	style=filled
+	fillcolor=white
+	tooltip="MazeGameCamera
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_2096836336 { 
+   	label=LayerTile
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   LayerTile686970209XXXgetCollisionEdge515322732[
+	label="+ getCollisionEdge()"
+	style=filled
+	fillcolor=white
+	tooltip="LayerTile
+
+null"
+	fontcolor=darkgreen
+];
+
+LayerTile686970209XXXupdateTile1327535604[
+	label="+ updateTile()"
+	style=filled
+	fillcolor=white
+	tooltip="LayerTile
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_435960145 { 
+   	label=LevelScreen
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   LevelScreen268915155XXXdispose0[
+	label="+ dispose()"
+	style=filled
+	fillcolor=white
+	tooltip="LevelScreen
+
+null"
+	fontcolor=darkgreen
+];
+
+LevelScreen268915155XXXdrawHeldKey1388730912[
+	label="+ drawHeldKey()"
+	style=filled
+	fillcolor=white
+	tooltip="LevelScreen
+
+null"
+	fontcolor=darkgreen
+];
+
+LevelScreen268915155XXXinput0[
+	label="+ input()"
+	style=filled
+	fillcolor=white
+	tooltip="LevelScreen
+
+null"
+	fontcolor=darkgreen
+];
+
+LevelScreen268915155XXXrender97526364[
+	label="+ render()"
+	style=filled
+	fillcolor=white
+	tooltip="LevelScreen
+
+null"
+	penwidth=4
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_734200356 { 
+   	label=Audio
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   Audio1065624724XXXplaySound80074991[
+	label="+ playSound()"
+	style=filled
+	fillcolor=white
+	tooltip="Audio
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_834723447 { 
+   	label=LevelData
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   LevelData68564983XXXfindIndex0[
+	label="+ findIndex()"
+	style=filled
+	fillcolor=white
+	tooltip="LevelData
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_864323173 { 
+   	label=Player
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   Player1065624724XXXaddKey1280841133[
+	label="+ addKey()"
+	style=filled
+	fillcolor=white
+	tooltip="Player
+
+null"
+	fontcolor=darkgreen
+];
+
+Player1065624724XXXinput1508377064[
+	label="+ input()"
+	style=filled
+	fillcolor=white
+	tooltip="Player
+
+null"
+	fontcolor=darkgreen
+];
+
+Player1065624724XXXuseKey1280841133[
+	label="+ useKey()"
+	style=filled
+	fillcolor=white
+	tooltip="Player
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_975230032 { 
+   	label=PlayerRenderData
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   PlayerRenderData686970209XXXupdate1649016557[
+	label="+ update()"
+	style=filled
+	fillcolor=white
+	tooltip="PlayerRenderData
+
+null"
+	fontcolor=darkgreen
+];
+} 
+} 
+} 
+
+'edges    
+Level68564983XXXcheckForTriggers121074111 -> Audio1065624724XXXplaySound80074991;
+Level68564983XXXcheckForTriggers121074111 -> LayerTile686970209XXXupdateTile1327535604;
+Level68564983XXXcheckForTriggers121074111 -> LevelScreen268915155XXXdispose0;
+Level68564983XXXcheckForTriggers121074111 -> Player1065624724XXXaddKey1280841133;
+Level68564983XXXcheckForTriggers121074111 -> Player1065624724XXXuseKey1280841133;
+Level68564983XXXgetMoveCorrectionVector1649016557 -> LayerTile686970209XXXgetCollisionEdge515322732;
+Level68564983XXXgetMoveCorrectionVector1649016557 -> PlayerPosition686970209XXXcalculateNewPosition2002444079;
+Level68564983XXXgetMoveCorrectionVector1649016557 -> PlayerPosition686970209XXXupdate2002444079;
+Level68564983XXXgetMoveCorrectionVector1649016557 -> Tile686970209XXXcollidesWithDoor1096015440;
+Level68564983XXXgetMoveCorrectionVector1649016557 -> Tile686970209XXXcollidesWithWall0;
+Level68564983XXXgetMoveCorrectionVector1649016557 -> Tile686970209XXXgetIndex1096015440;
+LevelScreen268915155XXXinput0 -> LevelData68564983XXXfindIndex0;
+LevelScreen268915155XXXrender97526364 -> Level68564983XXXrender1380165739;
+LevelScreen268915155XXXrender97526364 -> LevelScreen268915155XXXdrawHeldKey1388730912;
+LevelScreen268915155XXXrender97526364 -> LevelScreen268915155XXXinput0;
+LevelScreen268915155XXXrender97526364 -> MazeGameCamera1065624724XXXupdate1096015440;
+LevelScreen268915155XXXrender97526364 -> Player1065624724XXXinput1508377064;
+Player1065624724XXXinput1508377064 -> Level68564983XXXcheckForTriggers121074111;
+Player1065624724XXXinput1508377064 -> Level68564983XXXgetMoveCorrectionVector1649016557;
+Player1065624724XXXinput1508377064 -> PlayerPosition686970209XXXupdate2002444079;
+Player1065624724XXXinput1508377064 -> PlayerRenderData686970209XXXupdate1649016557;
+    
+}
+@enduml

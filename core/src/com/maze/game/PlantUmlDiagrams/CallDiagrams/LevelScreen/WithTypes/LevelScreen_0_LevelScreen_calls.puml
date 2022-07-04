@@ -1,0 +1,397 @@
+@startuml
+
+/' diagram meta data start
+config=CallConfiguration;
+{
+  "rootMethod": "com.maze.game.screens.LevelScreen#LevelScreen(LevelData)",
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": true,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showMethodParametersTypes": false,
+    "showMethodParametersNames": false,
+    "showMethodReturnType": false,
+    "showPackageLevels": 2,
+    "showCallOrder": false,
+    "edgeMode": "TypesAndMethods", // TypesOnly, MethodsOnly, TypesAndMethods, MethodsAndDirectTypeUsage
+    "showDetailedClassStructure": false
+  },
+  "rootClass": "com.maze.game.screens.LevelScreen",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="LR"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_3344319 { 
+   	label=maze
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1648327873 { 
+   	label=game
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   BomberfieldLevelData68564983[
+	label="(C)BomberfieldLevelData"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+IllusionLevelData68564983[
+	label="(C)IllusionLevelData"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+Level68564983[
+	label="(C)Level"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+LevelData68564983[
+	label="(C)LevelData"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+LevelScreen268915155[
+	label="(C)LevelScreen"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+Player1065624724[
+	label="(C)Player"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+PrortypeLevelData68564983[
+	label="(C)PrortypeLevelData"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+SecretChamberLevelData68564983[
+	label="(C)SecretChamberLevelData"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+TangleOfPathsLevelData68564983[
+	label="(C)TangleOfPathsLevelData"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel1Data68564983[
+	label="(C)TutorialLevel1Data"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel2Data68564983[
+	label="(C)TutorialLevel2Data"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel3Data68564983[
+	label="(C)TutorialLevel3Data"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel4Data68564983[
+	label="(C)TutorialLevel4Data"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel5Data68564983[
+	label="(C)TutorialLevel5Data"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel6Data68564983[
+	label="(C)TutorialLevel6Data"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+VictoryScreen268915155[
+	label="(C)VictoryScreen"
+	style=filled
+	shape=rect
+	fillcolor="#FFFFFF"
+];
+
+subgraph cluster_1007141749 { 
+   	label=LevelSelectScreen
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   LevelSelectScreen268915155XXXdrawLevelButton316913423[
+	label="+ drawLevelButton()"
+	style=filled
+	fillcolor=white
+	tooltip="LevelSelectScreen
+
+null"
+	fontcolor=darkgreen
+];
+
+LevelSelectScreen268915155XXXrender97526364[
+	label="+ render()"
+	style=filled
+	fillcolor=white
+	tooltip="LevelSelectScreen
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_1234602689 { 
+   	label=Level
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   Level68564983XXXcheckForTriggers121074111[
+	label="+ checkForTriggers()"
+	style=filled
+	fillcolor=white
+	tooltip="Level
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_1286778307 { 
+   	label=Assets
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   Assets1065624724XXXloadTileMap1808118735[
+	label="+ loadTileMap()"
+	style=filled
+	fillcolor=white
+	tooltip="Assets
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_435960145 { 
+   	label=LevelScreen
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   LevelScreen268915155XXXLevelScreen347258158[
+	label="+ LevelScreen()"
+	style=filled
+	fillcolor=white
+	tooltip="LevelScreen
+
+null"
+	penwidth=4
+	fontcolor=darkgreen
+];
+
+LevelScreen268915155XXXrender97526364[
+	label="+ render()"
+	style=filled
+	fillcolor=white
+	tooltip="LevelScreen
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_817608963 { 
+   	label=VictoryScreen
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   VictoryScreen268915155XXXdrawNextLevelButton610540140[
+	label="+ drawNextLevelButton()"
+	style=filled
+	fillcolor=white
+	tooltip="VictoryScreen
+
+null"
+	fontcolor=darkgreen
+];
+
+VictoryScreen268915155XXXdrawRepeatLevelButton610540140[
+	label="+ drawRepeatLevelButton()"
+	style=filled
+	fillcolor=white
+	tooltip="VictoryScreen
+
+null"
+	fontcolor=darkgreen
+];
+
+VictoryScreen268915155XXXrender97526364[
+	label="+ render()"
+	style=filled
+	fillcolor=white
+	tooltip="VictoryScreen
+
+null"
+	fontcolor=darkgreen
+];
+} 
+
+subgraph cluster_864323173 { 
+   	label=Player
+	labeljust=l
+	fillcolor=white
+	style=filled
+   
+   Player1065624724XXXinput1508377064[
+	label="+ input()"
+	style=filled
+	fillcolor=white
+	tooltip="Player
+
+null"
+	fontcolor=darkgreen
+];
+} 
+} 
+} 
+
+'edges    
+Level68564983 -> LevelData68564983[label="levelData
+[0..1]"];
+Level68564983XXXcheckForTriggers121074111 -> Level68564983[style=dashed];
+Level68564983XXXcheckForTriggers121074111 -> LevelData68564983[label=levelData, style=dashed];
+Level68564983XXXcheckForTriggers121074111 -> LevelScreen268915155XXXLevelScreen347258158;
+Level68564983XXXcheckForTriggers121074111 -> LevelScreen268915155[label=levelScreen, style=dashed];
+Level68564983XXXcheckForTriggers121074111 -> Player1065624724[label=player, style=dashed];
+LevelData68564983 -> BomberfieldLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> IllusionLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> PrortypeLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> SecretChamberLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TangleOfPathsLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel1Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel2Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel3Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel4Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel5Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel6Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelScreen268915155 -> Level68564983[label="level
+[0..1]"];
+LevelScreen268915155 -> Player1065624724[label="player
+[0..1]"];
+LevelScreen268915155XXXLevelScreen347258158 -> Assets1065624724XXXloadTileMap1808118735;
+LevelScreen268915155XXXLevelScreen347258158 -> LevelData68564983[label=levelData, style=dashed];
+LevelScreen268915155XXXrender97526364 -> Player1065624724XXXinput1508377064;
+LevelSelectScreen268915155XXXdrawLevelButton316913423 -> LevelScreen268915155XXXLevelScreen347258158;
+LevelSelectScreen268915155XXXrender97526364 -> LevelSelectScreen268915155XXXdrawLevelButton316913423;
+Player1065624724 -> LevelData68564983[label="levelData
+[0..1]"];
+Player1065624724XXXinput1508377064 -> Level68564983XXXcheckForTriggers121074111;
+Player1065624724XXXinput1508377064 -> Level68564983[label=level, style=dashed];
+Player1065624724XXXinput1508377064 -> LevelScreen268915155[label=levelScreen, style=dashed];
+VictoryScreen268915155 -> LevelData68564983[label="wonLevelData
+[0..1]"];
+VictoryScreen268915155XXXdrawNextLevelButton610540140 -> LevelScreen268915155XXXLevelScreen347258158;
+VictoryScreen268915155XXXdrawRepeatLevelButton610540140 -> LevelScreen268915155XXXLevelScreen347258158;
+VictoryScreen268915155XXXrender97526364 -> VictoryScreen268915155XXXdrawNextLevelButton610540140;
+VictoryScreen268915155XXXrender97526364 -> VictoryScreen268915155XXXdrawRepeatLevelButton610540140;
+    
+}
+@enduml

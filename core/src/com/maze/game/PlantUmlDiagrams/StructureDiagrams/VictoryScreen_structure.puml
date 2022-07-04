@@ -1,0 +1,326 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.maze.game.screens.VictoryScreen",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_3344319 { 
+   	label=maze
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1648327873 { 
+   	label=game
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   BomberfieldLevelData68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BomberfieldLevelData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+IllusionLevelData68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)IllusionLevelData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LevelData68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LevelData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   textureAssetDirectory: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   tileMapAssetDirectory: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ findIndex(): int</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PrortypeLevelData68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PrortypeLevelData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SecretChamberLevelData68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SecretChamberLevelData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TangleOfPathsLevelData68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TangleOfPathsLevelData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel1Data68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TutorialLevel1Data</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel2Data68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TutorialLevel2Data</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel3Data68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TutorialLevel3Data</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel4Data68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TutorialLevel4Data</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel5Data68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TutorialLevel5Data</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel6Data68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TutorialLevel6Data</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+VictoryScreen268915155[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)VictoryScreen</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   backButtonDimensions: Point [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   backTexture: Texture [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   backTexturePressed: Texture [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nextLevelButtonDimension: Point [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nextLevelTexture: Texture [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nextLevelTexturePressed: Texture [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   repeatLevelButtonDimension: Point [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   repeatLevelTexture: Texture [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   repeatLevelTexturePressed: Texture [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   sb: SpriteBatch [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   victoryImageTexture: Texture [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   wonLevelData: LevelData [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ dispose()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawBackButton(texture: Texture, texturePressed: Texture)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawNextLevelButton(texture: Texture, texturePressed: Texture)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawRepeatLevelButton(texture: Texture, texturePressed: Texture)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ input()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ render(delta: float)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+LevelData68564983 -> BomberfieldLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> IllusionLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> PrortypeLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> SecretChamberLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TangleOfPathsLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel1Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel2Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel3Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel4Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel5Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel6Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+VictoryScreen268915155 -> LevelData68564983[label="wonLevelData
+[0..1]"];
+    
+}
+@enduml

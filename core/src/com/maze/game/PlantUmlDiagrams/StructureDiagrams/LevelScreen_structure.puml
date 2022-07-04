@@ -1,0 +1,546 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "BothDirections" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.maze.game.screens.LevelScreen",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_3344319 { 
+   	label=maze
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1648327873 { 
+   	label=game
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Audio1065624724[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Audio</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ playSound(sound: Sound)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BomberfieldLevelData68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BomberfieldLevelData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+CornerPosition686970209[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)CornerPosition</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   expected: Point [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   previous: Point [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+IllusionLevelData68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)IllusionLevelData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Key686970209[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Key</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   keyType: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   tileIndexOfkey: Point [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LayerTile686970209[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LayerTile</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   cell: Cell [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   index: Point [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   playerCornerIndex: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   properties: MapProperties [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   tile: TiledMapTile [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getCollisionEdge(tileWidth: int, tileHeight: int): Point</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPosition(tileWidth: int, tileHeight: int): Point</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isInCollisionBox(cornerPosition: Point, tileWidth: int, tileHeight: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateTile(tile: TiledMapTile)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Level68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Level</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   baseLayer: TiledMapTileLayer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   cornerPositions: CornerPosition[] [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   cornerTiles: Tile[] [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   entryTileIndex: Point [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   height: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   heightInPixel: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   interactionLayer: TiledMapTileLayer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   levelData: LevelData [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   moveCorrectionVector: Vector2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   playerDied: Boolean [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   renderer: OrthogonalTiledMapRenderer [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   tileHeightInPixel: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   tileWidthInPixel: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tiledMap: TiledMap [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tiledMapTileSet: TiledMapTileSet [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   transparentTileId: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   width: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   widthInPixel: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- adjustForBorderViolation(playerPosition: PlayerPosition): PlayerPosition</TD></TR>
+<TR><TD ALIGN="LEFT" >- calculateCollisionConsideration(cornerIndex: int, directionVector: Vector2, previousCornerPosition: Point, edgeOfTile: Point): Boolean2</TD></TR>
+<TR><TD ALIGN="LEFT" >- calculateCollisionData(moveVector: Vector2, previousPlayerPosition: PlayerPosition)</TD></TR>
+<TR><TD ALIGN="LEFT" >- calculateCornerPositions(moveVector: Vector2, playerPosition: PlayerPosition, previousPlayerPosition: PlayerPosition): CornerPosition[]</TD></TR>
+<TR><TD ALIGN="LEFT" >- calculateMoveCorrectionVector(directionVector: Vector2, cornerIndex: int): Vector2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ checkForTriggers(player: Player, levelScreen: LevelScreen, levelData: LevelData)</TD></TR>
+<TR><TD ALIGN="LEFT" >- compareUsingDirectionVector(decider: int, checkIfEqual: boolean, leftHandInt: int, rightHandInt: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- diagonalDirectionVectorToCorner(directionVector: Vector2): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ dispose()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMoveCorrectionVector(moveVector: Vector2, previousPlayerPosition: PlayerPosition): Vector2</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStartingPoint(playerHeight: int): Point</TD></TR>
+<TR><TD ALIGN="LEFT" >+ render(camera: OrthographicCamera)</TD></TR>
+<TR><TD ALIGN="LEFT" >- resetData()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LevelData68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LevelData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   textureAssetDirectory: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   tileMapAssetDirectory: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ findIndex(): int</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LevelScreen268915155[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LevelScreen</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   UISpriteBatch: SpriteBatch [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   camera: MazeGameCamera [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   keyTextures: Texture[] [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   level: Level [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   levelSpriteBatch: SpriteBatch [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   player: Player [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   zoomFactor: float [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ dispose()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawHeldKey(texture: Texture, keyIndex: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ input()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ render(delta: float)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MazeGameCamera1065624724[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MazeGameCamera</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ update(playerCenter: Point, mapWidthPixel: int, mapHeightPixel: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Player1065624724[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Player</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   allowMovement: Boolean [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   height: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   heldKeys: List&lt;Key&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   levelData: LevelData [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   openedDoorIndices: List&lt;Point&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   position: PlayerPosition [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   renderData: PlayerRenderData [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   speed: float [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   width: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addKey(keyType: int, tileIndex: Point)</TD></TR>
+<TR><TD ALIGN="LEFT" >- checkForTriggers(level: Level, levelScreen: LevelScreen)</TD></TR>
+<TR><TD ALIGN="LEFT" >- cleanNumber(number: float): float</TD></TR>
+<TR><TD ALIGN="LEFT" >- containsKey(tileIndex: Point): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- containsKeyType(keyType: int): Boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ input(level: Level, levelScreen: LevelScreen)</TD></TR>
+<TR><TD ALIGN="LEFT" >- move(moveVector: Vector2, level: Level)</TD></TR>
+<TR><TD ALIGN="LEFT" >- removeOnly1Key(keyTypeToRemove: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ useKey(keyType: int, tileIndex: Point): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PlayerPosition686970209[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PlayerPosition</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   xMax: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   xMin: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   yMax: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   yMin: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ calculateNewPosition(vector: Vector2): PlayerPosition</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(vector: Vector2): PlayerPosition</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PlayerRenderData686970209[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PlayerRenderData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   lastNonZeroMoveVector: Vector2 [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   lastTextureChange: LocalDateTime [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   playerHeight: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   playerWidth: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   sprite: Sprite [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   texture: Texture [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   textureCycleIndex: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   textureIndexCycle: int[] [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   textureName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   textureRotation: float [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- determineTextureName(currentMoveVector: Vector2): String</TD></TR>
+<TR><TD ALIGN="LEFT" >- determineTextureRotation(currentMoveVector: Vector2): float</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(currentDirectionVector: Vector2, playerPosition: PlayerPosition)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PrortypeLevelData68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PrortypeLevelData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SecretChamberLevelData68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SecretChamberLevelData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TangleOfPathsLevelData68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TangleOfPathsLevelData</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Tile686970209[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Tile</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   base: LayerTile [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   interaction: LayerTile [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ collidesWithDoor(cornerPosition: Point, tileWidth: int, tileHeight: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ collidesWithWall(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getIndex(pixelCoordinates: Point, tileWidth: int, tileHeight: int): Point</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel1Data68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TutorialLevel1Data</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel2Data68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TutorialLevel2Data</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel3Data68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TutorialLevel3Data</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel4Data68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TutorialLevel4Data</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel5Data68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TutorialLevel5Data</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TutorialLevel6Data68564983[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TutorialLevel6Data</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   buttonName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   buttonPressedName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fileName: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+Level68564983 -> CornerPosition686970209[label="cornerPositions
+[0..*]"];
+Level68564983 -> LevelData68564983[label="levelData
+[0..1]"];
+Level68564983 -> Tile686970209[label="cornerTiles
+[0..*]"];
+LevelData68564983 -> BomberfieldLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> IllusionLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> PrortypeLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> SecretChamberLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TangleOfPathsLevelData68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel1Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel2Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel3Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel4Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel5Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelData68564983 -> TutorialLevel6Data68564983[arrowhead=none, arrowtail=empty, dir=both];
+LevelScreen268915155 -> Level68564983[label="level
+[0..1]"];
+LevelScreen268915155 -> LevelData68564983[label="input() -> findIndex()"];
+LevelScreen268915155 -> MazeGameCamera1065624724[label="camera
+[0..1]"];
+LevelScreen268915155 -> Player1065624724[label="player
+[0..1]"];
+Player1065624724 -> Key686970209[label="heldKeys
+[0..*]"];
+Player1065624724 -> LevelData68564983[label="levelData
+[0..1]"];
+Player1065624724 -> PlayerPosition686970209[label="position
+[0..1]"];
+Player1065624724 -> PlayerRenderData686970209[label="renderData
+[0..1]"];
+Tile686970209 -> LayerTile686970209[label="base
+[0..1]"];
+Tile686970209 -> LayerTile686970209[label="interaction
+[0..1]"];
+    
+}
+@enduml
