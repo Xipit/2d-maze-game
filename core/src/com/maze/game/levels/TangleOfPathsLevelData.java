@@ -1,5 +1,12 @@
 package com.maze.game.levels;
 
+/**
+ * <h1>TangleOfPaths Level</h1>
+ * Dieses Level ist ein Wirrwarr aus Gängen.
+ *
+ * @author  Lilia Schneider
+ */
+
 public class TangleOfPathsLevelData extends LevelData{
     private final String name = "Tangle of Paths";
     private final String fileName = "tangleOfPaths.tmx";
