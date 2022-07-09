@@ -11,8 +11,8 @@ package com.maze.game.levels;
 public class IllusionLevelData extends LevelData{
     private final String name = "Illusion";
     private final String fileName = "illusion.tmx";
-    private final String buttonName = "Bomber_aus.png";
-    private final String buttonPressedName = "bomber_an.png";
+    private final String buttonName = "illusion_aus.png";
+    private final String buttonPressedName = "illusion_an.png";
     // TODO
 
     @Override
