@@ -3,7 +3,6 @@ package com.maze.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,12 +21,13 @@ import com.maze.game.levels.*;
  * @author  Jörn Drechsler, Hanno Witzleb, Lucas Neugebauer
  */
 public class LevelScreen extends ScreenAdapter {
-    private final MazeGameCamera camera;
+    private MazeGameCamera camera;
     private final Level level;
     private final Player player;
     private final SpriteBatch levelSpriteBatch;
     private final SpriteBatch UISpriteBatch;
     private final float zoomFactor = 1/4F;
+    // maybe in constructor and setFullscreenMode (!Gdx.graphics.isFullscreen()) ? 1/4F : 1/8F
 
     private final Texture[] keyTextures = new Texture[3];
 
@@ -84,9 +84,28 @@ public class LevelScreen extends ScreenAdapter {
 
     public void input(){
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-
+            this.dispose();
             MazeGame.instance.setScreen(new LevelSelectScreen(level.levelData.findIndex()));
         }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.F)){
+            setFullscreenMode(!Gdx.graphics.isFullscreen());
+            this.camera = new MazeGameCamera(zoomFactor);
+        }
+    }
+
+    public void setFullscreenMode(boolean fullscreenMode) {
+        if (fullscreenMode) {
+            MazeGame.SCREEN_WIDTH = Gdx.graphics.getDisplayMode().width;
+            MazeGame.SCREEN_HEIGHT = Gdx.graphics.getDisplayMode().height;
+            Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+        }
+        else {
+            MazeGame.SCREEN_WIDTH = MazeGame.DEFAULT_SCREEN_WIDTH;
+            MazeGame.SCREEN_HEIGHT = MazeGame.DEFAULT_SCREEN_HEIGHT;
+            Gdx.graphics.setWindowedMode(MazeGame.SCREEN_WIDTH, MazeGame.SCREEN_HEIGHT);
+        }
+        // todo next screen wrong until further following screen change
     }
 
     public void drawHeldKey(Texture texture, int keyIndex){
@@ -96,10 +115,9 @@ public class LevelScreen extends ScreenAdapter {
         UISpriteBatch.draw(texture, xOffset, yOffset, 128, 128);
     }
 
-
-
     @Override
     public void dispose() {
+        setFullscreenMode(false);
         super.dispose();
         level.dispose();
     }

@@ -2,7 +2,6 @@ package com.maze.game;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.maze.game.MazeGame;
 
 /**
  * <h1>Desktop spezifischer Softwareschnittstelle</h1>
@@ -18,7 +17,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("Maze Game");
 		config.setWindowIcon("assets/icon/Cat_sitting.png");
-		config.setWindowedMode(MazeGame.SCREEN_WIDTH, MazeGame.SCREEN_HEIGHT);
+		config.setWindowedMode(MazeGame.DEFAULT_SCREEN_WIDTH, MazeGame.DEFAULT_SCREEN_HEIGHT);
 		config.setResizable(false);
 		new Lwjgl3Application(new MazeGame(), config);
 	}

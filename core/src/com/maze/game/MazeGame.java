@@ -12,8 +12,11 @@ import com.maze.game.screens.MenuScreen;
 public class MazeGame extends Game {
 	public static MazeGame instance;
 
-	public static final int SCREEN_WIDTH = 1080;
-	public static final int SCREEN_HEIGHT = 720;
+	public static final int DEFAULT_SCREEN_WIDTH = 1080;
+	public static final int DEFAULT_SCREEN_HEIGHT = 720;
+	public static int SCREEN_WIDTH = DEFAULT_SCREEN_WIDTH;
+	public static int SCREEN_HEIGHT = DEFAULT_SCREEN_HEIGHT;
+
 
 	public MazeGame() {
 		MazeGame.instance = this;
