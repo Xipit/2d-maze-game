@@ -13,7 +13,6 @@ public class IllusionLevelData extends LevelData{
     private final String fileName = "illusion.tmx";
     private final String buttonName = "illusion_aus.png";
     private final String buttonPressedName = "illusion_an.png";
-    // TODO
 
     @Override
     public String getName(){

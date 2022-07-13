@@ -44,8 +44,8 @@ public class LevelSelectScreen extends ScreenAdapter {
 
     private final Texture backgroundTexture;
 
-    private final SpriteBatch sb;
-
+    private SpriteBatch sb;
+    private Point resolutionSpriteBatch = new Point(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     public LevelSelectScreen(int startOfVisibleRange){
         this.maxRange = Assets.LEVEL_DATA.length ;
@@ -84,6 +84,11 @@ public class LevelSelectScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+        if (Gdx.graphics.getWidth() != resolutionSpriteBatch.x || Gdx.graphics.getHeight() != resolutionSpriteBatch.y) {
+            sb = new SpriteBatch();
+            resolutionSpriteBatch = new Point(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
 
         this.input();
 

@@ -13,7 +13,6 @@ import com.maze.game.types.PlayerRenderData;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * <h1>Spieler</h1>

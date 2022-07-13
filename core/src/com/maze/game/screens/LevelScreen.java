@@ -27,7 +27,6 @@ public class LevelScreen extends ScreenAdapter {
     private final SpriteBatch levelSpriteBatch;
     private final SpriteBatch UISpriteBatch;
     private final float zoomFactor = 1/4F;
-    // maybe in constructor and setFullscreenMode (!Gdx.graphics.isFullscreen()) ? 1/4F : 1/8F
 
     private final Texture[] keyTextures = new Texture[3];
 
@@ -105,7 +104,6 @@ public class LevelScreen extends ScreenAdapter {
             MazeGame.SCREEN_HEIGHT = MazeGame.DEFAULT_SCREEN_HEIGHT;
             Gdx.graphics.setWindowedMode(MazeGame.SCREEN_WIDTH, MazeGame.SCREEN_HEIGHT);
         }
-        // todo next screen wrong until further following screen change
     }
 
     public void drawHeldKey(Texture texture, int keyIndex){
