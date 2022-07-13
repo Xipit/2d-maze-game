@@ -17,7 +17,7 @@ public class MazeGameCamera extends OrthographicCamera {
     public MazeGameCamera(float levelZoomFactor){
         super();
 
-        this.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.setToOrtho(false, MazeGame.SCREEN_WIDTH, MazeGame.SCREEN_HEIGHT);
         this.zoom = levelZoomFactor;
 
         this.update();
@@ -28,16 +28,16 @@ public class MazeGameCamera extends OrthographicCamera {
         Vector3 cameraPosition = this.position;
 
         Vector3 targetPosition = new Vector3(
-                (Gdx.graphics.getWidth() >= (mapWidthPixel) * (1 / this.zoom))
+                (MazeGame.SCREEN_WIDTH >= (mapWidthPixel) * (1 / this.zoom))
                         ? (float) mapWidthPixel / 2
-                        : (playerCenter.x < Gdx.graphics.getWidth() * this.zoom / 2)
-                                ? (float) Gdx.graphics.getWidth() * this.zoom / 2
-                                : Math.min(playerCenter.x, (mapWidthPixel - (float) Gdx.graphics.getWidth() * this.zoom / 2)),
-                (Gdx.graphics.getHeight() >= (mapHeightPixel) * (1 / this.zoom))
+                        : (playerCenter.x < MazeGame.SCREEN_WIDTH * this.zoom / 2)
+                                ? (float) MazeGame.SCREEN_WIDTH * this.zoom / 2
+                                : Math.min(playerCenter.x, (mapWidthPixel - (float) MazeGame.SCREEN_WIDTH * this.zoom / 2)),
+                (MazeGame.SCREEN_HEIGHT >= (mapHeightPixel) * (1 / this.zoom))
                         ? (float)  mapHeightPixel / 2
-                        : (playerCenter.y < Gdx.graphics.getHeight() * this.zoom / 2)
-                                ? (float) Gdx.graphics.getHeight() * this.zoom / 2
-                                : Math.min(playerCenter.y, (mapHeightPixel - (float) Gdx.graphics.getHeight() * this.zoom / 2)),
+                        : (playerCenter.y < MazeGame.SCREEN_HEIGHT * this.zoom / 2)
+                                ? (float) MazeGame.SCREEN_HEIGHT * this.zoom / 2
+                                : Math.min(playerCenter.y, (mapHeightPixel - (float) MazeGame.SCREEN_HEIGHT * this.zoom / 2)),
                 0);
 
 

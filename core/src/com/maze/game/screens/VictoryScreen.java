@@ -32,7 +32,8 @@ public class VictoryScreen extends ScreenAdapter {
     private final Texture backTexture;
     private final Texture backTexturePressed;
 
-    private final SpriteBatch sb;
+    private SpriteBatch sb;
+    private Point resolutionSpriteBatch = new Point(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     private final LevelData wonLevelData;
 
@@ -58,6 +59,12 @@ public class VictoryScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+        // Gdx.graphics.getWidth() returns the changed window size correctly first after rendering several times
+        if (Gdx.graphics.getWidth() != resolutionSpriteBatch.x || Gdx.graphics.getHeight() != resolutionSpriteBatch.y) {
+            sb = new SpriteBatch();
+            resolutionSpriteBatch = new Point(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
 
         this.input();
 
