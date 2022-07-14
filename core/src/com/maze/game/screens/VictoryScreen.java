@@ -119,7 +119,6 @@ public class VictoryScreen extends ScreenAdapter {
         }else {
             sb.draw(texture, xOffset, yOffset, nextLevelButtonDimension.x, nextLevelButtonDimension.y);
         }
-
     }
 
     public void drawRepeatLevelButton(Texture texture, Texture texturePressed){
