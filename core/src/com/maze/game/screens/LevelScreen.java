@@ -32,6 +32,11 @@ public class LevelScreen extends ScreenAdapter {
 
     public LevelScreen(LevelData levelData){
         camera = new MazeGameCamera(windowedZoomFactor);
+        if(MazeGame.prefersFullscreen) {
+            Gdx.app.log("MAZEGAME", "activate fullscreen");
+            setLevelFullscreenMode(true);
+        }
+
 
         Assets.loadTileMap(levelData.getFileName());
         this.level = new Level(levelData);
@@ -87,11 +92,12 @@ public class LevelScreen extends ScreenAdapter {
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.F)){
-            setLevelFullscreenMode(!Gdx.graphics.isFullscreen());
+            setLevelFullscreenMode(!MazeGame.prefersFullscreen);
         }
     }
 
     public void setLevelFullscreenMode(boolean enableLevelFullscreen){
+
         setFullscreenMode(enableLevelFullscreen);
 
         if(enableLevelFullscreen){
@@ -100,6 +106,10 @@ public class LevelScreen extends ScreenAdapter {
         else{
             camera.updateVariables(windowedZoomFactor);
         }
+
+        MazeGame.prefersFullscreen = enableLevelFullscreen;
+        Gdx.app.log("MAZEGAME", "" + enableLevelFullscreen);
+
     }
     public void setFullscreenMode(boolean enableFullscreen) {
         if (enableFullscreen) {

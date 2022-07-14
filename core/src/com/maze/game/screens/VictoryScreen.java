@@ -37,6 +37,8 @@ public class VictoryScreen extends ScreenAdapter {
 
     private final LevelData wonLevelData;
 
+    private boolean isDisposed = false;
+
     public VictoryScreen(LevelData levelData) {
         this.wonLevelData = levelData;
 
@@ -56,6 +58,8 @@ public class VictoryScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
+        if(isDisposed) return;
+
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -95,6 +99,7 @@ public class VictoryScreen extends ScreenAdapter {
 
             sb.draw(texturePressed, xOffset, yOffset, backButtonDimensions.x, backButtonDimensions.y);
             if(Gdx.input.justTouched()) {
+                this.dispose();
                 MazeGame.instance.setScreen(new LevelSelectScreen(wonLevelData.findIndex()));
             }
         }else {
@@ -114,6 +119,7 @@ public class VictoryScreen extends ScreenAdapter {
 
             sb.draw(texturePressed, xOffset, yOffset, nextLevelButtonDimension.x, nextLevelButtonDimension.y);
             if(Gdx.input.justTouched()) {
+                this.dispose();
                 MazeGame.instance.setScreen(new LevelScreen(Assets.LEVEL_DATA[Math.min(wonLevelData.findIndex() + 1, Assets.LEVEL_DATA.length - 1)]));
             }
         }else {
@@ -132,6 +138,7 @@ public class VictoryScreen extends ScreenAdapter {
 
             sb.draw(texturePressed, xOffset, yOffset, repeatLevelButtonDimension.x, repeatLevelButtonDimension.y);
             if(Gdx.input.justTouched()) {
+                this.dispose();
                 MazeGame.instance.setScreen(new LevelScreen(Assets.LEVEL_DATA[wonLevelData.findIndex()]));
             }
         }else {
@@ -142,6 +149,7 @@ public class VictoryScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
+        this.isDisposed = true;
         super.dispose();
     }
 }
