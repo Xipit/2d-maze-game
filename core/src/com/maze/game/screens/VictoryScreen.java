@@ -13,9 +13,10 @@ import com.maze.game.levels.LevelData;
 import java.awt.*;
 
 /**
- * TODO: @Lucas add Docu krams
+ * <h1>VictoryScreen</h1>
+ * Erscheint nach dem ein Level abgeschlossen wurde
  *
- * @author  Lucas Neugebauer, Jörn Drechsler
+ * @author  Hanno Witzleb, Jörn Drechsler, Lucas Neugebauer
  */
 public class VictoryScreen extends ScreenAdapter {
     private final Texture victoryImageTexture;
@@ -47,7 +48,6 @@ public class VictoryScreen extends ScreenAdapter {
         victoryImageTexture = Assets.manager.get(Assets.VICTORY_IMAGE);
         nextLevelTexture = Assets.manager.get(Assets.NEXT_LEVEL);
         nextLevelTexturePressed = Assets.manager.get(Assets.NEXT_LEVEL_PRESSED);
-        //TODO implement specific texture for repeat button
         repeatLevelTexture = Assets.manager.get(Assets.RELOAD_LEVEL);
         repeatLevelTexturePressed = Assets.manager.get(Assets.RELOAD_LEVEL_PRESSED);
         backTexture = Assets.manager.get(Assets.LEVELS_BACKWARD);

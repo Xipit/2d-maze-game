@@ -19,7 +19,7 @@ public class Assets {
     private Assets(){}
 
     public static final String VICTORY_IMAGE = "assets/menu/victoryScreen.png";
-    public static final String NEXT_LEVEL = "assets/menu/nextlvl_aus.png"; //TODO add custom next level texture
+    public static final String NEXT_LEVEL = "assets/menu/nextlvl_aus.png";
     public static final String NEXT_LEVEL_PRESSED = "assets/menu/nextlvl_an.png";
     public static final String RELOAD_LEVEL = "assets/menu/repeat_aus.png";
     public static final String RELOAD_LEVEL_PRESSED = "assets/menu/repeat_an.png";
@@ -50,8 +50,6 @@ public class Assets {
     };
 
     public static final String LEVELS_BACKGRUND = "assets/menu/levelbg.png";
-
-    // TODO add custom Forward & Backward textures
     public static final String LEVELS_BACKWARD = "assets/menu/back_aus.png";
     public static final String LEVELS_FORWARD = "assets/menu/forward_aus.png";
     public static final String LEVELS_ESCAPE = "assets/menu/escape_off.png";

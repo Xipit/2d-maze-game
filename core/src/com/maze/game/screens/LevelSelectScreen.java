@@ -63,13 +63,11 @@ public class LevelSelectScreen extends ScreenAdapter {
         forwardTexture = Assets.manager.get(Assets.LEVELS_FORWARD);
         backTexturePressed = Assets.manager.get(Assets.LEVELS_BACKWARD_PRESSED);
         forwardTexturePressed = Assets.manager.get(Assets.LEVELS_FORWARD_PRESSED);
-        //TODO change disabled Texture
         backTextureDisabled = Assets.manager.get(Assets.LEVELS_BACKWARD_DISABLED);
         forwardTextureDisabled = Assets.manager.get(Assets.LEVELS_FORWARD_DISABLED);
 
         backgroundTexture = Assets.manager.get(Assets.LEVELS_BACKGRUND);
 
-        //TODO add special escape texture
         escapeTexture = Assets.manager.get(Assets.LEVELS_ESCAPE);
         escapeTexturePressed = Assets.manager.get(Assets.LEVELS_ESCAPE_PRESSED);
 
