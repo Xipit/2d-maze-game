@@ -51,7 +51,7 @@ public class LevelSelectScreen extends ScreenAdapter {
 
     public LevelSelectScreen(int startOfVisibleRange){
         this.maxRange = Assets.LEVEL_DATA.length ;
-        this.startOfVisibleRange = Math.min(startOfVisibleRange, maxRange);
+        this.startOfVisibleRange = Math.min(startOfVisibleRange, maxRange - 3);
         Assets.loadLevelSelectMenuTextures();
 
         for (int i = 0; i < levelTextures.length; i++) {
