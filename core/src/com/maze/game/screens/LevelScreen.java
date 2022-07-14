@@ -133,10 +133,13 @@ public class LevelScreen extends ScreenAdapter {
         UISpriteBatch.draw(texture, xOffset, yOffset, 128, 128);
     }
 
-    @Override
-    public void dispose() {
-        setFullscreenMode(false);
+    public void dispose(boolean setFullscreen){
+        if(!setFullscreen) setFullscreenMode(false);
         super.dispose();
         level.dispose();
+    }
+    @Override
+    public void dispose() {
+        dispose(false);
     }
 }
