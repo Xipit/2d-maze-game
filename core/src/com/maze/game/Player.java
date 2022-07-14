@@ -131,10 +131,7 @@ public class Player {
         return false;
     }
 
-
     private float cleanNumber (float number){
         return (float) (number > 0 ? Math.ceil(number) : Math.floor(number));
     }
-
-
 }

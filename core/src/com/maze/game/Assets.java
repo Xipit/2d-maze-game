@@ -34,7 +34,6 @@ public class Assets {
         manager.finishLoading();
     }
 
-
     // determines Appearance in Game and Order in LevelSelectScreen
     public static final LevelData[] LEVEL_DATA = {
             new TutorialLevel1Data(),

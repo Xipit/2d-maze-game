@@ -21,7 +21,7 @@ import com.maze.game.levels.*;
  * @author  Jörn Drechsler, Hanno Witzleb, Lucas Neugebauer
  */
 public class LevelScreen extends ScreenAdapter {
-    private MazeGameCamera camera;
+    private final MazeGameCamera camera;
     private final Level level;
     private final Player player;
     private final SpriteBatch levelSpriteBatch;
@@ -91,7 +91,7 @@ public class LevelScreen extends ScreenAdapter {
             MazeGame.instance.setScreen(new LevelSelectScreen(level.levelData.findIndex()));
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.F)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.F) || Gdx.input.isKeyJustPressed(Input.Keys.F11)){
             setLevelFullscreenMode(!MazeGame.prefersFullscreen);
         }
     }

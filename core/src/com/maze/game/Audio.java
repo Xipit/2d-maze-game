@@ -12,11 +12,6 @@ import com.badlogic.gdx.audio.Sound;
 public class Audio {
     private Audio(){}
 
-    private static final String DIRECTORY = "assets/sound/";
-
-
-
-
     public static final Sound COLLECT_KEY_SOUND =     Assets.manager.get(Assets.COLLECT_KEY_SOUND, Sound.class);
     public static final Sound STEP_ON_TRAP_SOUND =    Assets.manager.get(Assets.STEP_ON_TRAP_SOUND, Sound.class);
     public static final Sound OPEN_DOOR_SOUND =       Assets.manager.get(Assets.OPEN_DOOR_SOUND, Sound.class);
