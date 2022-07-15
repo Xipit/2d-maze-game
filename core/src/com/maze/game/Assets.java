@@ -81,7 +81,7 @@ public class Assets {
     public static final String END_BUTTON_PRESSED =     "menu/ende_an.png";
     public static final String LEVEL_BUTTON =           "menu/level_aus.png";
     public static final String LEVEL_BUTTON_PRESSED =   "menu/level_an.png";
-    public static final String BACKGROUND =             "menu/test.png";
+    public static final String BACKGROUND =             "menu/background.png";
 
     public static void loadMenuTextures(){
         manager.load(GAME_BUTTON, Texture.class);

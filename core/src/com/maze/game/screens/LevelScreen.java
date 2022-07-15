@@ -33,7 +33,6 @@ public class LevelScreen extends ScreenAdapter {
     public LevelScreen(LevelData levelData){
         camera = new MazeGameCamera(windowedZoomFactor);
         if(MazeGame.prefersFullscreen) {
-            Gdx.app.log("MAZEGAME", "activate fullscreen");
             setLevelFullscreenMode(true);
         }
 
@@ -108,8 +107,6 @@ public class LevelScreen extends ScreenAdapter {
         }
 
         MazeGame.prefersFullscreen = enableLevelFullscreen;
-        Gdx.app.log("MAZEGAME", "" + enableLevelFullscreen);
-
     }
     public void setFullscreenMode(boolean enableFullscreen) {
         if (enableFullscreen) {
