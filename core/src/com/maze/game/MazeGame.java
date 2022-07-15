@@ -17,6 +17,8 @@ public class MazeGame extends Game {
 	public static int SCREEN_WIDTH = DEFAULT_SCREEN_WIDTH;
 	public static int SCREEN_HEIGHT = DEFAULT_SCREEN_HEIGHT;
 
+	public static boolean prefersFullscreen = false;
+
 
 	public MazeGame() {
 		MazeGame.instance = this;

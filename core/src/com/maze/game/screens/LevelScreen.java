@@ -21,17 +21,21 @@ import com.maze.game.levels.*;
  * @author  Jörn Drechsler, Hanno Witzleb, Lucas Neugebauer
  */
 public class LevelScreen extends ScreenAdapter {
-    private MazeGameCamera camera;
+    private final MazeGameCamera camera;
     private final Level level;
     private final Player player;
     private final SpriteBatch levelSpriteBatch;
     private final SpriteBatch UISpriteBatch;
-    private final float zoomFactor = 1/4F;
+    private final float windowedZoomFactor = 1/4F; //1/4F;
 
     private final Texture[] keyTextures = new Texture[3];
 
     public LevelScreen(LevelData levelData){
-        camera = new MazeGameCamera(zoomFactor);
+        camera = new MazeGameCamera(windowedZoomFactor);
+        if(MazeGame.prefersFullscreen) {
+            Gdx.app.log("MAZEGAME", "activate fullscreen");
+            setLevelFullscreenMode(true);
+        }
 
 
         Assets.loadTileMap(levelData.getFileName());
@@ -87,21 +91,37 @@ public class LevelScreen extends ScreenAdapter {
             MazeGame.instance.setScreen(new LevelSelectScreen(level.levelData.findIndex()));
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.F)){
-            setFullscreenMode(!Gdx.graphics.isFullscreen());
-            this.camera = new MazeGameCamera(zoomFactor);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.F) || Gdx.input.isKeyJustPressed(Input.Keys.F11)){
+            setLevelFullscreenMode(!MazeGame.prefersFullscreen);
         }
     }
 
-    public void setFullscreenMode(boolean fullscreenMode) {
-        if (fullscreenMode) {
+    public void setLevelFullscreenMode(boolean enableLevelFullscreen){
+
+        setFullscreenMode(enableLevelFullscreen);
+
+        if(enableLevelFullscreen){
+            camera.updateVariables(windowedZoomFactor *  (1 / (float) Math.ceil((double)MazeGame.SCREEN_HEIGHT / (double)MazeGame.DEFAULT_SCREEN_HEIGHT)));
+        }
+        else{
+            camera.updateVariables(windowedZoomFactor);
+        }
+
+        MazeGame.prefersFullscreen = enableLevelFullscreen;
+        Gdx.app.log("MAZEGAME", "" + enableLevelFullscreen);
+
+    }
+    public void setFullscreenMode(boolean enableFullscreen) {
+        if (enableFullscreen) {
             MazeGame.SCREEN_WIDTH = Gdx.graphics.getDisplayMode().width;
             MazeGame.SCREEN_HEIGHT = Gdx.graphics.getDisplayMode().height;
+
             Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
         }
         else {
             MazeGame.SCREEN_WIDTH = MazeGame.DEFAULT_SCREEN_WIDTH;
             MazeGame.SCREEN_HEIGHT = MazeGame.DEFAULT_SCREEN_HEIGHT;
+
             Gdx.graphics.setWindowedMode(MazeGame.SCREEN_WIDTH, MazeGame.SCREEN_HEIGHT);
         }
     }
@@ -113,10 +133,13 @@ public class LevelScreen extends ScreenAdapter {
         UISpriteBatch.draw(texture, xOffset, yOffset, 128, 128);
     }
 
-    @Override
-    public void dispose() {
-        setFullscreenMode(false);
+    public void dispose(boolean setFullscreen){
+        if(!setFullscreen) setFullscreenMode(false);
         super.dispose();
         level.dispose();
+    }
+    @Override
+    public void dispose() {
+        dispose(false);
     }
 }

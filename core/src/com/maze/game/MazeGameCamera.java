@@ -1,6 +1,5 @@
 package com.maze.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 
@@ -17,8 +16,7 @@ public class MazeGameCamera extends OrthographicCamera {
     public MazeGameCamera(float levelZoomFactor){
         super();
 
-        this.setToOrtho(false, MazeGame.SCREEN_WIDTH, MazeGame.SCREEN_HEIGHT);
-        this.zoom = levelZoomFactor;
+        updateVariables(levelZoomFactor);
 
         this.update();
     }
@@ -55,5 +53,10 @@ public class MazeGameCamera extends OrthographicCamera {
 
         this.position.set(flooredCameraPosition);
         this.update();
+    }
+
+    public void updateVariables(float zoomFactor){
+        this.setToOrtho(false, MazeGame.SCREEN_WIDTH, MazeGame.SCREEN_HEIGHT);
+        this.zoom = zoomFactor;
     }
 }

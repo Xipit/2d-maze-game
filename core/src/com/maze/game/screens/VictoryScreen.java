@@ -13,9 +13,10 @@ import com.maze.game.levels.LevelData;
 import java.awt.*;
 
 /**
- * TODO: @Lucas add Docu krams
+ * <h1>VictoryScreen</h1>
+ * Erscheint nach dem ein Level abgeschlossen wurde
  *
- * @author  Lucas Neugebauer, Jörn Drechsler
+ * @author  Hanno Witzleb, Jörn Drechsler, Lucas Neugebauer
  */
 public class VictoryScreen extends ScreenAdapter {
     private final Texture victoryImageTexture;
@@ -37,6 +38,8 @@ public class VictoryScreen extends ScreenAdapter {
 
     private final LevelData wonLevelData;
 
+    private boolean isDisposed = false;
+
     public VictoryScreen(LevelData levelData) {
         this.wonLevelData = levelData;
 
@@ -45,7 +48,6 @@ public class VictoryScreen extends ScreenAdapter {
         victoryImageTexture = Assets.manager.get(Assets.VICTORY_IMAGE);
         nextLevelTexture = Assets.manager.get(Assets.NEXT_LEVEL);
         nextLevelTexturePressed = Assets.manager.get(Assets.NEXT_LEVEL_PRESSED);
-        //TODO implement specific texture for repeat button
         repeatLevelTexture = Assets.manager.get(Assets.RELOAD_LEVEL);
         repeatLevelTexturePressed = Assets.manager.get(Assets.RELOAD_LEVEL_PRESSED);
         backTexture = Assets.manager.get(Assets.LEVELS_BACKWARD);
@@ -56,6 +58,8 @@ public class VictoryScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
+        if(isDisposed) return;
+
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -95,6 +99,7 @@ public class VictoryScreen extends ScreenAdapter {
 
             sb.draw(texturePressed, xOffset, yOffset, backButtonDimensions.x, backButtonDimensions.y);
             if(Gdx.input.justTouched()) {
+                this.dispose();
                 MazeGame.instance.setScreen(new LevelSelectScreen(wonLevelData.findIndex()));
             }
         }else {
@@ -114,12 +119,12 @@ public class VictoryScreen extends ScreenAdapter {
 
             sb.draw(texturePressed, xOffset, yOffset, nextLevelButtonDimension.x, nextLevelButtonDimension.y);
             if(Gdx.input.justTouched()) {
+                this.dispose();
                 MazeGame.instance.setScreen(new LevelScreen(Assets.LEVEL_DATA[Math.min(wonLevelData.findIndex() + 1, Assets.LEVEL_DATA.length - 1)]));
             }
         }else {
             sb.draw(texture, xOffset, yOffset, nextLevelButtonDimension.x, nextLevelButtonDimension.y);
         }
-
     }
 
     public void drawRepeatLevelButton(Texture texture, Texture texturePressed){
@@ -133,6 +138,7 @@ public class VictoryScreen extends ScreenAdapter {
 
             sb.draw(texturePressed, xOffset, yOffset, repeatLevelButtonDimension.x, repeatLevelButtonDimension.y);
             if(Gdx.input.justTouched()) {
+                this.dispose();
                 MazeGame.instance.setScreen(new LevelScreen(Assets.LEVEL_DATA[wonLevelData.findIndex()]));
             }
         }else {
@@ -143,6 +149,7 @@ public class VictoryScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
+        this.isDisposed = true;
         super.dispose();
     }
 }

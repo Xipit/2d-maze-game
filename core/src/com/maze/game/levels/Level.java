@@ -344,7 +344,7 @@ public class Level {
                     Timer.schedule(new Timer.Task() {
                         @Override
                         public void run() {
-                            levelScreen.dispose();
+                            levelScreen.dispose(true);
                             MazeGame.instance.setScreen(new LevelScreen(levelData));
                         }
 

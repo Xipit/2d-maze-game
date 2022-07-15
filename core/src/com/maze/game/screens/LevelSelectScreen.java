@@ -47,9 +47,11 @@ public class LevelSelectScreen extends ScreenAdapter {
     private SpriteBatch sb;
     private Point resolutionSpriteBatch = new Point(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+    private boolean isDisposed = false;
+
     public LevelSelectScreen(int startOfVisibleRange){
         this.maxRange = Assets.LEVEL_DATA.length ;
-        this.startOfVisibleRange = Math.min(startOfVisibleRange, maxRange);
+        this.startOfVisibleRange = Math.min(startOfVisibleRange, maxRange - 3);
         Assets.loadLevelSelectMenuTextures();
 
         for (int i = 0; i < levelTextures.length; i++) {
@@ -61,13 +63,11 @@ public class LevelSelectScreen extends ScreenAdapter {
         forwardTexture = Assets.manager.get(Assets.LEVELS_FORWARD);
         backTexturePressed = Assets.manager.get(Assets.LEVELS_BACKWARD_PRESSED);
         forwardTexturePressed = Assets.manager.get(Assets.LEVELS_FORWARD_PRESSED);
-        //TODO change disabled Texture
         backTextureDisabled = Assets.manager.get(Assets.LEVELS_BACKWARD_DISABLED);
         forwardTextureDisabled = Assets.manager.get(Assets.LEVELS_FORWARD_DISABLED);
 
         backgroundTexture = Assets.manager.get(Assets.LEVELS_BACKGRUND);
 
-        //TODO add special escape texture
         escapeTexture = Assets.manager.get(Assets.LEVELS_ESCAPE);
         escapeTexturePressed = Assets.manager.get(Assets.LEVELS_ESCAPE_PRESSED);
 
@@ -81,6 +81,8 @@ public class LevelSelectScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
+        if(isDisposed) return;
+
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -141,6 +143,7 @@ public class LevelSelectScreen extends ScreenAdapter {
 
             sb.draw(texturePressed, xOffset, yOffset, levelButtonDimensions.x, levelButtonDimensions.y);
             if(Gdx.input.justTouched()) {
+                this.dispose();
                 Assets.loadTileMap(Assets.LEVEL_DATA[levelIndex].getFileName());
                 MazeGame.instance.setScreen(new LevelScreen(Assets.LEVEL_DATA[levelIndex]));
             }
@@ -199,5 +202,10 @@ public class LevelSelectScreen extends ScreenAdapter {
         }
 
 
+    }
+
+    public void dispose(){
+        this.isDisposed = true;
+        super.dispose();
     }
 }
