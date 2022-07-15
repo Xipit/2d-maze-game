@@ -18,11 +18,11 @@ public class Assets {
 
     private Assets(){}
 
-    public static final String VICTORY_IMAGE = "assets/menu/victoryScreen.png";
-    public static final String NEXT_LEVEL = "assets/menu/nextlvl_aus.png";
-    public static final String NEXT_LEVEL_PRESSED = "assets/menu/nextlvl_an.png";
-    public static final String RELOAD_LEVEL = "assets/menu/repeat_aus.png";
-    public static final String RELOAD_LEVEL_PRESSED = "assets/menu/repeat_an.png";
+    public static final String VICTORY_IMAGE =          "menu/victoryScreen.png";
+    public static final String NEXT_LEVEL =             "menu/nextlvl_aus.png";
+    public static final String NEXT_LEVEL_PRESSED =     "menu/nextlvl_an.png";
+    public static final String RELOAD_LEVEL =           "menu/repeat_aus.png";
+    public static final String RELOAD_LEVEL_PRESSED =   "menu/repeat_an.png";
 
     public static void loadVictoryMenuTextures(){
         manager.load(VICTORY_IMAGE, Texture.class);
@@ -48,15 +48,15 @@ public class Assets {
             new IllusionLevelData()
     };
 
-    public static final String LEVELS_BACKGRUND = "assets/menu/levelbg.png";
-    public static final String LEVELS_BACKWARD = "assets/menu/back_aus.png";
-    public static final String LEVELS_FORWARD = "assets/menu/forward_aus.png";
-    public static final String LEVELS_ESCAPE = "assets/menu/escape_off.png";
-    public static final String LEVELS_BACKWARD_PRESSED = "assets/menu/back_an.png";
-    public static final String LEVELS_FORWARD_PRESSED = "assets/menu/forward_an.png";
-    public static final String LEVELS_ESCAPE_PRESSED = "assets/menu/escape_on.png";
-    public static final String LEVELS_FORWARD_DISABLED = "assets/menu/forward_grau.png";
-    public static final String LEVELS_BACKWARD_DISABLED = "assets/menu/back_grau.png";
+    public static final String LEVELS_BACKGRUND =           "menu/levelbg.png";
+    public static final String LEVELS_BACKWARD =            "menu/back_aus.png";
+    public static final String LEVELS_FORWARD =             "menu/forward_aus.png";
+    public static final String LEVELS_ESCAPE =              "menu/escape_off.png";
+    public static final String LEVELS_BACKWARD_PRESSED =    "menu/back_an.png";
+    public static final String LEVELS_FORWARD_PRESSED =     "menu/forward_an.png";
+    public static final String LEVELS_ESCAPE_PRESSED =      "menu/escape_on.png";
+    public static final String LEVELS_FORWARD_DISABLED =    "menu/forward_grau.png";
+    public static final String LEVELS_BACKWARD_DISABLED =   "menu/back_grau.png";
 
     public static void loadLevelSelectMenuTextures(){
         for (LevelData levelDatum : LEVEL_DATA) {
@@ -75,13 +75,13 @@ public class Assets {
         manager.finishLoading();
     }
 
-    public static final String GAME_BUTTON =            "assets/menu/anknopf.png";
-    public static final String GAME_BUTTON_PRESSED =    "assets/menu/anknopf_an.png";
-    public static final String END_BUTTON =             "assets/menu/ende_aus.png";
-    public static final String END_BUTTON_PRESSED =     "assets/menu/ende_an.png";
-    public static final String LEVEL_BUTTON =           "assets/menu/level_aus.png";
-    public static final String LEVEL_BUTTON_PRESSED =   "assets/menu/level_an.png";
-    public static final String BACKGROUND =             "assets/menu/test.png";
+    public static final String GAME_BUTTON =            "menu/anknopf.png";
+    public static final String GAME_BUTTON_PRESSED =    "menu/anknopf_an.png";
+    public static final String END_BUTTON =             "menu/ende_aus.png";
+    public static final String END_BUTTON_PRESSED =     "menu/ende_an.png";
+    public static final String LEVEL_BUTTON =           "menu/level_aus.png";
+    public static final String LEVEL_BUTTON_PRESSED =   "menu/level_an.png";
+    public static final String BACKGROUND =             "menu/test.png";
 
     public static void loadMenuTextures(){
         manager.load(GAME_BUTTON, Texture.class);
@@ -96,24 +96,24 @@ public class Assets {
     }
 
     public static final String[] KEYS = {
-            "assets/keys/key_blue.png",
-            "assets/keys/key_green.png",
-            "assets/keys/key_red.png"
+            "keys/key_blue.png",
+            "keys/key_green.png",
+            "keys/key_red.png"
     };
 
     // Standard Direction: Top Left
     public static final String[] CAT_DIAGONAL =
-            {"assets/character/Cat_diagonal_leftFoot.png",
-            "assets/character/Cat_diagonal_middle.png",
-            "assets/character/Cat_diagonal_rightFoot.png"};
+            {"character/Cat_diagonal_leftFoot.png",
+            "character/Cat_diagonal_middle.png",
+            "character/Cat_diagonal_rightFoot.png"};
     // Standard Direction: Top
     public static final String[] CAT_VERTICAL =
-            {"assets/character/Cat_leftFoot.png",
-            "assets/character/Cat_middle.png",
-            "assets/character/Cat_rightFoot.png"};
+            {"character/Cat_leftFoot.png",
+            "character/Cat_middle.png",
+            "character/Cat_rightFoot.png"};
 
-    public static final String CAT_SITTING_LEFT =        "assets/character/Cat_sitting_left.png";
-    public static final String CAT_SITTING_RIGHT =        "assets/character/Cat_sitting_right.png";
+    public static final String CAT_SITTING_LEFT =        "character/Cat_sitting_left.png";
+    public static final String CAT_SITTING_RIGHT =       "character/Cat_sitting_right.png";
 
     public static void loadTextures() {
         manager.load(CAT_DIAGONAL[0], Texture.class);
@@ -132,11 +132,11 @@ public class Assets {
         manager.finishLoading();
     }
 
-    public static final String COLLECT_KEY_SOUND =     "assets/sound/collect_key.mp3";
-    public static final String STEP_ON_TRAP_SOUND =    "assets/sound/cat_steps_on_trap.mp3";
-    public static final String OPEN_DOOR_SOUND =       "assets/sound/open_door.mp3";
-    public static final String LEVEL_START_SOUND =     "assets/sound/level_start_meow.mp3";
-    public static final String LEVEL_FINISHED_SOUND =  "assets/sound/level_finished.mp3";
+    public static final String COLLECT_KEY_SOUND =     "sound/collect_key.mp3";
+    public static final String STEP_ON_TRAP_SOUND =    "sound/cat_steps_on_trap.mp3";
+    public static final String OPEN_DOOR_SOUND =       "sound/open_door.mp3";
+    public static final String LEVEL_START_SOUND =     "sound/level_start_meow.mp3";
+    public static final String LEVEL_FINISHED_SOUND =  "sound/level_finished.mp3";
 
     public static void loadAudio() {
 

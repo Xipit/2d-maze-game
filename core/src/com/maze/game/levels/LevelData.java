@@ -10,8 +10,8 @@ import com.maze.game.Assets;
  */
 public class LevelData {
 
-    protected final String textureAssetDirectory = "assets/menu/";
-    protected final String tileMapAssetDirectory = "assets/tilemap/";
+    protected final String textureAssetDirectory = "menu/";
+    protected final String tileMapAssetDirectory = "tilemap/";
 
     public LevelData(){
     }
